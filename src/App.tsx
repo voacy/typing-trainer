@@ -1,6 +1,17 @@
 import "./App.css";
+import words from "./shared/lib/words";
+import useTimer from "./features/timer/useTimer";
+import useTyping from "./features/typing/useTyping";
+import { getLetterClass, getActiveClass } from "./shared/lib";
 
 function App() {
+	const { timer, timerStatus, startTimer } = useTimer();
+	const { currentWordIndex, currentLetterIndex, letterStatuses } = useTyping(
+		timer,
+		timerStatus,
+		startTimer,
+	);
+
 	return (
 		<>
 			<header className="header">
@@ -11,20 +22,29 @@ function App() {
 
 			<main className="main">
 				<div className="container">
-					<ul className="stats__list">
-						<li className="stats__item">
-							<span>WPM</span>
-						</li>
-						<li className="stats__item">
-							<span>Accuracy</span>
-						</li>
-					</ul>
-
-					<div className="text">
-						<p>
-							the quick brown fox jumps over the lazy dog and keeps
-							moving through the silent night
-						</p>
+					<span className="timer">{timer}</span>
+					<div className="text__wrapper">
+						<ul className="text">
+							{words.map((word, wordIndex) => {
+								const isWordIncorrect =
+									wordIndex < currentWordIndex &&
+									letterStatuses[wordIndex].some(
+										(status) => status === "idle" || status === "incorrect",
+									);
+								return (
+									<li key={wordIndex} className={`word ${isWordIncorrect ? "incorrect-word" : ""}`}>
+										{word.split("").map((letter, letterIndex) => (
+											<span
+												key={letterIndex}
+												className={`${getLetterClass(letterStatuses, wordIndex, letterIndex)} ${getActiveClass(wordIndex, letterIndex, currentWordIndex, currentLetterIndex)} letter`}
+											>
+												{letter}
+											</span>
+										))}
+									</li>
+								);
+							})}
+						</ul>
 					</div>
 				</div>
 			</main>
