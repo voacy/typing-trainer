@@ -15,6 +15,7 @@ const useTyping = (timer: number, timerStatus: boolean, startTimer: () => void) 
 	const handleLetter = (e: string) => {
 		const newStatuses = [...letterStatuses];
 		newStatuses[currentWordIndex] = [...letterStatuses[currentWordIndex]];
+		if (currentLetterIndex >= currentWord.length) return;
 		if (e === currentLetter) {
 			newStatuses[currentWordIndex][currentLetterIndex] = "correct";
 		} else {
@@ -46,13 +47,14 @@ const useTyping = (timer: number, timerStatus: boolean, startTimer: () => void) 
 		if (currentLetterIndex > 0) {
 			setCurrentLetterIndex((e) => e - 1);
 			newStatuses[currentWordIndex][currentLetterIndex - 1] = "idle";
+			setLetterStatuses(newStatuses);
 		}
 
 		if (currentLetterIndex === 0 && hasErrors) {
 			setCurrentWordIndex((e) => e - 1);
 			setCurrentLetterIndex(words[currentWordIndex - 1].length);
+			setLetterStatuses(newStatuses);
 		}
-		setLetterStatuses(newStatuses);
 	};
 
 	const handleCtrlBackspace = () => {
