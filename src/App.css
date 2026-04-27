@@ -40,7 +40,6 @@
 	display: flex;
 	gap: 5px 15px;
 	max-width: 1000px;
-	margin: 0 auto;
 	flex-wrap: wrap;
 }
 
@@ -59,17 +58,6 @@
 	color: #c02433;
 }
 
-.active::before {
-	content: "";
-	position: absolute;
-	left: -2px;
-	top: 0;
-	height: 100%;
-	width: 2px;
-	background: #3ff877;
-	animation: blink 0.7s infinite;
-}
-
 @keyframes blink {
 	0%,
 	100% {
@@ -81,8 +69,10 @@
 }
 
 .text__wrapper {
+	position: relative;
 	overflow: hidden;
 	height: 180px;
+	padding: 0 5px;
 }
 
 .timer {
@@ -120,4 +110,12 @@
 	border-radius: 10px;
 	background-color: #32ce60;
 	color: #09090b;
+}
+
+.cursor {
+	position: absolute;
+	height: 39px;
+	width: 2px;
+	background: #32ce60;
+	transition: 0.07s all ease-in-out;
 }
