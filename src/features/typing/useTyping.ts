@@ -13,6 +13,16 @@ const useTyping = (timer: number, timerStatus: boolean, startTimer: () => void) 
 	const currentWord = words[currentWordIndex];
 	const currentLetter = currentWord[currentLetterIndex];
 
+	const hasErrors = () => {
+		return (
+			currentWordIndex > 0 &&
+			(letterStatuses[currentWordIndex - 1].some(
+				(status) => status === "idle" || status === "incorrect",
+			) ||
+				extraChars[currentWordIndex - 1].length > 0)
+		);
+	};
+
 	const handleLetter = (e: string) => {
 		const newStatuses = [...letterStatuses];
 		newStatuses[currentWordIndex] = [...letterStatuses[currentWordIndex]];
@@ -47,13 +57,6 @@ const useTyping = (timer: number, timerStatus: boolean, startTimer: () => void) 
 		const newExtraChars = [...extraChars];
 		newExtraChars[currentWordIndex] = [...extraChars[currentWordIndex]];
 
-		const hasErrors =
-			currentWordIndex > 0 &&
-			(letterStatuses[currentWordIndex - 1].some(
-				(status) => status === "idle" || status === "incorrect",
-			) ||
-				extraChars[currentWordIndex - 1].length > 0);
-
 		if (currentLetterIndex > currentWord.length) {
 			setCurrentLetterIndex((e) => e - 1);
 			newExtraChars[currentWordIndex] = extraChars[currentWordIndex].slice(0, -1);
@@ -67,7 +70,7 @@ const useTyping = (timer: number, timerStatus: boolean, startTimer: () => void) 
 			setLetterStatuses(newStatuses);
 		}
 
-		if (currentLetterIndex === 0 && hasErrors) {
+		if (currentLetterIndex === 0 && hasErrors()) {
 			setCurrentWordIndex((e) => e - 1);
 			setCurrentLetterIndex(
 				words[currentWordIndex - 1].length + extraChars[currentWordIndex - 1].length,
@@ -82,13 +85,6 @@ const useTyping = (timer: number, timerStatus: boolean, startTimer: () => void) 
 
 		const newExtraChars = [...extraChars];
 		newExtraChars[currentWordIndex] = [...extraChars[currentWordIndex]];
-
-		const hasErrors =
-			currentWordIndex > 0 &&
-			(letterStatuses[currentWordIndex - 1].some(
-				(status) => status === "idle" || status === "incorrect",
-			) ||
-				extraChars[currentWordIndex - 1].length > 0);
 
 		if (currentLetterIndex > currentWord.length) {
 			setCurrentLetterIndex(0);
@@ -108,7 +104,7 @@ const useTyping = (timer: number, timerStatus: boolean, startTimer: () => void) 
 			);
 		}
 
-		if (currentLetterIndex === 0 && hasErrors) {
+		if (currentLetterIndex === 0 && hasErrors()) {
 			setCurrentWordIndex((e) => e - 1);
 			setCurrentLetterIndex(
 				words[currentWordIndex - 1].length + extraChars[currentWordIndex - 1].length,
