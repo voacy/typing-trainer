@@ -38,7 +38,7 @@
 
 .text {
 	display: flex;
-	gap: 5px 15px;
+	gap: 20px 20px;
 	max-width: 1000px;
 	flex-wrap: wrap;
 }
@@ -46,7 +46,6 @@
 .letter {
 	position: relative;
 	font-size: 32px;
-	line-height: 1.7;
 	color: #52525b;
 }
 
@@ -56,16 +55,6 @@
 
 .incorrect {
 	color: #c02433;
-}
-
-@keyframes blink {
-	0%,
-	100% {
-		opacity: 1;
-	}
-	50% {
-		opacity: 0;
-	}
 }
 
 .text__wrapper {
@@ -90,7 +79,7 @@
 .incorrect-word::before {
 	content: "";
 	position: absolute;
-	bottom: 0;
+	bottom: 0px;
 	left: 0;
 	width: 100%;
 	height: 1px;
@@ -117,5 +106,21 @@
 	height: 39px;
 	width: 2px;
 	background: #32ce60;
-	transition: 0.07s all ease-in-out;
+	transition:
+		top 0.07s ease-in-out,
+		left 0.07s ease-in-out;
+}
+
+.cursor--blinking {
+	animation: blink 1s infinite;
+}
+
+@keyframes blink {
+	0%,
+	100% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0;
+	}
 }

@@ -5,7 +5,9 @@ import useTyping from "./features/typing/useTyping";
 import { getLetterClass, getActiveClass } from "./shared/lib";
 import useCapsLock from "./features/capsLock/useCapsLock";
 import { LockKeyhole } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
+import useCursor from "./features/cursor/useCursor";
+import useTextScroll from "./features/textScroll/useTextScroll";
 
 function App() {
 	const { timer, timerStatus, startTimer } = useTimer();
@@ -15,21 +17,9 @@ function App() {
 		timerStatus,
 		startTimer,
 	);
-	const [cursorPos, setCursorPos] = useState({ top: 0, left: 0 });
 	const wrapperRef = useRef<HTMLDivElement>(null);
-
-	useEffect(() => {
-		const el = document.querySelector(".active");
-
-		if (el && wrapperRef.current) {
-			const elPos = el.getBoundingClientRect();
-			const wrapperPos = wrapperRef.current.getBoundingClientRect();
-			setCursorPos({
-				top: elPos.top - wrapperPos.top,
-				left: elPos.left - wrapperPos.left,
-			});
-		}
-	}, [currentWordIndex, currentLetterIndex]);
+	const currentLine = useTextScroll(currentWordIndex, wrapperRef);
+	const cursorPos = useCursor(currentLetterIndex, currentWordIndex, currentLine, wrapperRef);
 
 	return (
 		<>
@@ -51,10 +41,10 @@ function App() {
 
 					<div className="text__wrapper" ref={wrapperRef}>
 						<span
-							className="cursor"
+							className={`cursor ${!timerStatus ? "cursor--blinking" : ""}`}
 							style={{ top: `${cursorPos.top}px`, left: `${cursorPos.left}px` }}
 						></span>
-						<ul className="text">
+						<ul className="text" style={{ transform: `translateY(-${currentLine}px)` }}>
 							{words.map((word, wordIndex) => {
 								const isWordIncorrect =
 									wordIndex < currentWordIndex &&
