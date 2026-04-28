@@ -1,12 +1,12 @@
 import "./App.scss";
-import useTimer from "./features/timer/useTimer";
-import useTyping from "./features/typing/useTyping";
-import useCapsLock from "./features/capsLock/useCapsLock";
+import useTimer from "../features/timer/useTimer";
+import useTyping from "../features/typing/useTyping";
+import useCapsLock from "../features/capsLock/useCapsLock";
 import { LockKeyhole } from "lucide-react";
 import { useRef } from "react";
-import useCursor from "./features/cursor/useCursor";
-import useTextScroll from "./features/textScroll/useTextScroll";
-import TypingText from "./features/typing/TypingText";
+import useCursor from "../features/cursor/useCursor";
+import useTextScroll from "../features/textScroll/useTextScroll";
+import TypingText from "../features/typing/TypingText";
 
 function App() {
 	const { timer, timerStatus, startTimer } = useTimer();

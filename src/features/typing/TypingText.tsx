@@ -21,8 +21,6 @@ const TypingText = (props: Props) => {
 					(letterStatuses[wordIndex].some((status: string) => status !== "correct") ||
 						extraChars[wordIndex].length > 0);
 
-				const isLastletter =
-					words[currentWordIndex].length === currentLetterIndex && wordIndex === currentWordIndex;
 				return (
 					<li key={wordIndex} className={`word ${isWordIncorrect ? "incorrect-word" : ""}`}>
 						{word.split("").map((letter, letterIndex) => (
@@ -38,12 +36,12 @@ const TypingText = (props: Props) => {
 								{letter}
 							</span>
 						))}
-						{extraChars[wordIndex].length > 0 && wordIndex === currentWordIndex && (
+						{(extraChars[wordIndex].length > 0 && wordIndex === currentWordIndex) ||
+						(currentLetterIndex === word.length &&
+							extraChars[wordIndex].length === 0 &&
+							wordIndex === currentWordIndex) ? (
 							<span className="letter active"></span>
-						)}
-						{isLastletter && extraChars[wordIndex].length === 0 && (
-							<span className="letter active"></span>
-						)}
+						) : null}
 					</li>
 				);
 			})}
