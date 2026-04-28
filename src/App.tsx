@@ -8,6 +8,7 @@ import { LockKeyhole } from "lucide-react";
 import { useRef } from "react";
 import useCursor from "./features/cursor/useCursor";
 import useTextScroll from "./features/textScroll/useTextScroll";
+import { LINE_HEIGHT } from "./shared/constants";
 
 function App() {
 	const { timer, timerStatus, startTimer } = useTimer();
@@ -44,7 +45,10 @@ function App() {
 							className={`cursor ${!timerStatus ? "cursor--blinking" : ""}`}
 							style={{ top: `${cursorPos.top}px`, left: `${cursorPos.left}px` }}
 						></span>
-						<ul className="text" style={{ transform: `translateY(-${currentLine}px)` }}>
+						<ul
+							className="text"
+							style={{ transform: `translateY(-${currentLine * LINE_HEIGHT}px)` }}
+						>
 							{words.map((word, wordIndex) => {
 								const isWordIncorrect =
 									wordIndex < currentWordIndex &&
