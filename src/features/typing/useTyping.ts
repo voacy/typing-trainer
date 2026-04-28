@@ -7,6 +7,7 @@ const useTyping = (timer: number, timerStatus: boolean, startTimer: () => void) 
 	const [letterStatuses, setLetterStatuses] = useState<LetterStatus[][]>(
 		createLetterStatuses(words),
 	);
+	const [extraChars, setExtraChars] = useState<string[][]>(words.map(() => []));
 	const [currentWordIndex, setCurrentWordIndex] = useState(0);
 	const [currentLetterIndex, setCurrentLetterIndex] = useState(0);
 	const currentWord = words[currentWordIndex];
@@ -15,10 +16,15 @@ const useTyping = (timer: number, timerStatus: boolean, startTimer: () => void) 
 	const handleLetter = (e: string) => {
 		const newStatuses = [...letterStatuses];
 		newStatuses[currentWordIndex] = [...letterStatuses[currentWordIndex]];
-		if (currentLetterIndex >= currentWord.length) return;
-		if (e === currentLetter) {
+
+		const newExtraChars = [...extraChars];
+		newExtraChars[currentWordIndex] = [...extraChars[currentWordIndex], e];
+
+		if (currentLetterIndex >= currentWord.length) {
+			setExtraChars(newExtraChars);
+		} else if (e === currentLetter) {
 			newStatuses[currentWordIndex][currentLetterIndex] = "correct";
-		} else {
+		} else if (e !== currentLetter) {
 			newStatuses[currentWordIndex][currentLetterIndex] = "incorrect";
 		}
 		setCurrentLetterIndex((e) => e + 1);
@@ -38,11 +44,22 @@ const useTyping = (timer: number, timerStatus: boolean, startTimer: () => void) 
 		const newStatuses = [...letterStatuses];
 		newStatuses[currentWordIndex] = [...letterStatuses[currentWordIndex]];
 
+		const newExtraChars = [...extraChars];
+		newExtraChars[currentWordIndex] = [...extraChars[currentWordIndex]];
+
 		const hasErrors =
 			currentWordIndex > 0 &&
-			letterStatuses[currentWordIndex - 1].some(
+			(letterStatuses[currentWordIndex - 1].some(
 				(status) => status === "idle" || status === "incorrect",
-			);
+			) ||
+				extraChars[currentWordIndex - 1].length > 0);
+
+		if (currentLetterIndex > currentWord.length) {
+			setCurrentLetterIndex((e) => e - 1);
+			newExtraChars[currentWordIndex] = extraChars[currentWordIndex].slice(0, -1);
+			setExtraChars(newExtraChars);
+			return;
+		}
 
 		if (currentLetterIndex > 0) {
 			setCurrentLetterIndex((e) => e - 1);
@@ -52,7 +69,9 @@ const useTyping = (timer: number, timerStatus: boolean, startTimer: () => void) 
 
 		if (currentLetterIndex === 0 && hasErrors) {
 			setCurrentWordIndex((e) => e - 1);
-			setCurrentLetterIndex(words[currentWordIndex - 1].length);
+			setCurrentLetterIndex(
+				words[currentWordIndex - 1].length + extraChars[currentWordIndex - 1].length,
+			);
 			setLetterStatuses(newStatuses);
 		}
 	};
@@ -61,11 +80,26 @@ const useTyping = (timer: number, timerStatus: boolean, startTimer: () => void) 
 		const newStatuses = [...letterStatuses];
 		newStatuses[currentWordIndex] = [...letterStatuses[currentWordIndex]];
 
+		const newExtraChars = [...extraChars];
+		newExtraChars[currentWordIndex] = [...extraChars[currentWordIndex]];
+
 		const hasErrors =
 			currentWordIndex > 0 &&
-			letterStatuses[currentWordIndex - 1].some(
+			(letterStatuses[currentWordIndex - 1].some(
 				(status) => status === "idle" || status === "incorrect",
+			) ||
+				extraChars[currentWordIndex - 1].length > 0);
+
+		if (currentLetterIndex > currentWord.length) {
+			setCurrentLetterIndex(0);
+			newExtraChars[currentWordIndex] = [];
+			newStatuses[currentWordIndex] = newStatuses[currentWordIndex].map(
+				() => "idle" as LetterStatus,
 			);
+			setExtraChars(newExtraChars);
+			setLetterStatuses(newStatuses);
+			return;
+		}
 
 		if (currentLetterIndex > 0) {
 			setCurrentLetterIndex(0);
@@ -76,7 +110,9 @@ const useTyping = (timer: number, timerStatus: boolean, startTimer: () => void) 
 
 		if (currentLetterIndex === 0 && hasErrors) {
 			setCurrentWordIndex((e) => e - 1);
-			setCurrentLetterIndex(words[currentWordIndex - 1].length);
+			setCurrentLetterIndex(
+				words[currentWordIndex - 1].length + extraChars[currentWordIndex - 1].length,
+			);
 		}
 		setLetterStatuses(newStatuses);
 	};
@@ -98,9 +134,9 @@ const useTyping = (timer: number, timerStatus: boolean, startTimer: () => void) 
 		return () => {
 			window.removeEventListener("keydown", handleKeyDown);
 		};
-	}, [currentLetter, letterStatuses, timer, timerStatus, startTimer]);
+	}, [currentLetter, letterStatuses, extraChars, timer, timerStatus, startTimer]);
 
-	return { letterStatuses, currentWordIndex, currentLetterIndex };
+	return { letterStatuses, extraChars, currentWordIndex, currentLetterIndex };
 };
 
 export default useTyping;

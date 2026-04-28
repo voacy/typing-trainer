@@ -1,19 +1,17 @@
-import "./App.css";
-import words from "./shared/lib/words";
+import "./App.scss";
 import useTimer from "./features/timer/useTimer";
 import useTyping from "./features/typing/useTyping";
-import { getLetterClass, getActiveClass } from "./shared/lib";
 import useCapsLock from "./features/capsLock/useCapsLock";
 import { LockKeyhole } from "lucide-react";
 import { useRef } from "react";
 import useCursor from "./features/cursor/useCursor";
 import useTextScroll from "./features/textScroll/useTextScroll";
-import { LINE_HEIGHT } from "./shared/constants";
+import TypingText from "./features/typing/TypingText";
 
 function App() {
 	const { timer, timerStatus, startTimer } = useTimer();
 	const isCapsLock = useCapsLock();
-	const { currentWordIndex, currentLetterIndex, letterStatuses } = useTyping(
+	const { currentWordIndex, currentLetterIndex, letterStatuses, extraChars } = useTyping(
 		timer,
 		timerStatus,
 		startTimer,
@@ -39,39 +37,18 @@ function App() {
 							Caps Lock
 						</span>
 					)}
-
 					<div className="text__wrapper" ref={wrapperRef}>
 						<span
 							className={`cursor ${!timerStatus ? "cursor--blinking" : ""}`}
 							style={{ top: `${cursorPos.top}px`, left: `${cursorPos.left}px` }}
 						></span>
-						<ul
-							className="text"
-							style={{ transform: `translateY(-${currentLine * LINE_HEIGHT}px)` }}
-						>
-							{words.map((word, wordIndex) => {
-								const isWordIncorrect =
-									wordIndex < currentWordIndex &&
-									letterStatuses[wordIndex].some((status) => status !== "correct");
-
-								const isLastletter =
-									words[currentWordIndex].length === currentLetterIndex &&
-									wordIndex === currentWordIndex;
-								return (
-									<li key={wordIndex} className={`word ${isWordIncorrect ? "incorrect-word" : ""}`}>
-										{word.split("").map((letter, letterIndex) => (
-											<span
-												key={letterIndex}
-												className={`letter ${getLetterClass(letterStatuses, wordIndex, letterIndex)} ${getActiveClass(wordIndex, letterIndex, currentWordIndex, currentLetterIndex)}`}
-											>
-												{letter}
-											</span>
-										))}
-										{isLastletter && <span className="letter active"></span>}
-									</li>
-								);
-							})}
-						</ul>
+						<TypingText
+							currentLine={currentLine}
+							currentWordIndex={currentWordIndex}
+							currentLetterIndex={currentLetterIndex}
+							letterStatuses={letterStatuses}
+							extraChars={extraChars}
+						/>
 					</div>
 				</div>
 			</main>
