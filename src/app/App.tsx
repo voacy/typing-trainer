@@ -10,26 +10,36 @@ import wordsList from "../shared/lib/wordsList";
 import Settings from "../widgets/Settings/Settings";
 import CapsLockWarning from "../features/capsLock/CapsLockWarning";
 import Header from "../widgets/Header/Header";
+import { ArrowsCounterClockwiseIcon } from "@phosphor-icons/react";
 
 function App() {
-	const [words] = useState(() => generateWords(wordsList, 10));
-	const { timer, timerStatus, startTimer } = useTimer();
-	const { currentWordIndex, currentLetterIndex, letterStatuses, extraChars } = useTyping(
-		words,
-		timer,
-		timerStatus,
-		startTimer,
-	);
+	const [settings, setSettings] = useState({
+		mode: "time",
+		isPunctuation: false,
+		isNumbers: false,
+		count: 30,
+		language: "english",
+	});
+	const [words, setWords] = useState(() => generateWords(wordsList, settings.count));
+	const { timer, timerStatus, startTimer, resetTimer } = useTimer(settings.count);
+	const { currentWordIndex, currentLetterIndex, letterStatuses, extraChars, resetTyping } =
+		useTyping(words, timer, timerStatus, startTimer);
 	const wrapperRef = useRef<HTMLDivElement>(null);
 	const offset = useTextScroll(currentWordIndex, wrapperRef);
 	const cursorPos = useCursor(currentLetterIndex, currentWordIndex, offset, wrapperRef);
+
+	const handleReset = (count = settings.count) => {
+		setWords(generateWords(wordsList, count));
+		resetTimer(count);
+		resetTyping();
+	};
 
 	return (
 		<>
 			<Header />
 			<main className="main">
 				<div className="container">
-					<Settings />
+					<Settings settings={settings} setSettings={setSettings} onReset={handleReset} />
 					<span className="timer">{timer}</span>
 					<CapsLockWarning />
 					<div className="text__wrapper" ref={wrapperRef}>
@@ -44,6 +54,9 @@ function App() {
 							timerStatus={timerStatus}
 						/>
 					</div>
+					<button className="reset__btn" onClick={() => handleReset()}>
+						<ArrowsCounterClockwiseIcon size={32} />
+					</button>
 				</div>
 			</main>
 		</>

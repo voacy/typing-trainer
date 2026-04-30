@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
-const useTimer = () => {
-	const [timer, setTimer] = useState(100);
+const useTimer = (duration: number) => {
+	const [timer, setTimer] = useState(duration);
 	const [timerStatus, setTimerStatus] = useState(false);
 
 	useEffect(() => {
@@ -23,7 +23,12 @@ const useTimer = () => {
 		setTimerStatus(true);
 	};
 
-	return { timer, timerStatus, startTimer };
+	const resetTimer = (newDuration?: number) => {
+		setTimer(newDuration ?? duration);
+		setTimerStatus(false);
+	};
+
+	return { timer, timerStatus, startTimer, resetTimer };
 };
 
 export default useTimer;

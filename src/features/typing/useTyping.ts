@@ -136,7 +136,14 @@ const useTyping = (
 		};
 	}, [currentLetter, letterStatuses, extraChars, timer, timerStatus, startTimer]);
 
-	return { letterStatuses, extraChars, currentWordIndex, currentLetterIndex };
+	const resetTyping = () => {
+		setLetterStatuses(createLetterStatuses(words));
+		setExtraChars(words.map(() => []));
+		setCurrentWordIndex(0);
+		setCurrentLetterIndex(0);
+	};
+
+	return { letterStatuses, extraChars, currentWordIndex, currentLetterIndex, resetTyping };
 };
 
 export default useTyping;

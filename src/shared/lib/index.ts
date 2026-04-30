@@ -9,7 +9,8 @@ export const getLetterClass = (
 	arrIndex: number,
 	charIndex: number,
 ) => {
-	return letterStatuses[arrIndex][charIndex];
+	if (!letterStatuses[arrIndex]) return "idle";
+	return letterStatuses[arrIndex][charIndex] ?? "idle";
 };
 
 export const getActiveClass = (

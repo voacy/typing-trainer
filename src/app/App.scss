@@ -53,8 +53,9 @@
 
 .text__wrapper {
 	position: relative;
-	overflow: hidden;
 	height: 180px;
+	margin-bottom: 30px;
+	overflow: hidden;
 }
 
 .timer {
@@ -115,4 +116,10 @@
 	50% {
 		opacity: 0;
 	}
+}
+
+.reset__btn {
+	display: block;
+	margin: 0 auto;
+	color: var(--color-text);
 }

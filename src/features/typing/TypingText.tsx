@@ -33,7 +33,7 @@ const TypingText = (props: Props) => {
 			{words.map((word, wordIndex) => {
 				const isWordIncorrect =
 					wordIndex < currentWordIndex &&
-					(letterStatuses[wordIndex].some((status: string) => status !== "correct") ||
+					(letterStatuses[wordIndex]?.some((status: string) => status !== "correct") ||
 						extraChars[wordIndex].length > 0);
 
 				return (
@@ -46,14 +46,14 @@ const TypingText = (props: Props) => {
 								{letter}
 							</span>
 						))}
-						{extraChars[wordIndex].map((letter, letterIndex) => (
+						{extraChars[wordIndex]?.map((letter, letterIndex) => (
 							<span key={letterIndex} className="letter extra">
 								{letter}
 							</span>
 						))}
-						{(extraChars[wordIndex].length > 0 && wordIndex === currentWordIndex) ||
+						{(extraChars[wordIndex]?.length > 0 && wordIndex === currentWordIndex) ||
 						(currentLetterIndex === word.length &&
-							extraChars[wordIndex].length === 0 &&
+							extraChars[wordIndex]?.length === 0 &&
 							wordIndex === currentWordIndex) ? (
 							<span className="letter active"></span>
 						) : null}
