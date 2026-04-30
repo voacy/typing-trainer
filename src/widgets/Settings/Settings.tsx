@@ -30,7 +30,9 @@ const Settings = (props: Props) => {
 
 	return (
 		<div className="settings" onMouseDown={(e) => e.preventDefault()}>
-			<div className="settings__group">
+			<div
+				className={`settings__group ${settings.mode === "quote" ? "settings__group--disabled" : ""}`}
+			>
 				<button
 					className={`settings__btn ${settings.isPunctuation ? "settings__btn--active" : ""}`}
 					onClick={() =>
@@ -66,7 +68,9 @@ const Settings = (props: Props) => {
 				</button>
 			</div>
 
-			<div className="settings__group">
+			<div
+				className={`settings__group ${settings.mode === "quote" ? "settings__group--disabled" : ""}`}
+			>
 				<button
 					className={`settings__btn ${settings.count === 10 ? "settings__btn--active" : ""}`}
 					onClick={() => handleSettingsChange({ ...settings, count: 10 })}

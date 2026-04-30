@@ -10,6 +10,12 @@
 		background: var(--color-mode-bg);
 		border-radius: 6px;
 		padding: 6px 15px;
+		transition: opacity 0.2s ease-in-out;
+
+		&--disabled {
+			opacity: 0.5;
+			pointer-events: none;
+		}
 	}
 
 	&__btn {
@@ -20,7 +26,7 @@
 		font-size: 14px;
 		padding: 4px 8px;
 
-		transition: color 0.15s;
+		transition: color 0.2s ease-in-out;
 
 		&:hover {
 			color: var(--color-letter-correct);
