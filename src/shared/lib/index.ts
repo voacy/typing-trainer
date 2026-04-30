@@ -23,3 +23,7 @@ export const getActiveClass = (
 	}
 	return "";
 };
+
+export const generateWords = (wordList: string[], count: number): string[] => {
+	return Array.from({ length: count }, () => wordList[Math.floor(Math.random() * wordList.length)]);
+};

@@ -1,9 +1,9 @@
-import words from "../../shared/lib/words";
 import { getActiveClass, getLetterClass } from "../../shared/lib";
 import type { LetterStatus } from "../../shared/types";
 import { LINE_HEIGHT } from "../../shared/constants";
 
 type Props = {
+	words: string[];
 	currentWordIndex: number;
 	currentLetterIndex: number;
 	letterStatuses: LetterStatus[][];
@@ -15,6 +15,7 @@ type Props = {
 
 const TypingText = (props: Props) => {
 	const {
+		words,
 		currentWordIndex,
 		currentLetterIndex,
 		letterStatuses,

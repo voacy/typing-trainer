@@ -14,7 +14,6 @@ const useTextScroll = (currentWordIndex: number, wrapperRef: RefObject<HTMLDivEl
 			} else if (curOffset < prev - LINE_HEIGHT) {
 				return prev - LINE_HEIGHT;
 			}
-			// внутри видимой области — не трогаем
 			return prev;
 		});
 	}, [currentWordIndex]);

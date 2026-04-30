@@ -1,9 +1,13 @@
 import { useState, useEffect } from "react";
-import words from "../../shared/lib/words";
 import { createLetterStatuses } from "../../shared/lib";
 import type { LetterStatus } from "../../shared/types";
 
-const useTyping = (timer: number, timerStatus: boolean, startTimer: () => void) => {
+const useTyping = (
+	words: string[],
+	timer: number,
+	timerStatus: boolean,
+	startTimer: () => void,
+) => {
 	const [letterStatuses, setLetterStatuses] = useState<LetterStatus[][]>(
 		createLetterStatuses(words),
 	);
