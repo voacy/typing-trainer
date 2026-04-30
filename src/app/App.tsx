@@ -11,12 +11,13 @@ import Settings from "../widgets/Settings/Settings";
 import CapsLockWarning from "../features/capsLock/CapsLockWarning";
 import Header from "../widgets/Header/Header";
 import { ArrowsCounterClockwiseIcon } from "@phosphor-icons/react";
+import { generateWordsWithPunctuation } from "../shared/lib";
+import quotes from "../shared/lib/quotes";
 
 function App() {
 	const [settings, setSettings] = useState({
 		mode: "time",
 		isPunctuation: false,
-		isNumbers: false,
 		count: 30,
 		language: "english",
 	});
@@ -28,10 +29,20 @@ function App() {
 	const offset = useTextScroll(currentWordIndex, wrapperRef);
 	const cursorPos = useCursor(currentLetterIndex, currentWordIndex, offset, wrapperRef);
 
-	const handleReset = (count = settings.count) => {
-		const newWords = generateWords(wordsList, count);
+	const handleReset = (newSettings = settings) => {
+		let newWords: string[];
+
+		if (newSettings.mode === "quote") {
+			const quote = quotes[Math.floor(Math.random() * quotes.length)];
+			newWords = quote.split(" ");
+		} else if (newSettings.isPunctuation) {
+			newWords = generateWordsWithPunctuation(wordsList, newSettings.count);
+		} else {
+			newWords = generateWords(wordsList, newSettings.count);
+		}
+
 		setWords(newWords);
-		resetTimer(count);
+		resetTimer(newSettings.count);
 		resetTyping(newWords);
 	};
 
@@ -41,7 +52,13 @@ function App() {
 			<main className="main">
 				<div className="container">
 					<Settings settings={settings} setSettings={setSettings} onReset={handleReset} />
-					<span className="timer">{timer}</span>
+					{settings.mode === "time" ? (
+						<span className="timer">{timer}</span>
+					) : (
+						<span className="timer">
+							{currentWordIndex}/{words.length}
+						</span>
+					)}
 					<CapsLockWarning />
 					<div className="text__wrapper" ref={wrapperRef}>
 						<TypingText

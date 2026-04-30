@@ -6,7 +6,7 @@ const Header = () => {
 		<header className="header">
 			<div className="container">
 				<a href="/" className="logo">
-					<ButterflyIcon size={32} weight="regular" />
+					<ButterflyIcon size={32} weight="fill" />
 					speedkeys
 				</a>
 			</div>

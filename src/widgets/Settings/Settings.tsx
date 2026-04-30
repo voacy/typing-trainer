@@ -4,14 +4,12 @@ import {
 	TextAaIcon,
 	QuotesIcon,
 	GlobeHemisphereWestIcon,
-	HashStraightIcon,
 } from "@phosphor-icons/react";
 import "./Settings.scss";
 
 type Settings = {
 	mode: string;
 	isPunctuation: boolean;
-	isNumbers: boolean;
 	count: number;
 	language: string;
 };
@@ -19,7 +17,7 @@ type Settings = {
 type Props = {
 	settings: Settings;
 	setSettings: (settings: Settings) => void;
-	onReset: (count?: number) => void;
+	onReset: (newSettings?: Settings) => void;
 };
 
 const Settings = (props: Props) => {
@@ -27,7 +25,7 @@ const Settings = (props: Props) => {
 
 	const handleSettingsChange = (newSettings: Settings) => {
 		setSettings(newSettings);
-		onReset(newSettings.count);
+		onReset(newSettings);
 	};
 
 	return (
@@ -42,13 +40,6 @@ const Settings = (props: Props) => {
 					<AtIcon size={16} />
 					punctuation
 				</button>
-				<button
-					className={`settings__btn ${settings.isNumbers ? "settings__btn--active" : ""}`}
-					onClick={() => handleSettingsChange({ ...settings, isNumbers: !settings.isNumbers })}
-				>
-					<HashStraightIcon size={16} />
-					numbers
-				</button>
 			</div>
 
 			<div className="settings__group">
@@ -56,7 +47,7 @@ const Settings = (props: Props) => {
 					className={`settings__btn ${settings.mode === "time" ? "settings__btn--active" : ""}`}
 					onClick={() => handleSettingsChange({ ...settings, mode: "time" })}
 				>
-					<ClockIcon size={16} />
+					<ClockIcon size={16} weight="fill" />
 					time
 				</button>
 				<button
@@ -70,7 +61,7 @@ const Settings = (props: Props) => {
 					className={`settings__btn ${settings.mode === "quote" ? "settings__btn--active" : ""}`}
 					onClick={() => handleSettingsChange({ ...settings, mode: "quote" })}
 				>
-					<QuotesIcon size={16} />
+					<QuotesIcon size={16} weight="fill" />
 					quote
 				</button>
 			</div>
@@ -101,7 +92,7 @@ const Settings = (props: Props) => {
 					className={`settings__btn ${settings.language === "english" ? "settings__btn--active" : ""}`}
 					onClick={() => handleSettingsChange({ ...settings, language: "english" })}
 				>
-					<GlobeHemisphereWestIcon size={16} />
+					<GlobeHemisphereWestIcon size={16} weight="fill" />
 				</button>
 			</div>
 		</div>
