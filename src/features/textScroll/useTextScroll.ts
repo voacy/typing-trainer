@@ -1,19 +1,25 @@
 import { useEffect, useState, type RefObject } from "react";
+import { LINE_HEIGHT } from "../../shared/constants";
 
 const useTextScroll = (currentWordIndex: number, wrapperRef: RefObject<HTMLDivElement | null>) => {
-	const [currentLine, setCurrentLine] = useState(-1);
+	const [offset, setOffset] = useState(0);
+
 	useEffect(() => {
 		const activeLetter = wrapperRef.current?.querySelector(".active");
-		if (currentWordIndex === 0) return;
-		const prevOffset =
-			wrapperRef.current?.querySelectorAll("li")[currentWordIndex - 1].offsetTop ?? 0;
 		const curOffset = activeLetter?.parentElement?.offsetTop ?? 0;
 
-		if (curOffset > prevOffset) {
-			setCurrentLine((prev) => prev + 1);
-		}
+		setOffset((prev) => {
+			if (curOffset > prev) {
+				return curOffset;
+			} else if (curOffset < prev - LINE_HEIGHT) {
+				return prev - LINE_HEIGHT;
+			}
+			// внутри видимой области — не трогаем
+			return prev;
+		});
 	}, [currentWordIndex]);
-	return currentLine;
+
+	return offset;
 };
 
 export default useTextScroll;

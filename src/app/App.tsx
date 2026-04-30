@@ -17,8 +17,8 @@ function App() {
 		startTimer,
 	);
 	const wrapperRef = useRef<HTMLDivElement>(null);
-	const currentLine = useTextScroll(currentWordIndex, wrapperRef);
-	const cursorPos = useCursor(currentLetterIndex, currentWordIndex, currentLine, wrapperRef);
+	const offset = useTextScroll(currentWordIndex, wrapperRef);
+	const cursorPos = useCursor(currentLetterIndex, currentWordIndex, offset, wrapperRef);
 
 	return (
 		<>
@@ -38,16 +38,14 @@ function App() {
 						</span>
 					)}
 					<div className="text__wrapper" ref={wrapperRef}>
-						<span
-							className={`cursor ${!timerStatus ? "cursor--blinking" : ""}`}
-							style={{ top: `${cursorPos.top}px`, left: `${cursorPos.left}px` }}
-						></span>
 						<TypingText
-							currentLine={currentLine}
+							offset={offset}
 							currentWordIndex={currentWordIndex}
 							currentLetterIndex={currentLetterIndex}
 							letterStatuses={letterStatuses}
 							extraChars={extraChars}
+							cursorPos={cursorPos}
+							timerStatus={timerStatus}
 						/>
 					</div>
 				</div>

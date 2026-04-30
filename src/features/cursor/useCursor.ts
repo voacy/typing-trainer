@@ -3,22 +3,23 @@ import { useEffect, useState, type RefObject } from "react";
 const useCursor = (
 	currentLetterIndex: number,
 	currentWordIndex: number,
-	currentLine: number,
+	offset: number,
 	wrapperRef: RefObject<HTMLDivElement | null>,
 ) => {
 	const [cursorPos, setCursorPos] = useState({ top: 0, left: 0 });
 	useEffect(() => {
 		const activeLetter = wrapperRef.current?.querySelector(".active");
+		const textEl = wrapperRef.current?.querySelector(".text");
 
-		if (activeLetter && wrapperRef.current) {
+		if (activeLetter && textEl && wrapperRef.current) {
 			const elPos = activeLetter.getBoundingClientRect();
-			const wrapperPos = wrapperRef.current.getBoundingClientRect();
+			const textPos = textEl.getBoundingClientRect();
 			setCursorPos({
-				top: elPos.top - wrapperPos.top,
-				left: elPos.left - wrapperPos.left,
+				top: elPos.top - textPos.top,
+				left: elPos.left - textPos.left,
 			});
 		}
-	}, [currentLetterIndex, currentWordIndex, currentLine]);
+	}, [currentLetterIndex, currentWordIndex, offset]);
 	return cursorPos;
 };
 

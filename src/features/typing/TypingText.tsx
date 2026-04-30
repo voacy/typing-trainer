@@ -1,20 +1,34 @@
 import words from "../../shared/lib/words";
-import { LINE_HEIGHT } from "../../shared/constants";
 import { getActiveClass, getLetterClass } from "../../shared/lib";
 import type { LetterStatus } from "../../shared/types";
+import { LINE_HEIGHT } from "../../shared/constants";
 
 type Props = {
-	currentLine: number;
 	currentWordIndex: number;
 	currentLetterIndex: number;
 	letterStatuses: LetterStatus[][];
 	extraChars: string[][];
+	offset: number;
+	cursorPos: { top: number; left: number };
+	timerStatus: boolean;
 };
 
 const TypingText = (props: Props) => {
-	const { currentWordIndex, currentLetterIndex, letterStatuses, currentLine, extraChars } = props;
+	const {
+		currentWordIndex,
+		currentLetterIndex,
+		letterStatuses,
+		extraChars,
+		offset,
+		cursorPos,
+		timerStatus,
+	} = props;
 	return (
-		<ul className="text" style={{ transform: `translateY(-${currentLine * LINE_HEIGHT}px)` }}>
+		<ul className="text" style={{ transform: `translateY(-${offset - LINE_HEIGHT}px)` }}>
+			<span
+				className={`cursor ${!timerStatus ? "cursor--blinking" : ""}`}
+				style={{ top: `${cursorPos.top}px`, left: `${cursorPos.left}px` }}
+			></span>
 			{words.map((word, wordIndex) => {
 				const isWordIncorrect =
 					wordIndex < currentWordIndex &&
