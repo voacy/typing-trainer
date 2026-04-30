@@ -29,9 +29,10 @@ function App() {
 	const cursorPos = useCursor(currentLetterIndex, currentWordIndex, offset, wrapperRef);
 
 	const handleReset = (count = settings.count) => {
-		setWords(generateWords(wordsList, count));
+		const newWords = generateWords(wordsList, count);
+		setWords(newWords);
 		resetTimer(count);
-		resetTyping();
+		resetTyping(newWords);
 	};
 
 	return (
@@ -54,7 +55,13 @@ function App() {
 							timerStatus={timerStatus}
 						/>
 					</div>
-					<button className="reset__btn" onClick={() => handleReset()}>
+					<button
+						className="reset__btn"
+						onClick={(e) => {
+							handleReset();
+							e.currentTarget.blur();
+						}}
+					>
 						<ArrowsCounterClockwiseIcon size={32} />
 					</button>
 				</div>

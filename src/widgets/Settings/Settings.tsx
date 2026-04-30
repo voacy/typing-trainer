@@ -31,7 +31,7 @@ const Settings = (props: Props) => {
 	};
 
 	return (
-		<div className="settings">
+		<div className="settings" onMouseDown={(e) => e.preventDefault()}>
 			<div className="settings__group">
 				<button
 					className={`settings__btn ${settings.isPunctuation ? "settings__btn--active" : ""}`}

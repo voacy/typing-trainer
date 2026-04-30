@@ -136,9 +136,10 @@ const useTyping = (
 		};
 	}, [currentLetter, letterStatuses, extraChars, timer, timerStatus, startTimer]);
 
-	const resetTyping = () => {
-		setLetterStatuses(createLetterStatuses(words));
-		setExtraChars(words.map(() => []));
+	const resetTyping = (newWords?: string[]) => {
+		const w = newWords ?? words;
+		setLetterStatuses(createLetterStatuses(w));
+		setExtraChars(w.map(() => []));
 		setCurrentWordIndex(0);
 		setCurrentLetterIndex(0);
 	};
