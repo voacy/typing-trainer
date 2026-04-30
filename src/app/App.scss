@@ -1,14 +1,3 @@
-.header {
-	padding: 32px 0;
-}
-
-.logo {
-	font-size: 24px;
-	font-weight: 600;
-	letter-spacing: -0.02em;
-	color: #f4f4f5;
-}
-
 .main {
 	min-height: calc(100vh - 88px);
 	display: flex;
@@ -32,7 +21,7 @@
 .stats__item {
 	font-size: 15px;
 	font-weight: 500;
-	color: #71717a;
+	color: var(--color-text);
 	letter-spacing: 0.02em;
 }
 
@@ -47,19 +36,19 @@
 .letter {
 	position: relative;
 	font-size: 32px;
-	color: #525261;
+	color: var(--color-letter-idle);
 }
 
 .correct {
-	color: #e6e5e5;
+	color: var(--color-letter-correct);
 }
 
 .incorrect {
-	color: #ad3340;
+	color: var(--color-letter-incorrect);
 }
 
 .extra {
-	color: #500f15;
+	color: var(--color-letter-extra);
 }
 
 .text__wrapper {
@@ -70,8 +59,7 @@
 
 .timer {
 	display: block;
-	color: #32ce60;
-	text-align: center;
+	color: var(--color-accent);
 	font-size: 32px;
 	margin: 200px 0 50px 0;
 }
@@ -87,7 +75,7 @@
 	left: 0;
 	width: 100%;
 	height: 1px;
-	background-color: #c02433;
+	background-color: var(--color-letter-incorrect);
 }
 
 .capslock-warning {
@@ -101,15 +89,15 @@
 	gap: 15px;
 	padding: 20px;
 	border-radius: 10px;
-	background-color: #32ce60;
-	color: #09090b;
+	background-color: var(--color-accent);
+	color: var(--color-bg);
 }
 
 .cursor {
 	position: absolute;
 	height: 39px;
 	width: 2px;
-	background: #32ce60;
+	background: var(--color-accent);
 	transition:
 		top 0.07s ease-in-out,
 		left 0.07s ease-in-out;

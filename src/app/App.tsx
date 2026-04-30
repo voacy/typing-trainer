@@ -1,19 +1,19 @@
 import "./App.scss";
 import useTimer from "../features/timer/useTimer";
 import useTyping from "../features/typing/useTyping";
-import useCapsLock from "../features/capsLock/useCapsLock";
-import { LockKeyhole } from "lucide-react";
 import { useRef, useState } from "react";
 import useCursor from "../features/cursor/useCursor";
 import useTextScroll from "../features/textScroll/useTextScroll";
 import TypingText from "../features/typing/TypingText";
 import { generateWords } from "../shared/lib";
 import wordsList from "../shared/lib/wordsList";
+import Settings from "../widgets/Settings/Settings";
+import CapsLockWarning from "../features/capsLock/CapsLockWarning";
+import Header from "../widgets/Header/Header";
 
 function App() {
-	const [words] = useState(() => generateWords(wordsList, 100));
+	const [words] = useState(() => generateWords(wordsList, 10));
 	const { timer, timerStatus, startTimer } = useTimer();
-	const isCapsLock = useCapsLock();
 	const { currentWordIndex, currentLetterIndex, letterStatuses, extraChars } = useTyping(
 		words,
 		timer,
@@ -26,21 +26,12 @@ function App() {
 
 	return (
 		<>
-			<header className="header">
-				<div className="container">
-					<a href="/">speedkeys</a>
-				</div>
-			</header>
-
+			<Header />
 			<main className="main">
 				<div className="container">
+					<Settings />
 					<span className="timer">{timer}</span>
-					{isCapsLock && (
-						<span className="capslock-warning">
-							<LockKeyhole size={25} strokeWidth={2} />
-							Caps Lock
-						</span>
-					)}
+					<CapsLockWarning />
 					<div className="text__wrapper" ref={wrapperRef}>
 						<TypingText
 							words={words}

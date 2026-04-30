@@ -1,0 +1,33 @@
+.settings {
+	display: flex;
+	align-items: center;
+	gap: 25px;
+
+	&__group {
+		display: flex;
+		align-items: center;
+		gap: 20px;
+		background: var(--color-mode-bg);
+		border-radius: 6px;
+		padding: 6px 15px;
+	}
+
+	&__btn {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		color: var(--color-mode-text);
+		font-size: 14px;
+		padding: 4px 8px;
+
+		transition: color 0.15s;
+
+		&:hover {
+			color: var(--color-letter-correct);
+		}
+
+		&--active {
+			color: var(--color-accent);
+		}
+	}
+}
