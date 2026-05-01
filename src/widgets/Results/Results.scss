@@ -1,0 +1,32 @@
+.results {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+
+	&__title {
+		font-size: 24px;
+		font-weight: 600;
+	}
+
+	&__stats {
+		display: flex;
+		gap: 32px;
+	}
+
+	&__stat {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+	}
+
+	&__label {
+		font-size: 12px;
+		opacity: 0.5;
+		text-transform: uppercase;
+	}
+
+	&__value {
+		font-size: 36px;
+		font-weight: 700;
+	}
+}

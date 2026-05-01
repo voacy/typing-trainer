@@ -14,7 +14,7 @@ const useTyping = (
 	const [extraChars, setExtraChars] = useState<string[][]>(words.map(() => []));
 	const [currentWordIndex, setCurrentWordIndex] = useState(0);
 	const [currentLetterIndex, setCurrentLetterIndex] = useState(0);
-	const currentWord = words[currentWordIndex];
+	const currentWord = words[currentWordIndex] ?? "";
 	const currentLetter = currentWord[currentLetterIndex];
 
 	const hasErrors = () => {
