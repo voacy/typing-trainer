@@ -7,6 +7,7 @@ import CapsLockWarning from "../../features/capsLock/CapsLockWarning";
 import { ArrowsCounterClockwiseIcon } from "@phosphor-icons/react";
 import Results from "../../widgets/Results/Results";
 import useSession from "./useSession";
+import useGameSounds from "../../features/sounds/useSounds";
 
 const TypingPage = () => {
 	const {
@@ -30,6 +31,7 @@ const TypingPage = () => {
 	const wrapperRef = useRef<HTMLDivElement>(null);
 	const offset = useTextScroll(currentWordIndex, wrapperRef);
 	const cursorPos = useCursor(currentLetterIndex, currentWordIndex, offset, wrapperRef);
+	const { playClick } = useGameSounds();
 
 	return (
 		<main className="main">
@@ -71,6 +73,7 @@ const TypingPage = () => {
 				<button
 					className="reset__btn"
 					onClick={(e) => {
+						playClick();
 						handleReset();
 						e.currentTarget.blur();
 					}}

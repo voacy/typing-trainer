@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lexend+Deca:wght@400;500;600&display=swap");
 
 :root {
 	// cherry blossom
@@ -12,11 +13,59 @@
 	--color-letter-extra: #d32738;
 	--color-mode-bg: #2d2f31;
 	--color-mode-text: #787d82;
-	font-family: "Inter", sans-serif;
+	font-family: "Lexend Deca", sans-serif;
 	font-synthesis: none;
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+}
+
+[data-theme="midnight-ocean"] {
+	--color-bg: #1a1e2e;
+	--color-text: #6b7a99;
+	--color-accent: #4fc3f7;
+	--color-letter-idle: #6b7a99;
+	--color-letter-correct: #c5cfe0;
+	--color-letter-incorrect: #ef5350;
+	--color-letter-extra: #c62828;
+	--color-mode-bg: #151929;
+	--color-mode-text: #6b7a99;
+}
+
+[data-theme="forest-ink"] {
+	--color-bg: #1a2420;
+	--color-text: #6b8f71;
+	--color-accent: #80cbc4;
+	--color-letter-idle: #6b8f71;
+	--color-letter-correct: #c5d5c0;
+	--color-letter-incorrect: #ef5350;
+	--color-letter-extra: #c62828;
+	--color-mode-bg: #151e1a;
+	--color-mode-text: #6b8f71;
+}
+
+[data-theme="ember"] {
+	--color-bg: #1e1c1a;
+	--color-text: #8a7a6a;
+	--color-accent: #ff7043;
+	--color-letter-idle: #8a7a6a;
+	--color-letter-correct: #d5c9bc;
+	--color-letter-incorrect: #ef5350;
+	--color-letter-extra: #c62828;
+	--color-mode-bg: #181614;
+	--color-mode-text: #8a7a6a;
+}
+
+[data-theme="gold-rush"] {
+	--color-bg: #1c1a14;
+	--color-text: #8a7e5a;
+	--color-accent: #ffd54f;
+	--color-letter-idle: #8a7e5a;
+	--color-letter-correct: #d5cdb0;
+	--color-letter-incorrect: #ef5350;
+	--color-letter-extra: #c62828;
+	--color-mode-bg: #161410;
+	--color-mode-text: #8a7e5a;
 }
 
 * {
@@ -45,4 +94,5 @@ button {
 	background: none;
 	border: none;
 	cursor: pointer;
+	outline: none;
 }

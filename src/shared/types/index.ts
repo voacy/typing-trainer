@@ -13,3 +13,5 @@ export type CursorPosition = {
 	top: number;
 	left: number;
 };
+
+export type Theme = "cherry-blossom" | "midnight-ocean" | "forest-ink" | "ember" | "gold-rush";

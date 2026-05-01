@@ -8,6 +8,7 @@ import {
 import "./Settings.scss";
 
 import type { TypingSettings } from "../../shared/types";
+import useGameSounds from "../../features/sounds/useSounds";
 
 type Props = {
 	settings: TypingSettings;
@@ -16,9 +17,11 @@ type Props = {
 };
 
 const Settings = (props: Props) => {
+	const { playClick } = useGameSounds();
 	const { settings, setSettings, onReset } = props;
 
 	const handleSettingsChange = (newSettings: TypingSettings) => {
+		playClick();
 		setSettings(newSettings);
 		onReset(newSettings);
 	};
@@ -31,7 +34,10 @@ const Settings = (props: Props) => {
 				<button
 					className={`settings__btn ${settings.isPunctuation ? "settings__btn--active" : ""}`}
 					onClick={() =>
-						handleSettingsChange({ ...settings, isPunctuation: !settings.isPunctuation })
+						handleSettingsChange({
+							...settings,
+							isPunctuation: !settings.isPunctuation,
+						})
 					}
 				>
 					<AtIcon size={16} />
@@ -47,6 +53,7 @@ const Settings = (props: Props) => {
 					<ClockIcon size={16} weight="fill" />
 					time
 				</button>
+
 				<button
 					className={`settings__btn ${settings.mode === "words" ? "settings__btn--active" : ""}`}
 					onClick={() => handleSettingsChange({ ...settings, mode: "words" })}
@@ -54,6 +61,7 @@ const Settings = (props: Props) => {
 					<TextAaIcon size={16} />
 					words
 				</button>
+
 				<button
 					className={`settings__btn ${settings.mode === "quote" ? "settings__btn--active" : ""}`}
 					onClick={() => handleSettingsChange({ ...settings, mode: "quote" })}
@@ -72,12 +80,14 @@ const Settings = (props: Props) => {
 				>
 					10
 				</button>
+
 				<button
 					className={`settings__btn ${settings.count === 30 ? "settings__btn--active" : ""}`}
 					onClick={() => handleSettingsChange({ ...settings, count: 30 })}
 				>
 					30
 				</button>
+
 				<button
 					className={`settings__btn ${settings.count === 60 ? "settings__btn--active" : ""}`}
 					onClick={() => handleSettingsChange({ ...settings, count: 60 })}
@@ -89,7 +99,12 @@ const Settings = (props: Props) => {
 			<div className="settings__group">
 				<button
 					className={`settings__btn ${settings.language === "english" ? "settings__btn--active" : ""}`}
-					onClick={() => handleSettingsChange({ ...settings, language: "english" })}
+					onClick={() =>
+						handleSettingsChange({
+							...settings,
+							language: "english",
+						})
+					}
 				>
 					<GlobeHemisphereWestIcon size={16} weight="fill" />
 				</button>

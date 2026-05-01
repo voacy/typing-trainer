@@ -9,8 +9,12 @@ import {
 	ResponsiveContainer,
 } from "recharts";
 import type { LetterStatus } from "../../shared/types";
-import confetti from "canvas-confetti";
+
+import useGameSounds from "../../features/sounds/useSounds";
+
 import { useEffect } from "react";
+
+import confetti from "canvas-confetti";
 
 type Props = {
 	wpm: number;
@@ -33,6 +37,12 @@ const Results = ({ wpm, accuracy, chartData, elapsed, letterStatuses, extraChars
 		wpm: entry.wpm,
 		accuracy: entry.accuracy,
 	}));
+
+	const { playResult } = useGameSounds();
+
+	useEffect(() => {
+		playResult();
+	}, [playResult]);
 
 	const colors = ["#d65ccc", "#d1d0c5", "#ca4754"];
 
