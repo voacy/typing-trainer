@@ -1,5 +1,5 @@
 import { getActiveClass, getLetterClass } from "../../shared/lib";
-import type { LetterStatus } from "../../shared/types";
+import type { CursorPosition, LetterStatus } from "../../shared/types";
 import { LINE_HEIGHT } from "../../shared/constants";
 
 type Props = {
@@ -9,7 +9,7 @@ type Props = {
 	letterStatuses: LetterStatus[][];
 	extraChars: string[][];
 	offset: number;
-	cursorPos: { top: number; left: number };
+	cursorPos: CursorPosition;
 	timerStatus: boolean;
 };
 

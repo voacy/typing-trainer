@@ -1,12 +1,14 @@
 import { useEffect, useState, type RefObject } from "react";
+import type { CursorPosition } from "../../shared/types";
 
 const useCursor = (
 	currentLetterIndex: number,
 	currentWordIndex: number,
 	offset: number,
 	wrapperRef: RefObject<HTMLDivElement | null>,
-) => {
-	const [cursorPos, setCursorPos] = useState({ top: 0, left: 0 });
+): CursorPosition => {
+	const [cursorPos, setCursorPos] = useState<CursorPosition>({ top: 0, left: 0 });
+
 	useEffect(() => {
 		const activeLetter = wrapperRef.current?.querySelector(".active");
 		const textEl = wrapperRef.current?.querySelector(".text");
@@ -20,6 +22,7 @@ const useCursor = (
 			});
 		}
 	}, [currentLetterIndex, currentWordIndex, offset]);
+
 	return cursorPos;
 };
 

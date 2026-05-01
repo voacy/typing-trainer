@@ -8,24 +8,25 @@ const useResults = (
 	isFinished: boolean,
 	elapsed: number,
 ) => {
-	const [finalWpm, setFinalWpm] = useState(0);
+	const [wpm, setWpm] = useState(0);
 	const flatStatuses = letterStatuses.flat();
 	const correct = flatStatuses.filter((status) => status === "correct").length;
 	const incorrect = flatStatuses.filter((status) => status === "incorrect").length;
 	const extra = extraChars.flat().length;
 
-	const wpm =
+	const currentWpm =
 		settings.mode === "time" ? correct / 5 / (settings.count / 60) : correct / 5 / (elapsed / 60);
 
-	const acc = (correct / (correct + incorrect + extra)) * 100;
+	const total = correct + incorrect + extra;
+	const accuracy = total === 0 ? 0 : (correct / total) * 100;
 
 	useEffect(() => {
 		if (isFinished) {
-			setFinalWpm(wpm);
+			setWpm(currentWpm);
 		}
 	}, [isFinished]);
 
-	return { finalWpm, acc };
+	return { wpm, accuracy };
 };
 
 export default useResults;
