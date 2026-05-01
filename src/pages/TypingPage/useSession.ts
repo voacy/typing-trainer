@@ -16,6 +16,10 @@ const getNewWords = (newSettings: TypingSettings): string[] => {
 };
 
 const useSession = () => {
+	const [chartData, setChartData] = useState<{ wpm: number; accuracy: number; errors: number }[]>(
+		[],
+	);
+
 	const [settings, setSettings] = useState<TypingSettings>({
 		mode: "words",
 		isPunctuation: false,
@@ -38,19 +42,36 @@ const useSession = () => {
 
 	const { wpm, accuracy } = useResults(letterStatuses, extraChars, settings, isFinished, elapsed);
 
-	const handleReset = (newSettings = settings) => {
-		const newWords = getNewWords(newSettings);
-		setWords(newWords);
-		resetTimer(newSettings.count);
-		resetTyping(newWords);
-		setIsFinished(false);
-	};
+	useEffect(() => {
+		if (timerStatus) {
+			const flatStatuses = letterStatuses.flat();
+			const correct = flatStatuses.filter((status) => status === "correct").length;
+			const incorrect = flatStatuses.filter((s) => s === "incorrect").length;
+			const extra = extraChars.flat().length;
+			const total = correct + incorrect + extra;
+			const currentWpm = elapsed > 0 ? correct / 5 / (elapsed / 60) : 0;
+			const currentAccuracy = total === 0 ? 0 : Math.round((correct / total) * 100);
+			setChartData((prev) => [
+				...prev,
+				{ wpm: Math.round(currentWpm), accuracy: currentAccuracy, errors: incorrect + extra },
+			]);
+		}
+	}, [elapsed, isFinished, timer]);
 
 	useEffect(() => {
 		if ((settings.mode === "time" && timer === 0) || currentWordIndex >= words.length) {
 			setIsFinished(true);
 		}
 	}, [timer, currentWordIndex]);
+
+	const handleReset = (newSettings = settings) => {
+		const newWords = getNewWords(newSettings);
+		setWords(newWords);
+		resetTimer(newSettings.count);
+		resetTyping(newWords);
+		setIsFinished(false);
+		setChartData([]);
+	};
 
 	return {
 		settings,
@@ -66,6 +87,8 @@ const useSession = () => {
 		wpm,
 		accuracy,
 		handleReset,
+		chartData,
+		elapsed,
 	};
 };
 

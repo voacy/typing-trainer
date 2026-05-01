@@ -6,7 +6,6 @@
 .container {
 	width: 100%;
 	max-width: 1360px;
-	padding: 0 20px;
 	margin: 0 auto;
 }
 
@@ -15,7 +14,6 @@
 	justify-content: center;
 	align-items: center;
 	gap: 40px;
-	margin-bottom: 56px;
 }
 
 .stats__item {
@@ -54,7 +52,6 @@
 .text__wrapper {
 	position: relative;
 	height: 180px;
-	margin-bottom: 30px;
 	overflow: hidden;
 }
 
@@ -62,7 +59,7 @@
 	display: block;
 	color: var(--color-accent);
 	font-size: 32px;
-	margin: 200px 0 50px 0;
+	margin-bottom: 30px;
 }
 
 .incorrect-word {
@@ -120,6 +117,6 @@
 
 .reset__btn {
 	display: block;
-	margin: 0 auto;
+	margin: 30px auto;
 	color: var(--color-text);
 }

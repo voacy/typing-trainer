@@ -23,6 +23,8 @@ const TypingPage = () => {
 		wpm,
 		accuracy,
 		handleReset,
+		chartData,
+		elapsed,
 	} = useSession();
 
 	const wrapperRef = useRef<HTMLDivElement>(null);
@@ -56,7 +58,16 @@ const TypingPage = () => {
 						/>
 					</div>
 				)}
-				{isFinished && <Results wpm={wpm} accuracy={accuracy} />}
+				{isFinished && (
+					<Results
+						wpm={wpm}
+						accuracy={accuracy}
+						chartData={chartData}
+						elapsed={elapsed}
+						letterStatuses={letterStatuses}
+						extraChars={extraChars}
+					/>
+				)}
 				<button
 					className="reset__btn"
 					onClick={(e) => {
