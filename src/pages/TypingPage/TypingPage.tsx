@@ -26,6 +26,9 @@ const TypingPage = () => {
 		handleReset,
 		chartData,
 		elapsed,
+		correct,
+		incorrect,
+		extra,
 	} = useSession();
 
 	const wrapperRef = useRef<HTMLDivElement>(null);
@@ -66,8 +69,9 @@ const TypingPage = () => {
 						accuracy={accuracy}
 						chartData={chartData}
 						elapsed={elapsed}
-						letterStatuses={letterStatuses}
-						extraChars={extraChars}
+						correct={correct}
+						incorrect={incorrect}
+						extra={extra}
 					/>
 				)}
 				<button

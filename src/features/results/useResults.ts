@@ -26,7 +26,7 @@ const useResults = (
 		}
 	}, [isFinished]);
 
-	return { wpm, accuracy };
+	return { wpm, accuracy, correct, incorrect, extra };
 };
 
 export default useResults;

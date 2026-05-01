@@ -40,7 +40,13 @@ const useSession = () => {
 	const { currentWordIndex, currentLetterIndex, letterStatuses, extraChars, resetTyping } =
 		useTyping(words, timer, timerStatus, startTimer);
 
-	const { wpm, accuracy } = useResults(letterStatuses, extraChars, settings, isFinished, elapsed);
+	const { wpm, accuracy, correct, incorrect, extra } = useResults(
+		letterStatuses,
+		extraChars,
+		settings,
+		isFinished,
+		elapsed,
+	);
 
 	useEffect(() => {
 		if (timerStatus) {
@@ -89,6 +95,9 @@ const useSession = () => {
 		handleReset,
 		chartData,
 		elapsed,
+		correct,
+		incorrect,
+		extra,
 	};
 };
 

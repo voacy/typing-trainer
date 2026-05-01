@@ -2,7 +2,7 @@ import "./Header.scss";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import useTheme from "../../features/theme/useTheme";
 import { themes } from "../../features/theme/themes";
-import { PaletteIcon, RobotIcon } from "@phosphor-icons/react";
+import { PaletteIcon, RobotIcon, GithubLogoIcon } from "@phosphor-icons/react";
 import useGameSounds from "../../features/sounds/useSounds";
 
 const Header = () => {
@@ -17,33 +17,42 @@ const Header = () => {
 					<RobotIcon size={40} fill={current.accent} />
 					speedkeys
 				</a>
-				<DropdownMenu.Root>
-					<DropdownMenu.Trigger className="theme-trigger" onPointerDown={() => playClick()}>
-						<PaletteIcon size={16} weight="fill" fill={current.accent} />
-						{current.label}
-					</DropdownMenu.Trigger>
-					<DropdownMenu.Portal>
-						<DropdownMenu.Content className="theme-dropdown" align="end">
-							{themes.map((t) => (
-								<DropdownMenu.Item
-									key={t.value}
-									className={`theme-item ${theme === t.value ? "theme-item--active" : ""}`}
-									onClick={() => {
-										playClick();
-										changeTheme(t.value);
-									}}
-								>
-									<span>{t.label}</span>
-									<div className="theme-dots" style={{ backgroundColor: t.bg }}>
-										<span className="theme-dot" style={{ backgroundColor: t.text }} />
-										<span className="theme-dot" style={{ backgroundColor: t.accent }} />
-										<span className="theme-dot" style={{ backgroundColor: t.textAdd }} />
-									</div>
-								</DropdownMenu.Item>
-							))}
-						</DropdownMenu.Content>
-					</DropdownMenu.Portal>
-				</DropdownMenu.Root>
+				<div className="header__right">
+					<a
+						className="header__link"
+						href="https://github.com/voacy/speed-keys"
+						onClick={() => playClick()}
+					>
+						<GithubLogoIcon size={16} weight="fill" fill={current.accent} />
+					</a>
+					<DropdownMenu.Root>
+						<DropdownMenu.Trigger className="theme-trigger" onPointerDown={() => playClick()}>
+							<PaletteIcon size={16} weight="fill" fill={current.accent} />
+							{current.label}
+						</DropdownMenu.Trigger>
+						<DropdownMenu.Portal>
+							<DropdownMenu.Content className="theme-dropdown" align="end">
+								{themes.map((t) => (
+									<DropdownMenu.Item
+										key={t.value}
+										className={`theme-item ${theme === t.value ? "theme-item--active" : ""}`}
+										onClick={() => {
+											playClick();
+											changeTheme(t.value);
+										}}
+									>
+										<span>{t.label}</span>
+										<div className="theme-dots" style={{ backgroundColor: t.bg }}>
+											<span className="theme-dot" style={{ backgroundColor: t.text }} />
+											<span className="theme-dot" style={{ backgroundColor: t.accent }} />
+											<span className="theme-dot" style={{ backgroundColor: t.textAdd }} />
+										</div>
+									</DropdownMenu.Item>
+								))}
+							</DropdownMenu.Content>
+						</DropdownMenu.Portal>
+					</DropdownMenu.Root>
+				</div>
 			</div>
 		</header>
 	);

@@ -8,7 +8,6 @@ import {
 	Tooltip,
 	ResponsiveContainer,
 } from "recharts";
-import type { LetterStatus } from "../../shared/types";
 
 import useGameSounds from "../../features/sounds/useSounds";
 
@@ -21,16 +20,12 @@ type Props = {
 	accuracy: number;
 	chartData: { wpm: number; accuracy: number; errors: number }[];
 	elapsed: number;
-	letterStatuses: LetterStatus[][];
-	extraChars: string[][];
+	correct: number;
+	incorrect: number;
+	extra: number;
 };
 
-const Results = ({ wpm, accuracy, chartData, elapsed, letterStatuses, extraChars }: Props) => {
-	const flatStatuses = letterStatuses.flat();
-	const correct = flatStatuses.filter((s) => s === "correct").length;
-	const incorrect = flatStatuses.filter((s) => s === "incorrect").length;
-	const extra = extraChars.flat().length;
-
+const Results = ({ wpm, accuracy, chartData, elapsed, correct, incorrect, extra }: Props) => {
 	const data = chartData.map((entry, index) => ({
 		second: index,
 		errors: entry.errors,
