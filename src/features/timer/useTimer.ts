@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const useTimer = (duration: number, isFinished: boolean) => {
+const useTimer = (duration: number, isFinished: boolean, mode: string) => {
 	const [timer, setTimer] = useState(duration);
 	const [timerStatus, setTimerStatus] = useState(false);
 	const [elapsed, setElapsed] = useState(0);
@@ -11,6 +11,7 @@ const useTimer = (duration: number, isFinished: boolean) => {
 				if (isFinished) return;
 				setElapsed((prev) => prev + 1);
 				setTimer((prev) => {
+					if (mode !== "time") return prev;
 					if (prev <= 1) {
 						clearInterval(interval);
 						return 0;

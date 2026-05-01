@@ -7,23 +7,18 @@ import {
 } from "@phosphor-icons/react";
 import "./Settings.scss";
 
-type Settings = {
-	mode: string;
-	isPunctuation: boolean;
-	count: number;
-	language: string;
-};
+import type { TypingSettings } from "../../shared/types";
 
 type Props = {
-	settings: Settings;
-	setSettings: (settings: Settings) => void;
-	onReset: (newSettings?: Settings) => void;
+	settings: TypingSettings;
+	setSettings: (settings: TypingSettings) => void;
+	onReset: (newSettings?: TypingSettings) => void;
 };
 
 const Settings = (props: Props) => {
 	const { settings, setSettings, onReset } = props;
 
-	const handleSettingsChange = (newSettings: Settings) => {
+	const handleSettingsChange = (newSettings: TypingSettings) => {
 		setSettings(newSettings);
 		onReset(newSettings);
 	};
