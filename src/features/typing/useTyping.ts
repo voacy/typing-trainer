@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { createLetterStatuses } from "../../shared/lib";
 import type { LetterStatus } from "../../shared/types";
+import useGameSounds from "../../features/sounds/useSounds";
 
 const useTyping = (
 	words: string[],
@@ -17,12 +18,12 @@ const useTyping = (
 	const currentWord = words[currentWordIndex] ?? "";
 	const currentLetter = currentWord[currentLetterIndex];
 
+	const { playCorrect, playIncorrect } = useGameSounds();
+
 	const hasErrors = () => {
 		return (
 			currentWordIndex > 0 &&
-			(letterStatuses[currentWordIndex - 1].some(
-				(status) => status === "idle" || status === "incorrect",
-			) ||
+			(letterStatuses[currentWordIndex - 1].some((status) => status !== "correct") ||
 				extraChars[currentWordIndex - 1].length > 0)
 		);
 	};
@@ -35,11 +36,14 @@ const useTyping = (
 		newExtraChars[currentWordIndex] = [...extraChars[currentWordIndex], e];
 
 		if (currentLetterIndex >= currentWord.length) {
+			playIncorrect();
 			setExtraChars(newExtraChars);
 		} else if (e === currentLetter) {
 			newStatuses[currentWordIndex][currentLetterIndex] = "correct";
+			playCorrect();
 		} else if (e !== currentLetter) {
 			newStatuses[currentWordIndex][currentLetterIndex] = "incorrect";
+			playIncorrect();
 		}
 		setCurrentLetterIndex((e) => e + 1);
 		setLetterStatuses(newStatuses);
@@ -50,6 +54,17 @@ const useTyping = (
 		newStatuses[currentWordIndex] = [...letterStatuses[currentWordIndex]];
 
 		if (currentLetterIndex === 0) return;
+
+		if (
+			letterStatuses[currentWordIndex].some((status) => status !== "correct") ||
+			extraChars[currentWordIndex].length > 0
+		) {
+			playIncorrect();
+		} else {
+			playCorrect();
+		}
+
+		console.log(extraChars);
 
 		setCurrentWordIndex((e) => e + 1);
 		setCurrentLetterIndex(0);
@@ -64,6 +79,7 @@ const useTyping = (
 		newExtraChars[currentWordIndex] = [...extraChars[currentWordIndex]];
 
 		if (currentLetterIndex > currentWord.length) {
+			playCorrect();
 			setCurrentLetterIndex((e) => e - 1);
 			newExtraChars[currentWordIndex] = extraChars[currentWordIndex].slice(0, -1);
 			setExtraChars(newExtraChars);
@@ -71,12 +87,14 @@ const useTyping = (
 		}
 
 		if (currentLetterIndex > 0) {
+			playCorrect();
 			setCurrentLetterIndex((e) => e - 1);
 			newStatuses[currentWordIndex][currentLetterIndex - 1] = "idle";
 			setLetterStatuses(newStatuses);
 		}
 
 		if (currentLetterIndex === 0 && hasErrors()) {
+			playCorrect();
 			setCurrentWordIndex((e) => e - 1);
 			setCurrentLetterIndex(
 				words[currentWordIndex - 1].length + extraChars[currentWordIndex - 1].length,
@@ -112,9 +130,12 @@ const useTyping = (
 
 		if (currentLetterIndex === 0 && hasErrors()) {
 			setCurrentWordIndex((e) => e - 1);
-			setCurrentLetterIndex(
-				words[currentWordIndex - 1].length + extraChars[currentWordIndex - 1].length,
+			setCurrentLetterIndex(0);
+			newStatuses[currentWordIndex - 1] = newStatuses[currentWordIndex - 1].map(
+				() => "idle" as LetterStatus,
 			);
+			newExtraChars[currentWordIndex - 1] = [];
+			setExtraChars(newExtraChars);
 		}
 		setLetterStatuses(newStatuses);
 	};

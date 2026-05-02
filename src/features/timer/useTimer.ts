@@ -21,7 +21,7 @@ const useTimer = (duration: number, isFinished: boolean, mode: string) => {
 			}, 1000);
 			return () => clearInterval(interval);
 		}
-	}, [timerStatus, isFinished]);
+	}, [timerStatus, isFinished, mode]);
 
 	const startTimer = () => {
 		setTimerStatus(true);
