@@ -3,7 +3,7 @@
 
 	&__right {
 		display: flex;
-		gap: 25px;
+		gap: 20px;
 	}
 
 	&__link {
@@ -13,7 +13,7 @@
 		color: var(--color-text);
 		font-size: 14px;
 		cursor: pointer;
-		padding: 6px 12px;
+		padding: 10px 12px;
 		border-radius: 6px;
 		background-color: var(--color-mode-bg);
 
@@ -34,10 +34,13 @@
 }
 
 .logo {
-	display: flex;
 	gap: 8px;
 	font-size: 28px;
 	color: var(--color-text-add);
+
+	& span {
+		color: var(--color-accent);
+	}
 }
 
 .theme-trigger {
@@ -47,7 +50,7 @@
 	color: var(--color-text);
 	font-size: 14px;
 	cursor: pointer;
-	padding: 6px 12px;
+	padding: 10px 12px;
 	border-radius: 6px;
 	background-color: var(--color-mode-bg);
 	transition: color 0.2s ease-in-out;
@@ -60,7 +63,7 @@
 .theme-dropdown {
 	background: var(--color-mode-bg);
 	border-radius: 6px;
-	padding: 4px;
+	padding: 4px 6px;
 	min-width: 220px;
 	margin-top: 20px;
 	z-index: 100;
@@ -70,7 +73,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	padding: 6px 12px;
+	padding: 6px;
 	border-radius: 6px;
 	font-size: 14px;
 	color: var(--color-text);

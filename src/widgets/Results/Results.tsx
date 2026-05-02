@@ -39,7 +39,7 @@ const Results = ({ wpm, accuracy, chartData, elapsed, correct, incorrect, extra 
 		playResult();
 	}, [playResult]);
 
-	const colors = ["#d65ccc", "#d1d0c5", "#ca4754"];
+	const colors = ["#d65ccc", "#d1d0c5", "#ca4754", "#47ca5d"];
 
 	useEffect(() => {
 		confetti({

@@ -2,7 +2,7 @@ import "./Header.scss";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import useTheme from "../../features/theme/useTheme";
 import { themes } from "../../features/theme/themes";
-import { PaletteIcon, RobotIcon, GithubLogoIcon } from "@phosphor-icons/react";
+import { PaletteIcon, GithubLogoIcon } from "@phosphor-icons/react";
 import useGameSounds from "../../features/sounds/useSounds";
 
 const Header = () => {
@@ -14,8 +14,7 @@ const Header = () => {
 		<header className="header">
 			<div className="container">
 				<a href="/" className="logo" onClick={() => playClick()}>
-					<RobotIcon size={40} fill={current.accent} />
-					speedkeys
+					speed<span>keys</span>
 				</a>
 				<div className="header__right">
 					<a
