@@ -20,12 +20,20 @@ const useSession = () => {
 		[],
 	);
 
-	const [settings, setSettings] = useState<TypingSettings>({
-		mode: "words",
-		isPunctuation: false,
-		count: 10,
-		language: "english",
-	});
+	const savedSettings = JSON.parse(localStorage.getItem("settings") || "null") as TypingSettings;
+
+	const [settings, setSettings] = useState<TypingSettings>(
+		savedSettings || {
+			mode: "words",
+			isPunctuation: false,
+			count: 10,
+			language: "english",
+		},
+	);
+
+	useEffect(() => {
+		localStorage.setItem("settings", JSON.stringify(settings));
+	}, [settings]);
 
 	const [isFinished, setIsFinished] = useState(false);
 
