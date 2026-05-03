@@ -5,6 +5,7 @@ export type Mode = "words" | "time" | "quote";
 export type TypingSettings = {
 	mode: Mode;
 	isPunctuation: boolean;
+	isNumbers: boolean;
 	count: number;
 	language: string;
 };

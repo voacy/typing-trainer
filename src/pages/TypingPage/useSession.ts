@@ -2,17 +2,15 @@ import { useEffect, useState } from "react";
 import useTimer from "../../features/timer/useTimer";
 import useTyping from "../../features/typing/useTyping";
 import useResults from "../../features/results/useResults";
-import { generateWords, generateWordsWithPunctuation, generateQuote } from "../../shared/lib";
+import { generateWordsWithOptions, generateQuote } from "../../shared/lib";
 import wordsList from "../../shared/lib/wordsList";
 import quotes from "../../shared/lib/quotes";
 import type { LetterStatus, TypingSettings } from "../../shared/types";
 
 const getNewWords = (newSettings: TypingSettings): string[] => {
 	const count = newSettings.mode === "time" ? 200 : newSettings.count;
-
 	if (newSettings.mode === "quote") return generateQuote(quotes);
-	if (newSettings.isPunctuation) return generateWordsWithPunctuation(wordsList, count);
-	return generateWords(wordsList, count);
+	return generateWordsWithOptions(wordsList, count, newSettings.isPunctuation, newSettings.isNumbers);
 };
 
 const useSession = () => {
@@ -26,6 +24,7 @@ const useSession = () => {
 		savedSettings || {
 			mode: "words",
 			isPunctuation: false,
+			isNumbers: false,
 			count: 10,
 			language: "english",
 		},
@@ -39,7 +38,7 @@ const useSession = () => {
 
 	const [snapshot, setSnapshot] = useState<{ words: string[]; letterStatuses: LetterStatus[][]; extraChars: string[][] } | null>(null);
 
-	const [words, setWords] = useState(() => generateWords(wordsList, settings.count));
+	const [words, setWords] = useState(() => getNewWords(settings));
 
 	const { timer, timerStatus, startTimer, resetTimer, elapsed } = useTimer(
 		settings.count,

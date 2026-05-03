@@ -4,6 +4,7 @@ import {
 	TextAaIcon,
 	QuotesIcon,
 	GlobeHemisphereWestIcon,
+	HashIcon,
 } from "@phosphor-icons/react";
 import "./Settings.scss";
 
@@ -42,6 +43,18 @@ const Settings = (props: Props) => {
 				>
 					<AtIcon size={20} />
 					punctuation
+				</button>
+				<button
+					className={`settings__btn ${settings.isNumbers ? "settings__btn--active" : ""}`}
+					onClick={() =>
+						handleSettingsChange({
+							...settings,
+							isNumbers: !settings.isNumbers,
+						})
+					}
+				>
+					<HashIcon size={20} />
+					numbers
 				</button>
 			</div>
 
