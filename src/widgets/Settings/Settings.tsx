@@ -1,6 +1,6 @@
 import {
 	AtIcon,
-	ClockIcon,
+	HourglassHighIcon,
 	TextAaIcon,
 	QuotesIcon,
 	GlobeHemisphereWestIcon,
@@ -40,7 +40,7 @@ const Settings = (props: Props) => {
 						})
 					}
 				>
-					<AtIcon size={16} />
+					<AtIcon size={20} />
 					punctuation
 				</button>
 			</div>
@@ -50,7 +50,7 @@ const Settings = (props: Props) => {
 					className={`settings__btn ${settings.mode === "time" ? "settings__btn--active" : ""}`}
 					onClick={() => handleSettingsChange({ ...settings, mode: "time" })}
 				>
-					<ClockIcon size={16} weight="fill" />
+					<HourglassHighIcon size={20} weight="fill" />
 					time
 				</button>
 
@@ -58,7 +58,7 @@ const Settings = (props: Props) => {
 					className={`settings__btn ${settings.mode === "words" ? "settings__btn--active" : ""}`}
 					onClick={() => handleSettingsChange({ ...settings, mode: "words" })}
 				>
-					<TextAaIcon size={16} />
+					<TextAaIcon size={20} />
 					words
 				</button>
 
@@ -66,7 +66,7 @@ const Settings = (props: Props) => {
 					className={`settings__btn ${settings.mode === "quote" ? "settings__btn--active" : ""}`}
 					onClick={() => handleSettingsChange({ ...settings, mode: "quote" })}
 				>
-					<QuotesIcon size={16} weight="fill" />
+					<QuotesIcon size={20} weight="fill" />
 					quote
 				</button>
 			</div>
@@ -94,6 +94,13 @@ const Settings = (props: Props) => {
 				>
 					60
 				</button>
+
+				<button
+					className={`settings__btn ${settings.count === 120 ? "settings__btn--active" : ""}`}
+					onClick={() => handleSettingsChange({ ...settings, count: 120 })}
+				>
+					120
+				</button>
 			</div>
 
 			<div className="settings__group">
@@ -106,7 +113,7 @@ const Settings = (props: Props) => {
 						})
 					}
 				>
-					<GlobeHemisphereWestIcon size={16} weight="fill" />
+					<GlobeHemisphereWestIcon size={20} weight="fill" />
 				</button>
 			</div>
 		</div>

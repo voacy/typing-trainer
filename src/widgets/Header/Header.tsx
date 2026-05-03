@@ -22,11 +22,11 @@ const Header = () => {
 						href="https://github.com/voacy/speed-keys"
 						onClick={() => playClick()}
 					>
-						<GithubLogoIcon size={16} weight="fill" fill={current.accent} />
+						<GithubLogoIcon size={20} weight="fill" fill={current.accent} />
 					</a>
 					<DropdownMenu.Root>
 						<DropdownMenu.Trigger className="theme-trigger" onPointerDown={() => playClick()}>
-							<PaletteIcon size={16} weight="fill" fill={current.accent} />
+							<PaletteIcon size={20} weight="fill" fill={current.accent} />
 							{current.label}
 						</DropdownMenu.Trigger>
 						<DropdownMenu.Portal>
