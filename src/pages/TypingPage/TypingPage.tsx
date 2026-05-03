@@ -43,12 +43,13 @@ const TypingPage = () => {
 
 	const handleScreenshot = async () => {
 		if (!resultsRef.current) return;
-		const canvas = await html2canvas(resultsRef.current, { backgroundColor: null });
+		const bgColor = getComputedStyle(document.documentElement)
+			.getPropertyValue("--color-bg")
+			.trim();
+		const canvas = await html2canvas(resultsRef.current, { backgroundColor: bgColor });
 		canvas.toBlob(async (blob) => {
 			if (!blob) return;
-			await navigator.clipboard.write([
-				new ClipboardItem({ "image/png": blob }),
-			]);
+			await navigator.clipboard.write([new ClipboardItem({ "image/png": blob })]);
 			toast.success("Screenshot copied to clipboard");
 		}, "image/png");
 	};
