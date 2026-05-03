@@ -11,9 +11,12 @@ import {
 
 import useGameSounds from "../../features/sounds/useSounds";
 
-import { useEffect } from "react";
+import { useEffect, forwardRef } from "react";
 
 import confetti from "canvas-confetti";
+import type { LetterStatus } from "../../shared/types";
+import { getLetterClass } from "../../shared/lib";
+import { ClipboardTextIcon, WarningIcon } from "@phosphor-icons/react";
 
 type Props = {
 	wpm: number;
@@ -23,115 +26,193 @@ type Props = {
 	correct: number;
 	incorrect: number;
 	extra: number;
+	words: string[];
+	letterStatuses: LetterStatus[][];
+	extraChars: string[][];
+	showReplay: boolean;
 };
 
-const Results = ({ wpm, accuracy, chartData, elapsed, correct, incorrect, extra }: Props) => {
-	const data = chartData.map((entry, index) => ({
-		second: index,
-		errors: entry.errors,
-		wpm: entry.wpm,
-		accuracy: entry.accuracy,
-	}));
+const Results = forwardRef<HTMLElement, Props>(
+	(
+		{
+			wpm,
+			accuracy,
+			chartData,
+			elapsed,
+			correct,
+			incorrect,
+			extra,
+			words,
+			letterStatuses,
+			extraChars,
+			showReplay,
+		},
+		ref,
+	) => {
+		const data = chartData.map((entry, index) => ({
+			second: index,
+			errors: entry.errors,
+			wpm: entry.wpm,
+			accuracy: entry.accuracy,
+		}));
 
-	const { playResult } = useGameSounds();
+		const { playResult } = useGameSounds();
 
-	useEffect(() => {
-		playResult();
-	}, [playResult]);
+		useEffect(() => {
+			playResult();
+		}, [playResult]);
 
-	const colors = ["#d65ccc", "#d1d0c5", "#ca4754", "#47ca5d"];
+		const colors = ["#d65ccc", "#d1d0c5", "#ca4754", "#47ca5d"];
 
-	useEffect(() => {
-		confetti({
-			particleCount: 50,
-			angle: 60,
-			spread: 150,
-			origin: { x: 0 },
-			colors: colors,
-		});
-		confetti({
-			particleCount: 50,
-			angle: 120,
-			spread: 150,
-			origin: { x: 1 },
-			colors: colors,
-		});
-	}, []);
+		useEffect(() => {
+			confetti({
+				particleCount: 50,
+				angle: 60,
+				spread: 150,
+				origin: { x: 0 },
+				colors: colors,
+			});
+			confetti({
+				particleCount: 50,
+				angle: 120,
+				spread: 150,
+				origin: { x: 1 },
+				colors: colors,
+			});
+		}, []);
 
-	return (
-		<section className="results">
-			<div className="results__stats">
-				<div className="results__stat">
-					<span className="results__label">wpm</span>
-					<span className="results__value">{wpm.toFixed(0)}</span>
+		const handleCopyAll = () => {
+			const typed = words.filter((_, i) => letterStatuses[i]?.some((s) => s !== "idle")).join(" ");
+			navigator.clipboard.writeText(typed);
+		};
+
+		const handleCopyErrors = () => {
+			const errors = words
+				.filter(
+					(_, i) => letterStatuses[i]?.some((s) => s === "incorrect") || extraChars[i]?.length > 0,
+				)
+				.join(" ");
+			navigator.clipboard.writeText(errors);
+		};
+
+		return (
+			<section className="results" ref={ref}>
+				<div className="results__stats">
+					<div className="results__stat">
+						<span className="results__label">wpm</span>
+						<span className="results__value">{wpm.toFixed(0)}</span>
+					</div>
+					<div className="results__stat">
+						<span className="results__label">acc</span>
+						<span className="results__value">{accuracy.toFixed(0)}%</span>
+					</div>
+					<div className="results__stat">
+						<span className="results__label">time</span>
+						<span className="results__value">{elapsed}s</span>
+					</div>
+					<div className="results__stat">
+						<span className="results__label">characters</span>
+						<span className="results__value">
+							{correct}/{incorrect}/{extra}
+						</span>
+					</div>
 				</div>
-				<div className="results__stat">
-					<span className="results__label">acc</span>
-					<span className="results__value">{accuracy.toFixed(0)}%</span>
+				<div className="results__chart">
+					<ResponsiveContainer width="100%" height={250}>
+						<ComposedChart data={data} margin={{ left: -30 }}>
+							<CartesianGrid strokeDasharray="3 3" stroke="var(--color-mode-bg)" />
+							<XAxis
+								dataKey="second"
+								tick={{ fill: "var(--color-text)", fontSize: 12 }}
+								axisLine={false}
+								tickLine={false}
+							/>
+							<YAxis
+								tick={{ fill: "var(--color-text)", fontSize: 12 }}
+								axisLine={false}
+								tickLine={false}
+							/>
+							<Tooltip
+								contentStyle={{
+									backgroundColor: "var(--color-mode-bg)",
+									border: "none",
+									borderRadius: "6px",
+									color: "var(--color-letter-correct)",
+								}}
+							/>
+							<Line
+								type="monotone"
+								dataKey="errors"
+								dot={false}
+								stroke="var(--color-letter-incorrect)"
+								strokeWidth={2}
+								legendType="rect"
+							/>
+							<Line
+								type="monotone"
+								dataKey="wpm"
+								dot={false}
+								stroke="var(--color-accent)"
+								strokeWidth={2}
+								legendType="rect"
+							/>
+							<Line
+								type="monotone"
+								dataKey="accuracy"
+								dot={false}
+								stroke="var(--color-letter-correct)"
+								strokeWidth={2}
+								legendType="rect"
+							/>
+						</ComposedChart>
+					</ResponsiveContainer>
 				</div>
-				<div className="results__stat">
-					<span className="results__label">time</span>
-					<span className="results__value">{elapsed}s</span>
-				</div>
-				<div className="results__stat">
-					<span className="results__label">characters</span>
-					<span className="results__value">
-						{correct}/{incorrect}/{extra}
-					</span>
-				</div>
-			</div>
-			<div className="results__chart">
-				<ResponsiveContainer width="100%" height={250}>
-					<ComposedChart data={data} margin={{ left: -30 }}>
-						<CartesianGrid strokeDasharray="3 3" stroke="var(--color-mode-bg)" />
-						<XAxis
-							dataKey="second"
-							tick={{ fill: "var(--color-text)", fontSize: 12 }}
-							axisLine={false}
-							tickLine={false}
-						/>
-						<YAxis
-							tick={{ fill: "var(--color-text)", fontSize: 12 }}
-							axisLine={false}
-							tickLine={false}
-						/>
-						<Tooltip
-							contentStyle={{
-								backgroundColor: "var(--color-mode-bg)",
-								border: "none",
-								borderRadius: "6px",
-								color: "var(--color-letter-correct)",
-							}}
-						/>
-						<Line
-							type="monotone"
-							dataKey="errors"
-							dot={false}
-							stroke="var(--color-letter-incorrect)"
-							strokeWidth={2}
-							legendType="rect"
-						/>
-						<Line
-							type="monotone"
-							dataKey="wpm"
-							dot={false}
-							stroke="var(--color-accent)"
-							strokeWidth={2}
-							legendType="rect"
-						/>
-						<Line
-							type="monotone"
-							dataKey="accuracy"
-							dot={false}
-							stroke="var(--color-letter-correct)"
-							strokeWidth={2}
-							legendType="rect"
-						/>
-					</ComposedChart>
-				</ResponsiveContainer>
-			</div>
-		</section>
-	);
-};
+				{showReplay && (
+					<div className="results__replay-section">
+						<div className="results__replay-header">
+							<span className="results__label">input history</span>
+							<div className="results__replay-actions">
+								<button className="results__replay-btn" onClick={handleCopyAll}>
+									<ClipboardTextIcon size={16} />
+								</button>
+								<button className="results__replay-btn" onClick={handleCopyErrors}>
+									<WarningIcon size={16} />
+								</button>
+							</div>
+						</div>
+						<ul className="results__replay">
+							{words.map((word, wordIndex) => {
+								if (!letterStatuses[wordIndex]?.some((s) => s !== "idle")) return null;
+
+								const isIncorrect =
+									letterStatuses[wordIndex]?.some((s) => s === "incorrect") ||
+									extraChars[wordIndex]?.length > 0;
+
+								return (
+									<span key={wordIndex} className={`word${isIncorrect ? " incorrect-word" : ""}`}>
+										{word.split("").map((letter, letterIndex) => (
+											<span
+												key={letterIndex}
+												className={`letter ${getLetterClass(letterStatuses, wordIndex, letterIndex)}`}
+											>
+												{letter}
+											</span>
+										))}
+										{extraChars[wordIndex]?.map((char, charIndex) => (
+											<span key={`extra-${charIndex}`} className="letter extra">
+												{char}
+											</span>
+										))}
+										<span className="letter"> </span>
+									</span>
+								);
+							})}
+						</ul>
+					</div>
+				)}
+			</section>
+		);
+	},
+);
 
 export default Results;

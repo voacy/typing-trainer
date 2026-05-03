@@ -1,13 +1,14 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import useCursor from "../../features/cursor/useCursor";
 import useTextScroll from "../../features/textScroll/useTextScroll";
 import TypingText from "../../features/typing/TypingText";
 import Settings from "../../widgets/Settings/Settings";
 import CapsLockWarning from "../../features/capsLock/CapsLockWarning";
-import { ArrowsCounterClockwiseIcon } from "@phosphor-icons/react";
+import { ArrowClockwiseIcon, TextAlignLeftIcon, ImageIcon } from "@phosphor-icons/react";
 import Results from "../../widgets/Results/Results";
 import useSession from "./useSession";
 import useGameSounds from "../../features/sounds/useSounds";
+import html2canvas from "html2canvas";
 
 const TypingPage = () => {
 	const {
@@ -32,9 +33,22 @@ const TypingPage = () => {
 	} = useSession();
 
 	const wrapperRef = useRef<HTMLDivElement>(null);
+	const resultsRef = useRef<HTMLElement>(null);
+	const [showReplay, setShowReplay] = useState(false);
 	const offset = useTextScroll(currentWordIndex, wrapperRef);
 	const cursorPos = useCursor(currentLetterIndex, currentWordIndex, offset, wrapperRef);
 	const { playClick } = useGameSounds();
+
+	const handleScreenshot = async () => {
+		if (!resultsRef.current) return;
+		const canvas = await html2canvas(resultsRef.current, { backgroundColor: null });
+		canvas.toBlob(async (blob) => {
+			if (!blob) return;
+			await navigator.clipboard.write([
+				new ClipboardItem({ "image/png": blob }),
+			]);
+		}, "image/png");
+	};
 
 	return (
 		<main className="main">
@@ -65,6 +79,7 @@ const TypingPage = () => {
 				)}
 				{isFinished && (
 					<Results
+						ref={resultsRef}
 						wpm={wpm}
 						accuracy={accuracy}
 						chartData={chartData}
@@ -72,18 +87,52 @@ const TypingPage = () => {
 						correct={correct}
 						incorrect={incorrect}
 						extra={extra}
+						words={words}
+						letterStatuses={letterStatuses}
+						extraChars={extraChars}
+						showReplay={showReplay}
 					/>
 				)}
-				<button
-					className="reset__btn"
-					onClick={(e) => {
-						playClick();
-						handleReset();
-						e.currentTarget.blur();
-					}}
-				>
-					<ArrowsCounterClockwiseIcon size={32} />
-				</button>
+
+				<div className="controls">
+					<button
+						className="controls__btn"
+						onClick={(e) => {
+							playClick();
+							handleReset();
+							setShowReplay(false);
+							e.currentTarget.blur();
+						}}
+					>
+						<ArrowClockwiseIcon size={20} />
+					</button>
+
+					{isFinished && (
+						<>
+							<button
+								className="controls__btn"
+								onClick={(e) => {
+									playClick();
+									setShowReplay((prev) => !prev);
+									e.currentTarget.blur();
+								}}
+							>
+								<TextAlignLeftIcon size={20} />
+							</button>
+
+							<button
+								className="controls__btn"
+								onClick={(e) => {
+									playClick();
+									handleScreenshot();
+									e.currentTarget.blur();
+								}}
+							>
+								<ImageIcon size={20} />
+							</button>
+						</>
+					)}
+				</div>
 			</div>
 		</main>
 	);

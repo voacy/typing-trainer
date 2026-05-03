@@ -1,12 +1,12 @@
 .results {
 	display: flex;
 	flex-direction: column;
-	gap: 24px;
+	gap: 32px;
 
 	&__stats {
 		display: flex;
 		gap: 48px;
-		margin-bottom: 30px;
+		align-items: flex-end;
 	}
 
 	&__stat {
@@ -31,5 +31,47 @@
 
 	&__chart {
 		width: 100%;
+	}
+
+	&__replay-section {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+	}
+
+	&__replay-header {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+	}
+
+	&__replay-actions {
+		display: flex;
+		gap: 6px;
+	}
+
+	&__replay-btn {
+		background: none;
+		border: none;
+		padding: 0;
+		cursor: pointer;
+		color: var(--color-text);
+		display: flex;
+		align-items: center;
+		transition: color 0.15s;
+
+		&:hover {
+			color: var(--color-accent);
+		}
+	}
+
+	&__replay {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px 12px;
+
+		.letter {
+			font-size: 18px;
+		}
 	}
 }

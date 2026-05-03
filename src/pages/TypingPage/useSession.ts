@@ -5,7 +5,7 @@ import useResults from "../../features/results/useResults";
 import { generateWords, generateWordsWithPunctuation, generateQuote } from "../../shared/lib";
 import wordsList from "../../shared/lib/wordsList";
 import quotes from "../../shared/lib/quotes";
-import type { TypingSettings } from "../../shared/types";
+import type { LetterStatus, TypingSettings } from "../../shared/types";
 
 const getNewWords = (newSettings: TypingSettings): string[] => {
 	const count = newSettings.mode === "time" ? 200 : newSettings.count;
@@ -36,6 +36,8 @@ const useSession = () => {
 	}, [settings]);
 
 	const [isFinished, setIsFinished] = useState(false);
+
+	const [snapshot, setSnapshot] = useState<{ words: string[]; letterStatuses: LetterStatus[][]; extraChars: string[][] } | null>(null);
 
 	const [words, setWords] = useState(() => generateWords(wordsList, settings.count));
 
@@ -78,6 +80,12 @@ const useSession = () => {
 		}
 	}, [timer, currentWordIndex]);
 
+	useEffect(() => {
+		if (isFinished) {
+			setSnapshot({ words, letterStatuses, extraChars });
+		}
+	}, [isFinished]);
+
 	const handleReset = (newSettings = settings) => {
 		const newWords = getNewWords(newSettings);
 		setWords(newWords);
@@ -85,6 +93,7 @@ const useSession = () => {
 		resetTyping(newWords);
 		setIsFinished(false);
 		setChartData([]);
+		setSnapshot(null);
 	};
 
 	return {
@@ -106,6 +115,7 @@ const useSession = () => {
 		correct,
 		incorrect,
 		extra,
+		snapshot,
 	};
 };
 
