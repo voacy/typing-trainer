@@ -14,7 +14,7 @@ const Header = () => {
 		<header className="header">
 			<div className="container">
 				<a href="/" className="logo" onClick={() => playClick()}>
-					speed<span>keys</span>
+					type<span>zone</span>
 				</a>
 				<div className="header__right">
 					<a
