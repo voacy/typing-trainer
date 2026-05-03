@@ -114,12 +114,23 @@ const Results = forwardRef<HTMLElement, Props>(
 						<span className="results__label">time</span>
 						<span className="results__value">{elapsed}s</span>
 					</div>
-					<div className="results__stat">
-						<span className="results__label">characters</span>
-						<span className="results__value">
-							{correct}/{incorrect}/{extra}
-						</span>
-					</div>
+					<AppTooltip
+						side="top"
+						content={
+							<div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
+								<span>correct: {correct}</span>
+								<span>incorrect: {incorrect}</span>
+								<span>extra: {extra}</span>
+							</div>
+						}
+					>
+						<div className="results__stat" style={{ cursor: "default" }}>
+							<span className="results__label">characters</span>
+							<span className="results__value">
+								{correct}/{incorrect}/{extra}
+							</span>
+						</div>
+					</AppTooltip>
 				</div>
 				<div className="results__chart">
 					<ResponsiveContainer width="100%" height={250}>
