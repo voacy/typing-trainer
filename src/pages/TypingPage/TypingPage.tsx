@@ -10,6 +10,7 @@ import useSession from "./useSession";
 import useGameSounds from "../../features/sounds/useSounds";
 import html2canvas from "html2canvas";
 import Tooltip from "../../shared/ui/Tooltip";
+import { toast } from "sonner";
 
 const TypingPage = () => {
 	const {
@@ -48,6 +49,7 @@ const TypingPage = () => {
 			await navigator.clipboard.write([
 				new ClipboardItem({ "image/png": blob }),
 			]);
+			toast.success("Screenshot copied to clipboard");
 		}, "image/png");
 	};
 

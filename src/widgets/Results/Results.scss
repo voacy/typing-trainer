@@ -37,6 +37,15 @@
 		display: flex;
 		flex-direction: column;
 		gap: 8px;
+		max-height: 0;
+		overflow: hidden;
+		opacity: 0;
+		transition: all 0.2s ease-in-out;
+
+		&--visible {
+			max-height: 500px;
+			opacity: 1;
+		}
 	}
 
 	&__replay-header {
@@ -58,7 +67,7 @@
 		color: var(--color-text);
 		display: flex;
 		align-items: center;
-		transition: color 0.15s;
+		transition: color 0.2s ease-in-out;
 
 		&:hover {
 			color: var(--color-accent);
@@ -68,10 +77,10 @@
 	&__replay {
 		display: flex;
 		flex-wrap: wrap;
-		gap: 8px 12px;
+		gap: 6px 6px;
 
 		.letter {
-			font-size: 18px;
+			font-size: 14px;
 		}
 	}
 }

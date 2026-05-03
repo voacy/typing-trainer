@@ -9,15 +9,14 @@ import {
 	ResponsiveContainer,
 } from "recharts";
 
-import useGameSounds from "../../features/sounds/useSounds";
-
 import { useEffect, forwardRef } from "react";
-
+import useGameSounds from "../../features/sounds/useSounds";
 import confetti from "canvas-confetti";
 import type { LetterStatus } from "../../shared/types";
 import { getLetterClass } from "../../shared/lib";
 import { ClipboardTextIcon, WarningIcon } from "@phosphor-icons/react";
 import AppTooltip from "../../shared/ui/Tooltip";
+import { toast } from "sonner";
 
 type Props = {
 	wpm: number;
@@ -57,7 +56,7 @@ const Results = forwardRef<HTMLElement, Props>(
 			accuracy: entry.accuracy,
 		}));
 
-		const { playResult } = useGameSounds();
+		const { playResult, playClick } = useGameSounds();
 
 		useEffect(() => {
 			playResult();
@@ -83,17 +82,21 @@ const Results = forwardRef<HTMLElement, Props>(
 		}, []);
 
 		const handleCopyAll = () => {
+			playClick();
 			const typed = words.filter((_, i) => letterStatuses[i]?.some((s) => s !== "idle")).join(" ");
 			navigator.clipboard.writeText(typed);
+			toast.success("Words copied to clipboard");
 		};
 
 		const handleCopyErrors = () => {
+			playClick();
 			const errors = words
 				.filter(
 					(_, i) => letterStatuses[i]?.some((s) => s === "incorrect") || extraChars[i]?.length > 0,
 				)
 				.join(" ");
 			navigator.clipboard.writeText(errors);
+			toast.success("Error words copied to clipboard");
 		};
 
 		return (
@@ -168,53 +171,53 @@ const Results = forwardRef<HTMLElement, Props>(
 						</ComposedChart>
 					</ResponsiveContainer>
 				</div>
-				{showReplay && (
-					<div className="results__replay-section">
-						<div className="results__replay-header">
-							<span className="results__label">input history</span>
-							<div className="results__replay-actions">
-								<AppTooltip content="Copy all words" side="top">
-									<button className="results__replay-btn" onClick={handleCopyAll}>
-										<ClipboardTextIcon size={16} />
-									</button>
-								</AppTooltip>
-								<AppTooltip content="Copy words with errors" side="top">
-									<button className="results__replay-btn" onClick={handleCopyErrors}>
-										<WarningIcon size={16} />
-									</button>
-								</AppTooltip>
-							</div>
+				<div
+					className={`results__replay-section ${showReplay ? "results__replay-section--visible" : ""}`}
+				>
+					<div className="results__replay-header">
+						<span className="results__label">input history</span>
+						<div className="results__replay-actions">
+							<AppTooltip content="Copy all words" side="top">
+								<button className="results__replay-btn" onClick={handleCopyAll}>
+									<ClipboardTextIcon size={16} />
+								</button>
+							</AppTooltip>
+							<AppTooltip content="Copy words with errors" side="top">
+								<button className="results__replay-btn" onClick={handleCopyErrors}>
+									<WarningIcon size={16} />
+								</button>
+							</AppTooltip>
 						</div>
-						<ul className="results__replay">
-							{words.map((word, wordIndex) => {
-								if (!letterStatuses[wordIndex]?.some((s) => s !== "idle")) return null;
-
-								const isIncorrect =
-									letterStatuses[wordIndex]?.some((s) => s === "incorrect") ||
-									extraChars[wordIndex]?.length > 0;
-
-								return (
-									<span key={wordIndex} className={`word${isIncorrect ? " incorrect-word" : ""}`}>
-										{word.split("").map((letter, letterIndex) => (
-											<span
-												key={letterIndex}
-												className={`letter ${getLetterClass(letterStatuses, wordIndex, letterIndex)}`}
-											>
-												{letter}
-											</span>
-										))}
-										{extraChars[wordIndex]?.map((char, charIndex) => (
-											<span key={`extra-${charIndex}`} className="letter extra">
-												{char}
-											</span>
-										))}
-										<span className="letter"> </span>
-									</span>
-								);
-							})}
-						</ul>
 					</div>
-				)}
+					<ul className="results__replay">
+						{words.map((word, wordIndex) => {
+							if (!letterStatuses[wordIndex]?.some((s) => s !== "idle")) return null;
+
+							const isIncorrect =
+								letterStatuses[wordIndex]?.some((s) => s === "incorrect") ||
+								extraChars[wordIndex]?.length > 0;
+
+							return (
+								<span key={wordIndex} className={`word${isIncorrect ? " incorrect-word" : ""}`}>
+									{word.split("").map((letter, letterIndex) => (
+										<span
+											key={letterIndex}
+											className={`letter ${getLetterClass(letterStatuses, wordIndex, letterIndex)}`}
+										>
+											{letter}
+										</span>
+									))}
+									{extraChars[wordIndex]?.map((char, charIndex) => (
+										<span key={`extra-${charIndex}`} className="letter extra">
+											{char}
+										</span>
+									))}
+									<span className="letter"> </span>
+								</span>
+							);
+						})}
+					</ul>
+				</div>
 			</section>
 		);
 	},

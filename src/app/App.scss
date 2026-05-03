@@ -134,4 +134,10 @@
 	max-height: 40px;
 	border-radius: 6px;
 	background-color: var(--color-mode-bg);
+
+	transition: color 0.2s ease-in-out;
+
+	&:hover {
+		color: var(--color-letter-correct);
+	}
 }
