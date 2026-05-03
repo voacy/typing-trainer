@@ -17,6 +17,7 @@ import confetti from "canvas-confetti";
 import type { LetterStatus } from "../../shared/types";
 import { getLetterClass } from "../../shared/lib";
 import { ClipboardTextIcon, WarningIcon } from "@phosphor-icons/react";
+import AppTooltip from "../../shared/ui/Tooltip";
 
 type Props = {
 	wpm: number;
@@ -172,12 +173,16 @@ const Results = forwardRef<HTMLElement, Props>(
 						<div className="results__replay-header">
 							<span className="results__label">input history</span>
 							<div className="results__replay-actions">
-								<button className="results__replay-btn" onClick={handleCopyAll}>
-									<ClipboardTextIcon size={16} />
-								</button>
-								<button className="results__replay-btn" onClick={handleCopyErrors}>
-									<WarningIcon size={16} />
-								</button>
+								<AppTooltip content="Copy all words" side="top">
+									<button className="results__replay-btn" onClick={handleCopyAll}>
+										<ClipboardTextIcon size={16} />
+									</button>
+								</AppTooltip>
+								<AppTooltip content="Copy words with errors" side="top">
+									<button className="results__replay-btn" onClick={handleCopyErrors}>
+										<WarningIcon size={16} />
+									</button>
+								</AppTooltip>
 							</div>
 						</div>
 						<ul className="results__replay">

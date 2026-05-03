@@ -9,6 +9,7 @@ import Results from "../../widgets/Results/Results";
 import useSession from "./useSession";
 import useGameSounds from "../../features/sounds/useSounds";
 import html2canvas from "html2canvas";
+import Tooltip from "../../shared/ui/Tooltip";
 
 const TypingPage = () => {
 	const {
@@ -95,41 +96,47 @@ const TypingPage = () => {
 				)}
 
 				<div className="controls">
-					<button
-						className="controls__btn"
-						onClick={(e) => {
-							playClick();
-							handleReset();
-							setShowReplay(false);
-							e.currentTarget.blur();
-						}}
-					>
-						<ArrowClockwiseIcon size={20} />
-					</button>
+					<Tooltip content="Restart" side="top">
+						<button
+							className="controls__btn"
+							onClick={(e) => {
+								playClick();
+								handleReset();
+								setShowReplay(false);
+								e.currentTarget.blur();
+							}}
+						>
+							<ArrowClockwiseIcon size={20} />
+						</button>
+					</Tooltip>
 
 					{isFinished && (
 						<>
-							<button
-								className="controls__btn"
-								onClick={(e) => {
-									playClick();
-									setShowReplay((prev) => !prev);
-									e.currentTarget.blur();
-								}}
-							>
-								<TextAlignLeftIcon size={20} />
-							</button>
+							<Tooltip content="Input history" side="top">
+								<button
+									className="controls__btn"
+									onClick={(e) => {
+										playClick();
+										setShowReplay((prev) => !prev);
+										e.currentTarget.blur();
+									}}
+								>
+									<TextAlignLeftIcon size={20} />
+								</button>
+							</Tooltip>
 
-							<button
-								className="controls__btn"
-								onClick={(e) => {
-									playClick();
-									handleScreenshot();
-									e.currentTarget.blur();
-								}}
-							>
-								<ImageIcon size={20} />
-							</button>
+							<Tooltip content="Copy screenshot" side="top">
+								<button
+									className="controls__btn"
+									onClick={(e) => {
+										playClick();
+										handleScreenshot();
+										e.currentTarget.blur();
+									}}
+								>
+									<ImageIcon size={20} />
+								</button>
+							</Tooltip>
 						</>
 					)}
 				</div>
