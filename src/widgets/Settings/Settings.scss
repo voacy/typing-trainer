@@ -39,3 +39,35 @@
 		}
 	}
 }
+
+.language-dropdown {
+	background: var(--color-mode-bg);
+	border-radius: 6px;
+	padding: 4px 6px;
+	min-width: 130px;
+	margin-top: 20px;
+	z-index: 100;
+}
+
+.language-item {
+	display: flex;
+	align-items: center;
+	padding: 6px;
+	border-radius: 6px;
+	font-size: 14px;
+	color: var(--color-text);
+	cursor: pointer;
+	outline: none;
+	transition:
+		background 0.15s ease-in-out,
+		color 0.15s ease-in-out;
+
+	&:hover {
+		background: var(--color-bg);
+		color: var(--color-letter-correct);
+	}
+
+	&--active {
+		color: var(--color-accent);
+	}
+}

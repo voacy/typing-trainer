@@ -3,13 +3,15 @@ import {
 	HourglassHighIcon,
 	TextAaIcon,
 	QuotesIcon,
-	GlobeHemisphereWestIcon,
 	HashIcon,
+	GlobeHemisphereWestIcon,
 } from "@phosphor-icons/react";
+import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import "./Settings.scss";
 
 import type { TypingSettings } from "../../shared/types";
 import useGameSounds from "../../features/sounds/useSounds";
+import { LANGUAGES } from "../../shared/lib/languages";
 
 type Props = {
 	settings: TypingSettings;
@@ -117,17 +119,29 @@ const Settings = (props: Props) => {
 			</div>
 
 			<div className="settings__group">
-				<button
-					className={`settings__btn ${settings.language === "english" ? "settings__btn--active" : ""}`}
-					onClick={() =>
-						handleSettingsChange({
-							...settings,
-							language: "english",
-						})
-					}
-				>
-					<GlobeHemisphereWestIcon size={20} weight="fill" />
-				</button>
+				<DropdownMenu.Root>
+					<DropdownMenu.Trigger
+						className={`settings__btn ${settings.language !== "english" ? "settings__btn--active" : ""}`}
+						onPointerDown={() => playClick()}
+					>
+						<GlobeHemisphereWestIcon size={20} weight="fill" />
+					</DropdownMenu.Trigger>
+					<DropdownMenu.Portal>
+						<DropdownMenu.Content className="language-dropdown" align="center" side="bottom">
+							{LANGUAGES.map((lang) => (
+								<DropdownMenu.Item
+									key={lang.code}
+									className={`language-item ${settings.language === lang.code ? "language-item--active" : ""}`}
+									onClick={() => {
+										handleSettingsChange({ ...settings, language: lang.code });
+									}}
+								>
+									{lang.label}
+								</DropdownMenu.Item>
+							))}
+						</DropdownMenu.Content>
+					</DropdownMenu.Portal>
+				</DropdownMenu.Root>
 			</div>
 		</div>
 	);

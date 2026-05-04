@@ -3,14 +3,15 @@ import useTimer from "../../features/timer/useTimer";
 import useTyping from "../../features/typing/useTyping";
 import useResults from "../../features/results/useResults";
 import { generateWordsWithOptions, generateQuote } from "../../shared/lib";
-import wordsList from "../../shared/lib/wordsList";
+import { getLanguageWords } from "../../shared/lib/languages";
 import quotes from "../../shared/lib/quotes";
 import type { LetterStatus, TypingSettings } from "../../shared/types";
 
 const getNewWords = (newSettings: TypingSettings): string[] => {
 	const count = newSettings.mode === "time" ? 200 : newSettings.count;
 	if (newSettings.mode === "quote") return generateQuote(quotes);
-	return generateWordsWithOptions(wordsList, count, newSettings.isPunctuation, newSettings.isNumbers);
+	const wordList = getLanguageWords(newSettings.language);
+	return generateWordsWithOptions(wordList, count, newSettings.isPunctuation, newSettings.isNumbers);
 };
 
 const useSession = () => {
