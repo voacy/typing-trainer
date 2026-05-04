@@ -243,8 +243,12 @@
 	font-family: inherit;
 }
 
+html, body {
+	height: 100%;
+	overflow: hidden;
+}
+
 body {
-	min-height: 100vh;
 	background-color: var(--color-bg);
 	color: var(--color-text);
 }
