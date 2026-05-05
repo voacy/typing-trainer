@@ -125,6 +125,7 @@ const Settings = (props: Props) => {
 						onPointerDown={() => playClick()}
 					>
 						<GlobeHemisphereWestIcon size={20} weight="fill" />
+						{settings.language}
 					</DropdownMenu.Trigger>
 					<DropdownMenu.Portal>
 						<DropdownMenu.Content className="language-dropdown" align="center" side="bottom">
