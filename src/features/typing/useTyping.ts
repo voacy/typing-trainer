@@ -64,8 +64,6 @@ const useTyping = (
 			playCorrect();
 		}
 
-		console.log(extraChars);
-
 		setCurrentWordIndex((e) => e + 1);
 		setCurrentLetterIndex(0);
 		setLetterStatuses(newStatuses);
