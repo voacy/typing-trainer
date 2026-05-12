@@ -66,7 +66,7 @@ const TypingPage = () => {
 							{currentWordIndex}/{words.length}
 						</span>
 					))}
-				<CapsLockWarning />
+				{!isFinished && <CapsLockWarning />}
 				{!isFinished && (
 					<div className="text__wrapper" ref={wrapperRef}>
 						<TypingText
