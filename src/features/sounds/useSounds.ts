@@ -2,8 +2,8 @@ import useSound from "use-sound";
 
 import clickSound from "../../shared/assets/click.mp3";
 import resultSound from "../../shared/assets/results.mp3";
-import correctSound from "../../shared/assets/correct.mp3";
-import incorrectSound from "../../shared/assets/incorrect.mp3";
+import correctSound from "../../shared/assets/correct.wav";
+import incorrectSound from "../../shared/assets/incorrect.wav";
 
 const useGameSounds = () => {
 	const [playClick] = useSound(clickSound, { volume: 0.2 });
