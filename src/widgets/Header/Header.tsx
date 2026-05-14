@@ -14,7 +14,7 @@ const Header = () => {
 		<header className="header">
 			<div className="container">
 				<a href="/" className="logo" onClick={() => playClick()}>
-					type<span>zone</span>
+					monkeytype
 				</a>
 				<div className="header__right">
 					<a

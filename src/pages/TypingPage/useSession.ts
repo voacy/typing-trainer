@@ -11,7 +11,12 @@ const getNewWords = (newSettings: TypingSettings): string[] => {
 	const count = newSettings.mode === "time" ? 200 : newSettings.count;
 	if (newSettings.mode === "quote") return generateQuote(quotes);
 	const wordList = getLanguageWords(newSettings.language);
-	return generateWordsWithOptions(wordList, count, newSettings.isPunctuation, newSettings.isNumbers);
+	return generateWordsWithOptions(
+		wordList,
+		count,
+		newSettings.isPunctuation,
+		newSettings.isNumbers,
+	);
 };
 
 const useSession = () => {
@@ -37,7 +42,11 @@ const useSession = () => {
 
 	const [isFinished, setIsFinished] = useState(false);
 
-	const [snapshot, setSnapshot] = useState<{ words: string[]; letterStatuses: LetterStatus[][]; extraChars: string[][] } | null>(null);
+	const [snapshot, setSnapshot] = useState<{
+		words: string[];
+		letterStatuses: LetterStatus[][];
+		extraChars: string[][];
+	} | null>(null);
 
 	const [words, setWords] = useState(() => getNewWords(settings));
 

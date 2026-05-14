@@ -6,11 +6,11 @@ import Settings from "../../widgets/Settings/Settings";
 import CapsLockWarning from "../../features/capsLock/CapsLockWarning";
 import { ArrowClockwiseIcon, TextAlignLeftIcon, ImageIcon } from "@phosphor-icons/react";
 import Results from "../../widgets/Results/Results";
-import useSession from "./useSession";
 import useGameSounds from "../../features/sounds/useSounds";
 import html2canvas from "html2canvas";
 import Tooltip from "../../shared/ui/Tooltip";
 import { toast } from "sonner";
+import { useSessionContext } from "../../app/SessionContext";
 
 const TypingPage = () => {
 	const {
@@ -32,7 +32,7 @@ const TypingPage = () => {
 		correct,
 		incorrect,
 		extra,
-	} = useSession();
+	} = useSessionContext();
 
 	const wrapperRef = useRef<HTMLDivElement>(null);
 	const resultsRef = useRef<HTMLElement>(null);

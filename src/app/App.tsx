@@ -3,6 +3,7 @@ import TypingPage from "../pages/TypingPage/TypingPage";
 import Header from "../widgets/Header/Header";
 import { TooltipProvider } from "../shared/ui/Tooltip";
 import { Toaster } from "sonner";
+import { SessionProvider } from "./SessionContext";
 
 function App() {
 	return (
@@ -20,8 +21,10 @@ function App() {
 					},
 				}}
 			/>
-			<Header />
-			<TypingPage />
+			<SessionProvider>
+				<Header />
+				<TypingPage />
+			</SessionProvider>
 		</TooltipProvider>
 	);
 }

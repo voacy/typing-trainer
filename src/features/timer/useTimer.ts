@@ -8,7 +8,6 @@ const useTimer = (duration: number, isFinished: boolean, mode: string) => {
 	useEffect(() => {
 		if (timerStatus) {
 			const interval = setInterval(() => {
-				if (isFinished) return;
 				setElapsed((prev) => prev + 1);
 				setTimer((prev) => {
 					if (mode !== "time") return prev;
@@ -21,7 +20,14 @@ const useTimer = (duration: number, isFinished: boolean, mode: string) => {
 			}, 1000);
 			return () => clearInterval(interval);
 		}
-	}, [timerStatus, isFinished, mode]);
+	}, [timerStatus, mode]);
+
+	useEffect(() => {
+		if (isFinished) {
+			setTimerStatus(false);
+			return;
+		}
+	}, [isFinished]);
 
 	const startTimer = () => {
 		setTimerStatus(true);

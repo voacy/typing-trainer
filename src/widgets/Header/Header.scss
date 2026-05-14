@@ -4,6 +4,7 @@
 	&__right {
 		display: flex;
 		gap: 20px;
+		transition: all 0.2s ease-in-out;
 	}
 
 	&__link {
@@ -39,10 +40,7 @@
 	font-size: 28px;
 	font-weight: 600;
 	color: var(--color-text-add);
-
-	& span {
-		color: var(--color-accent);
-	}
+	transition: all 0.2s ease-in-out;
 }
 
 .theme-trigger {
@@ -106,4 +104,15 @@
 	width: 10px;
 	height: 10px;
 	border-radius: 50%;
+}
+
+.session--active {
+	.logo {
+		color: var(--color-text);
+	}
+
+	.header__right {
+		opacity: 0;
+		visibility: hidden;
+	}
 }
