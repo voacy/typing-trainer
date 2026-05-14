@@ -23,7 +23,7 @@
 		}
 
 		&:hover svg {
-			fill: var(--color-letter-correct);
+			fill: inherit;
 		}
 	}
 }
@@ -35,12 +35,30 @@
 }
 
 .logo {
+	position: relative;
 	display: flex;
 	align-items: center;
+	gap: 10px;
 	font-size: 28px;
+	line-height: 28px;
 	font-weight: 600;
 	color: var(--color-text-add);
 	transition: all 0.2s ease-in-out;
+
+	&::before {
+		content: "flow state";
+		position: absolute;
+		top: -8px;
+		left: 52px;
+		font-size: 10px;
+		font-weight: 400;
+		color: var(--color-text);
+		transition: all 0.2s ease-in-out;
+	}
+
+	& svg {
+		transition: fill 0.2s ease-in-out;
+	}
 }
 
 .theme-trigger {
@@ -109,6 +127,15 @@
 .session--active {
 	.logo {
 		color: var(--color-text);
+
+		&::before {
+			opacity: 0;
+			visibility: 0;
+		}
+
+		& svg {
+			fill: var(--color-text);
+		}
 	}
 
 	.header__right {
