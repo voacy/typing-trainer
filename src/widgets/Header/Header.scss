@@ -22,8 +22,10 @@
 			transition: fill 0.2s ease-in-out;
 		}
 
-		&:hover svg {
-			fill: inherit;
+		&:hover {
+			svg {
+				fill: var(--color-letter-correct);
+			}
 		}
 	}
 }
@@ -75,6 +77,14 @@
 
 	&:hover {
 		color: var(--color-letter-correct);
+
+		svg {
+			fill: var(--color-letter-correct);
+		}
+	}
+
+	& svg {
+		transition: fill 0.2s ease-in-out;
 	}
 }
 
