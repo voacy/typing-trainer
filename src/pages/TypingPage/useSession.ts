@@ -24,17 +24,19 @@ const useSession = () => {
 		[],
 	);
 
-	const savedSettings = JSON.parse(localStorage.getItem("settings") || "null") as TypingSettings;
-
-	const [settings, setSettings] = useState<TypingSettings>(
-		savedSettings || {
-			mode: "words",
-			isPunctuation: false,
-			isNumbers: false,
-			count: 10,
-			language: "english",
-		},
-	);
+	const [settings, setSettings] = useState<TypingSettings>(() => {
+		try {
+			return JSON.parse(localStorage.getItem("settings") || "null") as TypingSettings;
+		} catch {
+			return {
+				mode: "words",
+				isPunctuation: false,
+				isNumbers: false,
+				count: 10,
+				language: "english",
+			};
+		}
+	});
 
 	useEffect(() => {
 		localStorage.setItem("settings", JSON.stringify(settings));
@@ -63,7 +65,6 @@ const useSession = () => {
 		letterStatuses,
 		extraChars,
 		settings,
-		isFinished,
 		elapsed,
 	);
 

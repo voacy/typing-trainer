@@ -45,7 +45,7 @@ const useTyping = (
 			newStatuses[currentWordIndex][currentLetterIndex] = "incorrect";
 			playIncorrect();
 		}
-		setCurrentLetterIndex((e) => e + 1);
+		setCurrentLetterIndex((char) => char + 1);
 		setLetterStatuses(newStatuses);
 	};
 
@@ -64,7 +64,7 @@ const useTyping = (
 			playCorrect();
 		}
 
-		setCurrentWordIndex((e) => e + 1);
+		setCurrentWordIndex((word) => word + 1);
 		setCurrentLetterIndex(0);
 		setLetterStatuses(newStatuses);
 	};
@@ -78,7 +78,7 @@ const useTyping = (
 
 		if (currentLetterIndex > currentWord.length) {
 			playCorrect();
-			setCurrentLetterIndex((e) => e - 1);
+			setCurrentLetterIndex((char) => char - 1);
 			newExtraChars[currentWordIndex] = extraChars[currentWordIndex].slice(0, -1);
 			setExtraChars(newExtraChars);
 			return;
@@ -86,14 +86,14 @@ const useTyping = (
 
 		if (currentLetterIndex > 0) {
 			playCorrect();
-			setCurrentLetterIndex((e) => e - 1);
+			setCurrentLetterIndex((char) => char - 1);
 			newStatuses[currentWordIndex][currentLetterIndex - 1] = "idle";
 			setLetterStatuses(newStatuses);
 		}
 
 		if (currentLetterIndex === 0 && hasErrors()) {
 			playCorrect();
-			setCurrentWordIndex((e) => e - 1);
+			setCurrentWordIndex((word) => word - 1);
 			setCurrentLetterIndex(
 				words[currentWordIndex - 1].length + extraChars[currentWordIndex - 1].length,
 			);
@@ -127,7 +127,7 @@ const useTyping = (
 		}
 
 		if (currentLetterIndex === 0 && hasErrors()) {
-			setCurrentWordIndex((e) => e - 1);
+			setCurrentWordIndex((word) => word - 1);
 			setCurrentLetterIndex(0);
 			newStatuses[currentWordIndex - 1] = newStatuses[currentWordIndex - 1].map(
 				() => "idle" as LetterStatus,
