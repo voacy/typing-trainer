@@ -4,7 +4,6 @@ import Header from "../widgets/Header/Header";
 import AboutPage from "../pages/AboutPage/AboutPage";
 import { TooltipProvider } from "../shared/ui/Tooltip";
 import { Toaster } from "sonner";
-import { SessionProvider } from "./SessionContext";
 import { Routes, Route } from "react-router-dom";
 
 function App() {
@@ -25,14 +24,7 @@ function App() {
 			/>
 			<Header />
 			<Routes>
-				<Route
-					path="/"
-					element={
-						<SessionProvider>
-							<TypingPage />
-						</SessionProvider>
-					}
-				></Route>
+				<Route path="/" element={<TypingPage />} />
 				<Route path="/about" element={<AboutPage />}></Route>
 			</Routes>
 		</TooltipProvider>

@@ -10,7 +10,7 @@ import useGameSounds from "../../features/sounds/useSounds";
 import html2canvas from "html2canvas";
 import Tooltip from "../../shared/ui/Tooltip";
 import { toast } from "sonner";
-import { useSessionContext } from "../../app/SessionContext";
+import useSession from "./useSession";
 
 const TypingPage = () => {
 	const {
@@ -32,7 +32,7 @@ const TypingPage = () => {
 		correct,
 		incorrect,
 		extra,
-	} = useSessionContext();
+	} = useSession();
 
 	const wrapperRef = useRef<HTMLDivElement>(null);
 	const resultsRef = useRef<HTMLElement>(null);

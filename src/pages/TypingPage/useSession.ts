@@ -96,6 +96,10 @@ const useSession = () => {
 		}
 	}, [isFinished]);
 
+	useEffect(() => {
+		document.body.classList.toggle("session--active", timerStatus);
+	}, [timerStatus]);
+
 	const handleReset = (newSettings = settings) => {
 		const newWords = getNewWords(newSettings);
 		setWords(newWords);
