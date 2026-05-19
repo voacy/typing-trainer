@@ -9,6 +9,14 @@ const SettingsPage = () => {
 			<div className="container">
 				<section className="settings__section">
 					<h1 className="settings__title">settings</h1>
+					<p className="settings__desc">
+						Note: All current settings are stored in your browser's local storage and are not
+						uploaded to any server. If you clear your browser data or use a different browser or
+						device, your saved settings will be lost
+					</p>
+				</section>
+				<section className="settings__section">
+					<p className="settings__label">// themes</p>
 					<div className="theme__list">
 						{themes.map((e) => {
 							return (

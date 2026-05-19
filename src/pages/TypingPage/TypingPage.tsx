@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import useCursor from "../../features/cursor/useCursor";
 import useTextScroll from "../../features/textScroll/useTextScroll";
 import TypingText from "../../features/typing/TypingText";
-import Settings from "../../widgets/Settings/Settings";
+import Toolbar from "../../widgets/Toolbar/Toolbar";
 import CapsLockWarning from "../../features/capsLock/CapsLockWarning";
 import { ArrowClockwiseIcon, TextAlignLeftIcon, ImageIcon } from "@phosphor-icons/react";
 import Results from "../../widgets/Results/Results";
@@ -57,7 +57,7 @@ const TypingPage = () => {
 	return (
 		<main className="main">
 			<div className="container">
-				<Settings settings={settings} setSettings={setSettings} onReset={handleReset} />
+				<Toolbar settings={settings} setSettings={setSettings} onReset={handleReset} />
 				{!isFinished &&
 					(settings.mode === "time" ? (
 						<span className="timer">{timer}</span>

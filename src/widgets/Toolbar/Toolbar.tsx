@@ -7,7 +7,7 @@ import {
 	GlobeHemisphereWestIcon,
 } from "@phosphor-icons/react";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
-import "./Settings.scss";
+import "./Toolbar.scss";
 
 import type { TypingSettings } from "../../shared/types";
 import useGameSounds from "../../features/sounds/useSounds";
@@ -19,7 +19,7 @@ type Props = {
 	onReset: (newSettings?: TypingSettings) => void;
 };
 
-const Settings = (props: Props) => {
+const Toolbar = (props: Props) => {
 	const { playClick } = useGameSounds();
 	const { settings, setSettings, onReset } = props;
 
@@ -30,12 +30,12 @@ const Settings = (props: Props) => {
 	};
 
 	return (
-		<div className="settings" onMouseDown={(e) => e.preventDefault()}>
+		<div className="toolbar" onMouseDown={(e) => e.preventDefault()}>
 			<div
-				className={`settings__group ${settings.mode === "quote" ? "settings__group--disabled" : ""}`}
+				className={`toolbar__group ${settings.mode === "quote" ? "toolbar__group--disabled" : ""}`}
 			>
 				<button
-					className={`settings__btn ${settings.isPunctuation ? "settings__btn--active" : ""}`}
+					className={`toolbar__btn ${settings.isPunctuation ? "toolbar__btn--active" : ""}`}
 					onClick={() =>
 						handleSettingsChange({
 							...settings,
@@ -47,7 +47,7 @@ const Settings = (props: Props) => {
 					punctuation
 				</button>
 				<button
-					className={`settings__btn ${settings.isNumbers ? "settings__btn--active" : ""}`}
+					className={`toolbar__btn ${settings.isNumbers ? "toolbar__btn--active" : ""}`}
 					onClick={() =>
 						handleSettingsChange({
 							...settings,
@@ -60,9 +60,9 @@ const Settings = (props: Props) => {
 				</button>
 			</div>
 
-			<div className="settings__group">
+			<div className="toolbar__group">
 				<button
-					className={`settings__btn ${settings.mode === "time" ? "settings__btn--active" : ""}`}
+					className={`toolbar__btn ${settings.mode === "time" ? "toolbar__btn--active" : ""}`}
 					onClick={() => handleSettingsChange({ ...settings, mode: "time" })}
 				>
 					<HourglassHighIcon size={20} weight="fill" />
@@ -70,7 +70,7 @@ const Settings = (props: Props) => {
 				</button>
 
 				<button
-					className={`settings__btn ${settings.mode === "words" ? "settings__btn--active" : ""}`}
+					className={`toolbar__btn ${settings.mode === "words" ? "toolbar__btn--active" : ""}`}
 					onClick={() => handleSettingsChange({ ...settings, mode: "words" })}
 				>
 					<TextAaIcon size={20} />
@@ -78,7 +78,7 @@ const Settings = (props: Props) => {
 				</button>
 
 				<button
-					className={`settings__btn ${settings.mode === "quote" ? "settings__btn--active" : ""}`}
+					className={`toolbar__btn ${settings.mode === "quote" ? "toolbar__btn--active" : ""}`}
 					onClick={() => handleSettingsChange({ ...settings, mode: "quote" })}
 				>
 					<QuotesIcon size={20} weight="fill" />
@@ -87,41 +87,41 @@ const Settings = (props: Props) => {
 			</div>
 
 			<div
-				className={`settings__group ${settings.mode === "quote" ? "settings__group--disabled" : ""}`}
+				className={`toolbar__group ${settings.mode === "quote" ? "toolbar__group--disabled" : ""}`}
 			>
 				<button
-					className={`settings__btn ${settings.count === 10 ? "settings__btn--active" : ""}`}
+					className={`toolbar__btn ${settings.count === 10 ? "toolbar__btn--active" : ""}`}
 					onClick={() => handleSettingsChange({ ...settings, count: 10 })}
 				>
 					10
 				</button>
 
 				<button
-					className={`settings__btn ${settings.count === 30 ? "settings__btn--active" : ""}`}
+					className={`toolbar__btn ${settings.count === 30 ? "toolbar__btn--active" : ""}`}
 					onClick={() => handleSettingsChange({ ...settings, count: 30 })}
 				>
 					30
 				</button>
 
 				<button
-					className={`settings__btn ${settings.count === 60 ? "settings__btn--active" : ""}`}
+					className={`toolbar__btn ${settings.count === 60 ? "toolbar__btn--active" : ""}`}
 					onClick={() => handleSettingsChange({ ...settings, count: 60 })}
 				>
 					60
 				</button>
 
 				<button
-					className={`settings__btn ${settings.count === 120 ? "settings__btn--active" : ""}`}
+					className={`toolbar__btn ${settings.count === 120 ? "toolbar__btn--active" : ""}`}
 					onClick={() => handleSettingsChange({ ...settings, count: 120 })}
 				>
 					120
 				</button>
 			</div>
 
-			<div className="settings__group">
+			<div className="toolbar__group">
 				<DropdownMenu.Root>
 					<DropdownMenu.Trigger
-						className={`settings__btn ${settings.language !== "english" ? "settings__btn--active" : ""}`}
+						className={`toolbar__btn ${settings.language !== "english" ? "toolbar__btn--active" : ""}`}
 						onPointerDown={() => playClick()}
 					>
 						<GlobeHemisphereWestIcon size={20} weight="fill" />
@@ -148,4 +148,4 @@ const Settings = (props: Props) => {
 	);
 };
 
-export default Settings;
+export default Toolbar;

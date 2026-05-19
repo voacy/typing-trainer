@@ -58,8 +58,7 @@ const AboutPage = () => {
 					<h1 className="about__title">about</h1>
 					<p className="about__desc">
 						A minimalistic typing speed trainer inspired by Monkeytype. Test yourself in words,
-						time, or quote mode — track your <span className="about__accent">wpm</span> and{" "}
-						<span className="about__accent">accuracy</span> in real time.
+						time, or quote mode — track your wpm and accuracy in real time.
 					</p>
 				</section>
 

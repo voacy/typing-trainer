@@ -1,5 +1,5 @@
 import "./Header.scss";
-import { GithubLogoIcon, InfoIcon, KeyboardIcon, GearSixIcon } from "@phosphor-icons/react";
+import { InfoIcon, KeyboardIcon, GearSixIcon } from "@phosphor-icons/react";
 import useGameSounds from "../../features/sounds/useSounds";
 import { Link } from "react-router-dom";
 
@@ -43,15 +43,7 @@ const Header = () => {
 						</ul>
 					</nav>
 				</div>
-				<div className="header__right">
-					<a
-						className="header__link"
-						href="https://github.com/voacy/speed-keys"
-						onClick={() => playClick()}
-					>
-						<GithubLogoIcon size={20} weight="fill" />
-					</a>
-				</div>
+				<div className="header__right"></div>
 			</div>
 		</header>
 	);
