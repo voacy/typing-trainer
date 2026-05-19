@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { Theme } from "../../shared/types";
 
-const DEFAULT_THEME: Theme = "solarized-dark";
+const DEFAULT_THEME: Theme = "tokyo-night";
 
 const useTheme = () => {
 	const savedTheme = localStorage.getItem("theme") as Theme;
@@ -9,6 +9,8 @@ const useTheme = () => {
 
 	if (savedTheme) {
 		document.body.setAttribute("data-theme", savedTheme);
+	} else {
+		document.body.setAttribute("data-theme", DEFAULT_THEME);
 	}
 
 	const changeTheme = (newTheme: Theme) => {
