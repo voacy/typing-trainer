@@ -6,6 +6,10 @@ const useResults = (
 	settings: TypingSettings,
 	elapsed: number,
 ) => {
+	if (!elapsed) {
+		return { wpm: 0, accuracy: 0, correct: 0, incorrect: 0, extra: 0 };
+	}
+
 	const flatStatuses = letterStatuses.flat();
 	const correct = flatStatuses.filter((status) => status === "correct").length;
 	const incorrect = flatStatuses.filter((status) => status === "incorrect").length;
