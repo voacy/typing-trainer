@@ -24,17 +24,21 @@ const useSession = () => {
 		[],
 	);
 
+	const defaultSettings: TypingSettings = {
+		mode: "words",
+		isPunctuation: false,
+		isNumbers: false,
+		count: 10,
+		language: "english",
+	};
+
 	const [settings, setSettings] = useState<TypingSettings>(() => {
 		try {
-			return JSON.parse(localStorage.getItem("settings") || "null") as TypingSettings;
+			const saved = localStorage.getItem("settings");
+			if (!saved) return defaultSettings;
+			return JSON.parse(saved) as TypingSettings;
 		} catch {
-			return {
-				mode: "words",
-				isPunctuation: false,
-				isNumbers: false,
-				count: 10,
-				language: "english",
-			};
+			return defaultSettings;
 		}
 	});
 
