@@ -2,11 +2,14 @@ import "./App.scss";
 import TypingPage from "../pages/TypingPage/TypingPage";
 import Header from "../widgets/Header/Header";
 import AboutPage from "../pages/AboutPage/AboutPage";
+import SettingsPage from "../pages/SettingsPage/SettingsPage";
 import { TooltipProvider } from "../shared/ui/Tooltip";
 import { Toaster } from "sonner";
 import { Routes, Route } from "react-router-dom";
+import useTheme from "../features/theme/useTheme";
 
 function App() {
+	useTheme();
 	return (
 		<TooltipProvider>
 			<Toaster
@@ -25,7 +28,8 @@ function App() {
 			<Header />
 			<Routes>
 				<Route path="/" element={<TypingPage />} />
-				<Route path="/about" element={<AboutPage />}></Route>
+				<Route path="/about" element={<AboutPage />} />
+				<Route path="/settings" element={<SettingsPage />} />
 			</Routes>
 		</TooltipProvider>
 	);

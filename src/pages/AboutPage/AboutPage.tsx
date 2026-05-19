@@ -55,11 +55,10 @@ const AboutPage = () => {
 		<main className="about">
 			<div className="container">
 				<section className="about__section">
-					<p className="about__label">// about</p>
-					<h1 className="about__title">typezone</h1>
+					<h1 className="about__title">about</h1>
 					<p className="about__desc">
-						A minimalistic typing speed trainer inspired by Monkeytype. Test yourself in words, time,
-						or quote mode — track your <span className="about__accent">wpm</span> and{" "}
+						A minimalistic typing speed trainer inspired by Monkeytype. Test yourself in words,
+						time, or quote mode — track your <span className="about__accent">wpm</span> and{" "}
 						<span className="about__accent">accuracy</span> in real time.
 					</p>
 				</section>
@@ -107,12 +106,7 @@ const AboutPage = () => {
 
 				<section className="about__section about__section--last">
 					<p className="about__label">// source</p>
-					<a
-						className="about__github"
-						href="https://github.com/voacy/speed-keys"
-						target="_blank"
-						rel="noreferrer"
-					>
+					<a className="about__github" href="https://github.com/voacy/speed-keys" rel="noreferrer">
 						<GithubLogoIcon size={16} weight="fill" />
 						github.com/voacy/speed-keys
 					</a>

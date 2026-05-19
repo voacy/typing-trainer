@@ -1,0 +1,42 @@
+.theme {
+	&__name {
+		font-size: 18px;
+	}
+	&__list {
+		display: grid;
+		grid-template-columns: repeat(5, 1fr);
+		gap: 10px;
+	}
+
+	&__btn {
+		position: relative;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		padding: 10px 12px;
+		border-radius: 6px;
+
+		&--active {
+			outline: 2px solid var(--color-accent);
+			transform: scale(1.1);
+			z-index: 2;
+		}
+	}
+
+	&__dots {
+		position: absolute;
+		right: 12px;
+		top: 50%;
+		transform: translateY(-50%);
+		display: flex;
+		align-items: center;
+		gap: 3px;
+	}
+
+	&__dot {
+		width: 10px;
+		height: 10px;
+		border-radius: 50%;
+	}
+}
