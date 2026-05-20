@@ -1,9 +1,15 @@
 import "./SettingsPage.scss";
 import { themes } from "../../features/theme/themes";
 import useTheme from "../../features/theme/useTheme";
+import { CaretDownIcon } from "@phosphor-icons/react";
+import { useState } from "react";
 
 const SettingsPage = () => {
 	const { theme, changeTheme } = useTheme();
+	const [openSection, setOpenSections] = useState({
+		themes: false,
+	});
+
 	return (
 		<main className="settings">
 			<div className="container">
@@ -15,9 +21,15 @@ const SettingsPage = () => {
 						device, your saved settings will be lost
 					</p>
 				</section>
-				<section className="settings__section">
-					<p className="settings__label">// themes</p>
-					<div className="theme__list">
+				<section className={`settings__section ${openSection.themes ? "hidden" : ""}`}>
+					<p
+						className="settings__label"
+						onClick={() => setOpenSections({ themes: !openSection.themes })}
+					>
+						<CaretDownIcon className="settings__icon" size={20} weight="fill" />
+						themes
+					</p>
+					<div className="theme__list settings__list">
 						{themes.map((e) => {
 							return (
 								<div

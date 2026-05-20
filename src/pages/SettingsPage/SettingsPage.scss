@@ -1,5 +1,6 @@
 .settings {
 	padding: 60px 0 80px;
+
 	&__title {
 		font-size: clamp(42px, 6vw, 72px);
 		font-weight: 700;
@@ -16,12 +17,18 @@
 	}
 
 	&__label {
-		font-size: 11px;
-		letter-spacing: 2px;
-		color: var(--color-text);
-		opacity: 0.5;
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		font-size: 20px;
+		cursor: pointer;
+		color: var(--color-text-add);
 		margin-bottom: 18px;
 		font-weight: 500;
+	}
+
+	&__icon {
+		transition: 0.2s transform ease-in-out;
 	}
 
 	&__section {
@@ -31,6 +38,23 @@
 
 		&--last {
 			border-bottom: none;
+		}
+	}
+
+	&__list {
+		transition: 0.2s all ease-in-out;
+	}
+
+	.hidden {
+		.settings__list {
+			opacity: 0;
+			visibility: hidden;
+			max-height: 0px;
+			overflow: hidden;
+		}
+
+		.settings__icon {
+			transform: rotate(-90deg);
 		}
 	}
 }
