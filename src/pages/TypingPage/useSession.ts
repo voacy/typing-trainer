@@ -9,7 +9,7 @@ import type { LetterStatus, TypingSettings } from "../../shared/types";
 
 const getNewWords = (newSettings: TypingSettings): string[] => {
 	const count = newSettings.mode === "time" ? 200 : newSettings.count;
-	if (newSettings.mode === "quote") return generateQuote(quotes);
+	if (newSettings.mode === "quote") return generateQuote(quotes, newSettings.language);
 	const wordList = getLanguageWords(newSettings.language);
 	return generateWordsWithOptions(
 		wordList,

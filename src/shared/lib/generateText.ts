@@ -56,7 +56,8 @@ export const generateWordsWithOptions = (
 	return result;
 };
 
-export const generateQuote = (quotes: string[]): string[] => {
-	const quote = quotes[Math.floor(Math.random() * quotes.length)];
+export const generateQuote = (quotes: Record<string, string[]>, language: string): string[] => {
+	const languageQuotes = quotes[language] ?? quotes["english"];
+	const quote = languageQuotes[Math.floor(Math.random() * languageQuotes.length)];
 	return quote.split(" ");
 };
