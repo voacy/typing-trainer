@@ -1,10 +1,13 @@
 import "./Header.scss";
 import { InfoIcon, GearSixIcon, SwordIcon } from "@phosphor-icons/react";
 import useGameSounds from "../../features/sounds/useSounds";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const Header = () => {
-	const { playClick } = useGameSounds();
+	const { playClick, playPage } = useGameSounds();
+
+	const getLinkClass = ({ isActive }: { isActive: boolean }) =>
+		`menu__link${isActive ? " menu__link--active" : ""}`;
 
 	return (
 		<header className="header">
@@ -26,19 +29,19 @@ const Header = () => {
 					<nav className="menu">
 						<ul className="menu__list">
 							<li className="menu__item">
-								<Link to="/" className="menu__link">
+								<NavLink to="/" className={getLinkClass} onClick={() => playPage()}>
 									<SwordIcon size={20} weight="fill" />
-								</Link>
+								</NavLink>
 							</li>
 							<li className="menu__item">
-								<Link to="/about" className="menu__link">
+								<NavLink to="/about" className={getLinkClass} onClick={() => playPage()}>
 									<InfoIcon size={20} weight="fill" />
-								</Link>
+								</NavLink>
 							</li>
 							<li className="menu__item">
-								<Link to="/settings" className="menu__link">
+								<NavLink to="/settings" className={getLinkClass} onClick={() => playPage()}>
 									<GearSixIcon size={20} weight="fill" />
-								</Link>
+								</NavLink>
 							</li>
 						</ul>
 					</nav>
