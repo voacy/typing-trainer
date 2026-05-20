@@ -200,7 +200,6 @@ export type Theme =
 	| "spiderman"
 	| "red-dragon"
 	| "dark"
-	| "rgb"
 	| "vesper"
 	| "voc"
 	| "midnight"

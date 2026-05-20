@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=Syne:wght@700;800&display=swap");
 
 :root {
 	--color-bg: #1a1b26;
@@ -9,7 +9,7 @@
 	--color-letter-incorrect: #f7768e;
 	--color-letter-extra: #c45a70;
 	--color-mode-bg: #13141f;
-	font-family: "Golos Text", sans-serif;
+	font-family: "Syne", sans-serif;
 	font-synthesis: none;
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
@@ -1859,16 +1859,7 @@
 	--color-letter-extra: #cc2222;
 	--color-mode-bg: #080808;
 }
-[data-theme="rgb"] {
-	--color-bg: #111111;
-	--color-text: #444444;
-	--color-text-add: #eeeeee;
-	--color-accent: #ff0000;
-	--color-letter-correct: #eeeeee;
-	--color-letter-incorrect: #ff4444;
-	--color-letter-extra: #cc2222;
-	--color-mode-bg: #080808;
-}
+
 [data-theme="vesper"] {
 	--color-bg: #101010;
 	--color-text: #a0a0a0;

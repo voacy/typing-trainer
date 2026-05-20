@@ -1468,14 +1468,6 @@ export const themes: ThemeOption[] = [
 		textAdd: "#eeeeee",
 	},
 	{
-		value: "rgb",
-		label: "rgb",
-		bg: "#111111",
-		text: "#444444",
-		accent: "#ff0000",
-		textAdd: "#eeeeee",
-	},
-	{
 		value: "vesper",
 		label: "vesper",
 		bg: "#101010",

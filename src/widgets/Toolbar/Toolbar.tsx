@@ -43,7 +43,7 @@ const Toolbar = (props: Props) => {
 						})
 					}
 				>
-					<AtIcon size={20} />
+					<AtIcon size={16} />
 					punctuation
 				</button>
 				<button
@@ -55,7 +55,7 @@ const Toolbar = (props: Props) => {
 						})
 					}
 				>
-					<HashIcon size={20} />
+					<HashIcon size={16} />
 					numbers
 				</button>
 			</div>
@@ -65,7 +65,7 @@ const Toolbar = (props: Props) => {
 					className={`toolbar__btn ${settings.mode === "time" ? "toolbar__btn--active" : ""}`}
 					onClick={() => handleSettingsChange({ ...settings, mode: "time" })}
 				>
-					<HourglassHighIcon size={20} weight="fill" />
+					<HourglassHighIcon size={16} weight="fill" />
 					time
 				</button>
 
@@ -73,7 +73,7 @@ const Toolbar = (props: Props) => {
 					className={`toolbar__btn ${settings.mode === "words" ? "toolbar__btn--active" : ""}`}
 					onClick={() => handleSettingsChange({ ...settings, mode: "words" })}
 				>
-					<TextAaIcon size={20} />
+					<TextAaIcon size={16} />
 					words
 				</button>
 
@@ -81,7 +81,7 @@ const Toolbar = (props: Props) => {
 					className={`toolbar__btn ${settings.mode === "quote" ? "toolbar__btn--active" : ""}`}
 					onClick={() => handleSettingsChange({ ...settings, mode: "quote" })}
 				>
-					<QuotesIcon size={20} weight="fill" />
+					<QuotesIcon size={16} weight="fill" />
 					quote
 				</button>
 			</div>
@@ -124,7 +124,7 @@ const Toolbar = (props: Props) => {
 						className={`toolbar__btn ${settings.language !== "english" ? "toolbar__btn--active" : ""}`}
 						onPointerDown={() => playClick()}
 					>
-						<GlobeHemisphereWestIcon size={20} weight="fill" />
+						<GlobeHemisphereWestIcon size={16} weight="fill" />
 						{settings.language}
 					</DropdownMenu.Trigger>
 					<DropdownMenu.Portal>

@@ -24,12 +24,11 @@ function App() {
 				position="top-right"
 				toastOptions={{
 					style: {
-						background: "var(--color-mode-bg)",
-						color: "var(--color-accent)",
-						border: "1px dashed var(--color-mode-bg)",
-						outline: "1px dashed var(--color-accent)",
-						fontSize: "14px",
-						fontFamily: "inherit",
+						background: "var(--color-accent)",
+						color: "var(--color-bg)",
+						border: "none",
+						fontSize: "16px",
+						fontFamily: "Syne",
 					},
 				}}
 			/>

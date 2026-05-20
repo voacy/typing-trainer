@@ -33,6 +33,7 @@
 .letter {
 	position: relative;
 	font-size: 36px;
+	font-family: "Golos Text", sans-serif;
 	color: var(--color-text);
 }
 
@@ -120,24 +121,20 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	gap: 20px;
+	gap: 10px;
 }
 
 .controls__btn {
-	display: block;
+	display: flex;
+	align-items: center;
 	margin-top: 30px;
-	color: var(--color-text);
+	gap: 6px;
+	color: var(--color-bg);
 	font-size: 14px;
 	cursor: pointer;
-	padding: 10px;
-	max-height: 40px;
+	padding: 6px;
 	border-radius: 6px;
-	background-color: var(--color-mode-bg);
-	transition: color 0.2s ease-in-out;
-
-	&:hover {
-		color: var(--color-letter-correct);
-	}
+	background-color: var(--color-accent);
 }
 
 #nprogress {

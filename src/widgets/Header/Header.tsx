@@ -1,5 +1,5 @@
 import "./Header.scss";
-import { InfoIcon, KeyboardIcon, GearSixIcon } from "@phosphor-icons/react";
+import { InfoIcon, GearSixIcon, SwordIcon } from "@phosphor-icons/react";
 import useGameSounds from "../../features/sounds/useSounds";
 import { Link } from "react-router-dom";
 
@@ -27,7 +27,7 @@ const Header = () => {
 						<ul className="menu__list">
 							<li className="menu__item">
 								<Link to="/" className="menu__link">
-									<KeyboardIcon size={20} weight="fill" />
+									<SwordIcon size={20} weight="fill" />
 								</Link>
 							</li>
 							<li className="menu__item">
