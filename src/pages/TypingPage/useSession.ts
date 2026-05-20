@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import useTimer from "../../features/timer/useTimer";
 import useTyping from "../../features/typing/useTyping";
 import useResults from "../../features/results/useResults";
@@ -19,26 +19,26 @@ const getNewWords = (newSettings: TypingSettings): string[] => {
 	);
 };
 
+const DEFAULT_SETTINGS: TypingSettings = {
+	mode: "words",
+	isPunctuation: false,
+	isNumbers: false,
+	count: 10,
+	language: "english",
+};
+
 const useSession = () => {
 	const [chartData, setChartData] = useState<{ wpm: number; accuracy: number; errors: number }[]>(
 		[],
 	);
 
-	const defaultSettings: TypingSettings = {
-		mode: "words",
-		isPunctuation: false,
-		isNumbers: false,
-		count: 10,
-		language: "english",
-	};
-
 	const [settings, setSettings] = useState<TypingSettings>(() => {
 		try {
 			const saved = localStorage.getItem("settings");
-			if (!saved) return defaultSettings;
+			if (!saved) return DEFAULT_SETTINGS;
 			return JSON.parse(saved) as TypingSettings;
 		} catch {
-			return defaultSettings;
+			return DEFAULT_SETTINGS;
 		}
 	});
 
@@ -86,33 +86,31 @@ const useSession = () => {
 				{ wpm: Math.round(currentWpm), accuracy: currentAccuracy, errors: incorrect + extra },
 			]);
 		}
-	}, [elapsed, isFinished, timer]);
+	}, [elapsed]);
 
 	useEffect(() => {
 		if ((settings.mode === "time" && timer === 0) || currentWordIndex >= words.length) {
 			setIsFinished(true);
-		}
-	}, [timer, currentWordIndex]);
-
-	useEffect(() => {
-		if (isFinished) {
 			setSnapshot({ words, letterStatuses, extraChars });
 		}
-	}, [isFinished]);
+	}, [timer, currentWordIndex]);
 
 	useEffect(() => {
 		document.body.classList.toggle("session--active", timerStatus);
 	}, [timerStatus]);
 
-	const handleReset = (newSettings = settings) => {
-		const newWords = getNewWords(newSettings);
-		setWords(newWords);
-		resetTimer(newSettings.count);
-		resetTyping(newWords);
-		setIsFinished(false);
-		setChartData([]);
-		setSnapshot(null);
-	};
+	const handleReset = useCallback(
+		(newSettings = settings) => {
+			const newWords = getNewWords(newSettings);
+			setWords(newWords);
+			resetTimer(newSettings.count);
+			resetTyping(newWords);
+			setIsFinished(false);
+			setChartData([]);
+			setSnapshot(null);
+		},
+		[settings],
+	);
 
 	return {
 		settings,
