@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { createLetterStatuses } from "../../shared/lib";
 import type { LetterStatus } from "../../shared/types";
 import useGameSounds from "../../features/sounds/useSounds";
@@ -20,36 +20,48 @@ const useTyping = (
 
 	const { playCorrect, playIncorrect } = useGameSounds();
 
-	const hasErrors = () => {
+	const hasErrors = useCallback(() => {
 		return (
 			currentWordIndex > 0 &&
 			(letterStatuses[currentWordIndex - 1].some((status) => status !== "correct") ||
 				extraChars[currentWordIndex - 1].length > 0)
 		);
-	};
+	}, [currentWordIndex, letterStatuses, extraChars]);
 
-	const handleLetter = (e: string) => {
-		const newStatuses = [...letterStatuses];
-		newStatuses[currentWordIndex] = [...letterStatuses[currentWordIndex]];
+	const handleLetter = useCallback(
+		(e: string) => {
+			const newStatuses = [...letterStatuses];
+			newStatuses[currentWordIndex] = [...letterStatuses[currentWordIndex]];
 
-		const newExtraChars = [...extraChars];
-		newExtraChars[currentWordIndex] = [...extraChars[currentWordIndex], e];
+			const newExtraChars = [...extraChars];
+			newExtraChars[currentWordIndex] = [...extraChars[currentWordIndex], e];
 
-		if (currentLetterIndex >= currentWord.length) {
-			playIncorrect();
-			setExtraChars(newExtraChars);
-		} else if (e === currentLetter) {
-			newStatuses[currentWordIndex][currentLetterIndex] = "correct";
-			playCorrect();
-		} else if (e !== currentLetter) {
-			newStatuses[currentWordIndex][currentLetterIndex] = "incorrect";
-			playIncorrect();
-		}
-		setCurrentLetterIndex((char) => char + 1);
-		setLetterStatuses(newStatuses);
-	};
+			if (currentLetterIndex >= currentWord.length) {
+				playIncorrect();
+				setExtraChars(newExtraChars);
+			} else if (e === currentLetter) {
+				newStatuses[currentWordIndex][currentLetterIndex] = "correct";
+				playCorrect();
+			} else if (e !== currentLetter) {
+				newStatuses[currentWordIndex][currentLetterIndex] = "incorrect";
+				playIncorrect();
+			}
+			setCurrentLetterIndex((char) => char + 1);
+			setLetterStatuses(newStatuses);
+		},
+		[
+			letterStatuses,
+			extraChars,
+			currentWordIndex,
+			currentLetterIndex,
+			currentLetter,
+			currentWord,
+			playCorrect,
+			playIncorrect,
+		],
+	);
 
-	const handleSpace = () => {
+	const handleSpace = useCallback(() => {
 		const newStatuses = [...letterStatuses];
 		newStatuses[currentWordIndex] = [...letterStatuses[currentWordIndex]];
 
@@ -67,9 +79,16 @@ const useTyping = (
 		setCurrentWordIndex((word) => word + 1);
 		setCurrentLetterIndex(0);
 		setLetterStatuses(newStatuses);
-	};
+	}, [
+		letterStatuses,
+		currentWordIndex,
+		currentLetterIndex,
+		extraChars,
+		playIncorrect,
+		playCorrect,
+	]);
 
-	const handleBackspace = () => {
+	const handleBackspace = useCallback(() => {
 		const newStatuses = [...letterStatuses];
 		newStatuses[currentWordIndex] = [...letterStatuses[currentWordIndex]];
 
@@ -99,9 +118,18 @@ const useTyping = (
 			);
 			setLetterStatuses(newStatuses);
 		}
-	};
+	}, [
+		letterStatuses,
+		currentWordIndex,
+		currentLetterIndex,
+		extraChars,
+		currentWord,
+		words,
+		hasErrors,
+		playCorrect,
+	]);
 
-	const handleCtrlBackspace = () => {
+	const handleCtrlBackspace = useCallback(() => {
 		const newStatuses = [...letterStatuses];
 		newStatuses[currentWordIndex] = [...letterStatuses[currentWordIndex]];
 
@@ -136,7 +164,7 @@ const useTyping = (
 			setExtraChars(newExtraChars);
 		}
 		setLetterStatuses(newStatuses);
-	};
+	}, [letterStatuses, currentWordIndex, currentLetterIndex, extraChars, currentWord, hasErrors]);
 
 	useEffect(() => {
 		const handleKeyDown = (e: KeyboardEvent) => {
@@ -156,15 +184,28 @@ const useTyping = (
 		return () => {
 			window.removeEventListener("keydown", handleKeyDown);
 		};
-	}, [currentLetter, letterStatuses, extraChars, timer, timerStatus, startTimer]);
+	}, [
+		handleSpace,
+		handleBackspace,
+		handleCtrlBackspace,
+		handleLetter,
+		timer,
+		timerStatus,
+		startTimer,
+		letterStatuses,
+		currentWordIndex,
+	]);
 
-	const resetTyping = (newWords?: string[]) => {
-		const w = newWords ?? words;
-		setLetterStatuses(createLetterStatuses(w));
-		setExtraChars(w.map(() => []));
-		setCurrentWordIndex(0);
-		setCurrentLetterIndex(0);
-	};
+	const resetTyping = useCallback(
+		(newWords?: string[]) => {
+			const w = newWords ?? words;
+			setLetterStatuses(createLetterStatuses(w));
+			setExtraChars(w.map(() => []));
+			setCurrentWordIndex(0);
+			setCurrentLetterIndex(0);
+		},
+		[words],
+	);
 
 	return { letterStatuses, extraChars, currentWordIndex, currentLetterIndex, resetTyping };
 };
