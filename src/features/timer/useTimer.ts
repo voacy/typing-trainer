@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 const useTimer = (duration: number, isFinished: boolean, mode: string) => {
 	const [timer, setTimer] = useState(duration);
@@ -23,21 +23,21 @@ const useTimer = (duration: number, isFinished: boolean, mode: string) => {
 	}, [timerStatus, mode]);
 
 	useEffect(() => {
-		if (isFinished) {
-			setTimerStatus(false);
-			return;
-		}
+		if (isFinished) setTimerStatus(false);
 	}, [isFinished]);
 
-	const startTimer = () => {
+	const startTimer = useCallback(() => {
 		setTimerStatus(true);
-	};
+	}, []);
 
-	const resetTimer = (newDuration?: number) => {
-		setTimer(newDuration ?? duration);
-		setTimerStatus(false);
-		setElapsed(0);
-	};
+	const resetTimer = useCallback(
+		(newDuration?: number) => {
+			setTimer(newDuration ?? duration);
+			setTimerStatus(false);
+			setElapsed(0);
+		},
+		[duration],
+	);
 
 	return { timer, timerStatus, startTimer, resetTimer, elapsed };
 };
