@@ -5,11 +5,19 @@ import AboutPage from "../pages/AboutPage/AboutPage";
 import SettingsPage from "../pages/SettingsPage/SettingsPage";
 import { TooltipProvider } from "../shared/ui/Tooltip";
 import { Toaster } from "sonner";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import useTheme from "../features/theme/useTheme";
+import NProgress from "nprogress";
+import { useEffect } from "react";
 
 function App() {
 	useTheme();
+	const location = useLocation();
+
+	useEffect(() => {
+		NProgress.start();
+		NProgress.done();
+	}, [location.pathname]);
 	return (
 		<TooltipProvider>
 			<Toaster
