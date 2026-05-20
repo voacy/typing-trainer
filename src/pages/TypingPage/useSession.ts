@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import useTimer from "../../features/timer/useTimer";
 import useTyping from "../../features/typing/useTyping";
-import useResults from "../../features/results/useResults";
+import calculateResults from "../../features/results/calculateResults";
 import { generateWordsWithOptions, generateQuote } from "../../shared/lib";
 import { getLanguageWords } from "../../shared/lib/languages";
 import quotes from "../../shared/lib/quotes";
@@ -65,7 +65,7 @@ const useSession = () => {
 	const { currentWordIndex, currentLetterIndex, letterStatuses, extraChars, resetTyping } =
 		useTyping(words, timer, timerStatus, startTimer);
 
-	const { wpm, accuracy, correct, incorrect, extra } = useResults(
+	const { wpm, accuracy, correct, incorrect, extra } = calculateResults(
 		letterStatuses,
 		extraChars,
 		settings,

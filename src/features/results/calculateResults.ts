@@ -1,6 +1,6 @@
 import type { LetterStatus, TypingSettings } from "../../shared/types";
 
-const useResults = (
+const calculateResults = (
 	letterStatuses: LetterStatus[][],
 	extraChars: string[][],
 	settings: TypingSettings,
@@ -24,4 +24,4 @@ const useResults = (
 	return { wpm, accuracy, correct, incorrect, extra };
 };
 
-export default useResults;
+export default calculateResults;
