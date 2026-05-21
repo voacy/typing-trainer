@@ -171,12 +171,14 @@ const useTyping = (
 			if (!letterStatuses[currentWordIndex]) return;
 			const isLetter = e.key.length === 1 && e.key !== " ";
 			if (timer === 0) return;
-			if (!timerStatus) startTimer();
 
 			if (e.key === " ") handleSpace();
 			else if (e.key === "Backspace" && e.ctrlKey) handleCtrlBackspace();
 			else if (e.key === "Backspace") handleBackspace();
-			else if (isLetter) handleLetter(e.key);
+			else if (isLetter) {
+				if (!timerStatus) startTimer();
+				handleLetter(e.key);
+			}
 		};
 
 		window.addEventListener("keydown", handleKeyDown);

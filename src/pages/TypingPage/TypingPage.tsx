@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useCursor from "../../features/cursor/useCursor";
 import useTextScroll from "../../features/textScroll/useTextScroll";
 import TypingText from "../../features/typing/TypingText";
@@ -36,10 +36,30 @@ const TypingPage = () => {
 
 	const wrapperRef = useRef<HTMLDivElement>(null);
 	const resultsRef = useRef<HTMLElement>(null);
+	const btnRef = useRef<HTMLButtonElement>(null);
 	const [showReplay, setShowReplay] = useState(false);
 	const offset = useTextScroll(currentWordIndex, wrapperRef);
 	const cursorPos = useCursor(currentLetterIndex, currentWordIndex, offset, wrapperRef);
 	const { playClick } = useGameSounds();
+
+	useEffect(() => {
+		const onKeyDown = (e: KeyboardEvent) => {
+			if (e.key !== "Tab") return;
+
+			const isRestartFocused = document.activeElement === btnRef.current;
+
+			if (!isRestartFocused) {
+				e.preventDefault();
+				btnRef.current?.focus();
+			}
+		};
+
+		document.addEventListener("keydown", onKeyDown);
+
+		return () => {
+			document.removeEventListener("keydown", onKeyDown);
+		};
+	}, []);
 
 	const handleScreenshot = async () => {
 		if (!resultsRef.current) return;
@@ -101,6 +121,7 @@ const TypingPage = () => {
 				<div className="controls">
 					<Tooltip content="Restart" side="top">
 						<button
+							ref={btnRef}
 							className="controls__btn"
 							onClick={(e) => {
 								playClick();
@@ -142,6 +163,13 @@ const TypingPage = () => {
 							</Tooltip>
 						</>
 					)}
+				</div>
+				<div className="hint">
+					<kbd>tab</kbd>
+					<span>+</span>
+					<kbd>enter</kbd>
+					<span>›</span>
+					<span>restart test</span>
 				</div>
 			</div>
 		</main>
