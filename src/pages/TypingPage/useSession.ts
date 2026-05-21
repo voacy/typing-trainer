@@ -86,7 +86,7 @@ const useSession = () => {
 				{ wpm: Math.round(currentWpm), accuracy: currentAccuracy, errors: incorrect + extra },
 			]);
 		}
-	}, [elapsed]);
+	}, [elapsed, isFinished, timer]);
 
 	useEffect(() => {
 		if ((settings.mode === "time" && timer === 0) || currentWordIndex >= words.length) {
