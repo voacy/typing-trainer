@@ -78,7 +78,7 @@ const SettingsPage = () => {
 										key={e.value}
 										onClick={() => {
 											changeIncorrectSound(e.value);
-											playIncorrect;
+											playIncorrect();
 										}}
 									>
 										{e.value}
