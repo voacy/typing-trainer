@@ -1,13 +1,23 @@
 import "./SettingsPage.scss";
 import { themes } from "../../features/theme/themes";
+import { sounds } from "../../features/sounds/sounds";
 import useTheme from "../../features/theme/useTheme";
-import { CaretDownIcon } from "@phosphor-icons/react";
+import useGameSounds from "../../features/sounds/useSounds";
+import {
+	CaretDownIcon,
+	SpeakerHighIcon,
+	// SpeakerLowIcon,
+	SpeakerXIcon,
+} from "@phosphor-icons/react";
 import { useState } from "react";
 
 const SettingsPage = () => {
 	const { theme, changeTheme } = useTheme();
+	const { changeCorrectSound, changeIncorrectSound, correctSound, incorrectSound } =
+		useGameSounds();
 	const [openSection, setOpenSections] = useState({
 		themes: false,
+		sounds: false,
 	});
 
 	return (
@@ -21,14 +31,59 @@ const SettingsPage = () => {
 						device, your saved settings will be lost
 					</p>
 				</section>
-				<section className={`settings__section ${openSection.themes ? "hidden" : ""}`}>
-					<p
+				<section className={`settings__section ${openSection.sounds ? "hidden" : ""}`}>
+					<h2
 						className="settings__label"
-						onClick={() => setOpenSections({ themes: !openSection.themes })}
+						onClick={() => setOpenSections((prev) => ({ ...prev, sounds: !prev.sounds }))}
 					>
-						<CaretDownIcon className="settings__icon" size={20} weight="fill" />
+						<CaretDownIcon className="settings__icon" size={40} weight="fill" />
+						sounds
+					</h2>
+					<div className="sounds__wrapper">
+						<h3 className="settings__subtitle">
+							<SpeakerHighIcon size={20} weight="fill" />
+							play sound on click
+						</h3>
+						<div className="sounds__list sounds--correct">
+							{sounds.correct.map((e) => {
+								return (
+									<button
+										className={`sounds__btn ${e.value === correctSound ? "sounds__btn--active" : ""}`}
+										key={e.value}
+										onClick={() => changeCorrectSound(e.value)}
+									>
+										{e.value}
+									</button>
+								);
+							})}
+						</div>
+						<h3 className="settings__subtitle">
+							<SpeakerXIcon size={20} weight="fill" />
+							play sound on error
+						</h3>
+						<div className="sounds__list sounds--incorrect">
+							{sounds.incorrect.map((e) => {
+								return (
+									<button
+										className={`sounds__btn ${e.value === incorrectSound ? "sounds__btn--active" : ""}`}
+										key={e.value}
+										onClick={() => changeIncorrectSound(e.value)}
+									>
+										{e.value}
+									</button>
+								);
+							})}
+						</div>
+					</div>
+				</section>
+				<section className={`settings__section ${openSection.themes ? "hidden" : ""}`}>
+					<h2
+						className="settings__label"
+						onClick={() => setOpenSections((prev) => ({ ...prev, themes: !prev.themes }))}
+					>
+						<CaretDownIcon className="settings__icon" size={40} weight="fill" />
 						themes
-					</p>
+					</h2>
 					<div className="theme__list settings__list">
 						{themes.map((e) => {
 							return (
