@@ -13,8 +13,14 @@ import { useState } from "react";
 
 const SettingsPage = () => {
 	const { theme, changeTheme } = useTheme();
-	const { changeCorrectSound, changeIncorrectSound, correctSound, incorrectSound } =
-		useGameSounds();
+	const {
+		changeCorrectSound,
+		changeIncorrectSound,
+		correctSound,
+		incorrectSound,
+		playCorrect,
+		playIncorrect,
+	} = useGameSounds();
 	const [openSection, setOpenSections] = useState({
 		themes: false,
 		sounds: false,
@@ -50,7 +56,10 @@ const SettingsPage = () => {
 									<button
 										className={`sounds__btn ${e.value === correctSound ? "sounds__btn--active" : ""}`}
 										key={e.value}
-										onClick={() => changeCorrectSound(e.value)}
+										onClick={() => {
+											changeCorrectSound(e.value);
+											playCorrect();
+										}}
 									>
 										{e.value}
 									</button>
@@ -67,7 +76,10 @@ const SettingsPage = () => {
 									<button
 										className={`sounds__btn ${e.value === incorrectSound ? "sounds__btn--active" : ""}`}
 										key={e.value}
-										onClick={() => changeIncorrectSound(e.value)}
+										onClick={() => {
+											changeIncorrectSound(e.value);
+											playIncorrect;
+										}}
 									>
 										{e.value}
 									</button>
