@@ -18,8 +18,8 @@ const SettingsPage = () => {
 		changeIncorrectSound,
 		correctSound,
 		incorrectSound,
-		playCorrect,
-		playIncorrect,
+		previewCorrect,
+		previewIncorrect,
 	} = useGameSounds();
 	const [openSection, setOpenSections] = useState({
 		themes: false,
@@ -57,8 +57,8 @@ const SettingsPage = () => {
 										className={`sounds__btn ${e.value === correctSound ? "sounds__btn--active" : ""}`}
 										key={e.value}
 										onClick={() => {
+											previewCorrect(e.value);
 											changeCorrectSound(e.value);
-											playCorrect();
 										}}
 									>
 										{e.value}
@@ -77,8 +77,8 @@ const SettingsPage = () => {
 										className={`sounds__btn ${e.value === incorrectSound ? "sounds__btn--active" : ""}`}
 										key={e.value}
 										onClick={() => {
+											previewIncorrect(e.value);
 											changeIncorrectSound(e.value);
-											playIncorrect();
 										}}
 									>
 										{e.value}
