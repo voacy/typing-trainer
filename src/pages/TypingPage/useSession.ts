@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import useTimer from "../../features/timer/useTimer";
 import useTyping from "../../features/typing/useTyping";
 import calculateResults from "../../features/results/calculateResults";
@@ -47,6 +47,8 @@ const useSession = () => {
 	}, [settings]);
 
 	const [isFinished, setIsFinished] = useState(false);
+	const [isMouseActive, setIsMouseActive] = useState(false);
+	const isMouseActiveRef = useRef(false);
 
 	const [snapshot, setSnapshot] = useState<{
 		words: string[];
@@ -96,8 +98,32 @@ const useSession = () => {
 	}, [timer, currentWordIndex]);
 
 	useEffect(() => {
-		document.body.classList.toggle("session--active", timerStatus);
-	}, [timerStatus]);
+		document.body.classList.toggle("session--active", timerStatus && !isMouseActive);
+	}, [timerStatus, isMouseActive]);
+
+	useEffect(() => {
+		if (!timerStatus || isFinished) return;
+
+		const handleMouseMove = () => {
+			if (isMouseActiveRef.current) return;
+			isMouseActiveRef.current = true;
+			setIsMouseActive(true);
+		};
+
+		const handleKeyDown = () => {
+			if (!isMouseActiveRef.current) return;
+			isMouseActiveRef.current = false;
+			setIsMouseActive(false);
+		};
+
+		window.addEventListener("mousemove", handleMouseMove);
+		window.addEventListener("keydown", handleKeyDown, { capture: true });
+
+		return () => {
+			window.removeEventListener("mousemove", handleMouseMove);
+			window.removeEventListener("keydown", handleKeyDown, { capture: true });
+		};
+	}, [timerStatus, isFinished]);
 
 	const handleReset = useCallback(
 		(newSettings = settings) => {
@@ -106,6 +132,8 @@ const useSession = () => {
 			resetTimer(newSettings.count);
 			resetTyping(newWords);
 			setIsFinished(false);
+			isMouseActiveRef.current = false;
+			setIsMouseActive(false);
 			setChartData([]);
 			setSnapshot(null);
 		},
@@ -116,6 +144,7 @@ const useSession = () => {
 		settings,
 		setSettings,
 		isFinished,
+		isMouseActive,
 		words,
 		timer,
 		timerStatus,
