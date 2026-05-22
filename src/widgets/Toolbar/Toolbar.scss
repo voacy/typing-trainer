@@ -3,8 +3,16 @@
 	align-items: center;
 	justify-content: center;
 	gap: 8px;
-	margin-bottom: 100px;
 	transition: all 0.2s ease-in-out;
+	flex-wrap: wrap;
+
+	@media (max-width: 768px) {
+		gap: 6px;
+	}
+
+	@media (max-width: 480px) {
+		gap: 4px;
+	}
 
 	&__group {
 		display: flex;
@@ -32,6 +40,17 @@
 		transition:
 			color 0.15s ease-in-out,
 			background 0.15s ease-in-out;
+
+		@media (max-width: 768px) {
+			font-size: 12px;
+			padding: 4px 8px;
+		}
+
+		@media (max-width: 480px) {
+			font-size: 11px;
+			padding: 4px 6px;
+			gap: 3px;
+		}
 
 		&:hover {
 			color: var(--color-letter-correct);

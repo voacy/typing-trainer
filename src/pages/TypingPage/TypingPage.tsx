@@ -1,3 +1,4 @@
+import "./TypingPage.scss";
 import { useEffect, useRef, useState } from "react";
 import useCursor from "../../features/cursor/useCursor";
 import useTextScroll from "../../features/textScroll/useTextScroll";
@@ -37,6 +38,7 @@ const TypingPage = () => {
 	const wrapperRef = useRef<HTMLDivElement>(null);
 	const resultsRef = useRef<HTMLElement>(null);
 	const btnRef = useRef<HTMLButtonElement>(null);
+	const mobileInputRef = useRef<HTMLInputElement>(null);
 	const [showReplay, setShowReplay] = useState(false);
 	const offset = useTextScroll(currentWordIndex, wrapperRef);
 	const cursorPos = useCursor(currentLetterIndex, currentWordIndex, offset, wrapperRef);
@@ -45,21 +47,23 @@ const TypingPage = () => {
 	useEffect(() => {
 		const onKeyDown = (e: KeyboardEvent) => {
 			if (e.key !== "Tab") return;
-
 			const isRestartFocused = document.activeElement === btnRef.current;
-
 			if (!isRestartFocused) {
 				e.preventDefault();
 				btnRef.current?.focus();
 			}
 		};
-
 		document.addEventListener("keydown", onKeyDown);
-
-		return () => {
-			document.removeEventListener("keydown", onKeyDown);
-		};
+		return () => document.removeEventListener("keydown", onKeyDown);
 	}, []);
+
+	useEffect(() => {
+		const handleTouch = () => {
+			if (!isFinished) mobileInputRef.current?.focus();
+		};
+		document.addEventListener("touchstart", handleTouch);
+		return () => document.removeEventListener("touchstart", handleTouch);
+	}, [isFinished]);
 
 	const handleScreenshot = async () => {
 		if (!resultsRef.current) return;
@@ -75,101 +79,120 @@ const TypingPage = () => {
 	};
 
 	return (
-		<main className="main">
-			<div className="container">
-				<Toolbar settings={settings} setSettings={setSettings} onReset={handleReset} />
-				{!isFinished &&
-					(settings.mode === "time" ? (
-						<span className="timer">{timer}</span>
-					) : (
-						<span className="timer">
-							{currentWordIndex}/{words.length}
-						</span>
-					))}
-				{!isFinished && <CapsLockWarning />}
-				{!isFinished && (
-					<div className="text__wrapper" ref={wrapperRef}>
-						<TypingText
+		<main className="main typing-page">
+			<input
+				ref={mobileInputRef}
+				className="mobile-input"
+				type="text"
+				inputMode="text"
+				autoComplete="off"
+				autoCorrect="off"
+				autoCapitalize="none"
+				spellCheck={false}
+				readOnly
+			/>
+
+			<div className="toolbar-bar">
+				<div className="container">
+					<Toolbar settings={settings} setSettings={setSettings} onReset={handleReset} />
+				</div>
+			</div>
+
+			<div className="typing-page__body">
+				<div className="container">
+					{!isFinished &&
+						(settings.mode === "time" ? (
+							<span className="timer">{timer}</span>
+						) : (
+							<span className="timer">
+								{currentWordIndex}/{words.length}
+							</span>
+						))}
+					{!isFinished && <CapsLockWarning />}
+					{!isFinished && (
+						<div className="text__wrapper" ref={wrapperRef}>
+							<TypingText
+								words={words}
+								offset={offset}
+								currentWordIndex={currentWordIndex}
+								currentLetterIndex={currentLetterIndex}
+								letterStatuses={letterStatuses}
+								extraChars={extraChars}
+								cursorPos={cursorPos}
+								timerStatus={timerStatus}
+							/>
+						</div>
+					)}
+					{isFinished && (
+						<Results
+							ref={resultsRef}
+							wpm={wpm}
+							accuracy={accuracy}
+							chartData={chartData}
+							elapsed={elapsed}
+							correct={correct}
+							incorrect={incorrect}
+							extra={extra}
 							words={words}
-							offset={offset}
-							currentWordIndex={currentWordIndex}
-							currentLetterIndex={currentLetterIndex}
 							letterStatuses={letterStatuses}
 							extraChars={extraChars}
-							cursorPos={cursorPos}
-							timerStatus={timerStatus}
+							showReplay={showReplay}
 						/>
-					</div>
-				)}
-				{isFinished && (
-					<Results
-						ref={resultsRef}
-						wpm={wpm}
-						accuracy={accuracy}
-						chartData={chartData}
-						elapsed={elapsed}
-						correct={correct}
-						incorrect={incorrect}
-						extra={extra}
-						words={words}
-						letterStatuses={letterStatuses}
-						extraChars={extraChars}
-						showReplay={showReplay}
-					/>
-				)}
-
-				<div className="controls">
-					<Tooltip content="Restart" side="top">
-						<button
-							ref={btnRef}
-							className="controls__btn"
-							onClick={(e) => {
-								playClick();
-								handleReset();
-								setShowReplay(false);
-								e.currentTarget.blur();
-							}}
-						>
-							<ArrowClockwiseIcon size={20} />
-						</button>
-					</Tooltip>
-
-					{isFinished && (
-						<>
-							<Tooltip content="Input history" side="top">
-								<button
-									className="controls__btn"
-									onClick={(e) => {
-										playClick();
-										setShowReplay((prev) => !prev);
-										e.currentTarget.blur();
-									}}
-								>
-									<TextAlignLeftIcon size={20} />
-								</button>
-							</Tooltip>
-
-							<Tooltip content="Copy screenshot" side="top">
-								<button
-									className="controls__btn"
-									onClick={(e) => {
-										playClick();
-										handleScreenshot();
-										e.currentTarget.blur();
-									}}
-								>
-									<ImageIcon size={20} />
-								</button>
-							</Tooltip>
-						</>
 					)}
-				</div>
-				<div className="hint">
-					<kbd>tab</kbd>
-					<span>+</span>
-					<kbd>enter</kbd>
-					<span>›</span>
-					<span>restart test</span>
+
+					<div className="controls">
+						<Tooltip content="Restart" side="top">
+							<button
+								ref={btnRef}
+								className="controls__btn"
+								onClick={(e) => {
+									playClick();
+									handleReset();
+									setShowReplay(false);
+									e.currentTarget.blur();
+								}}
+							>
+								<ArrowClockwiseIcon size={20} />
+							</button>
+						</Tooltip>
+
+						{isFinished && (
+							<>
+								<Tooltip content="Input history" side="top">
+									<button
+										className="controls__btn"
+										onClick={(e) => {
+											playClick();
+											setShowReplay((prev) => !prev);
+											e.currentTarget.blur();
+										}}
+									>
+										<TextAlignLeftIcon size={20} />
+									</button>
+								</Tooltip>
+
+								<Tooltip content="Copy screenshot" side="top">
+									<button
+										className="controls__btn"
+										onClick={(e) => {
+											playClick();
+											handleScreenshot();
+											e.currentTarget.blur();
+										}}
+									>
+										<ImageIcon size={20} />
+									</button>
+								</Tooltip>
+							</>
+						)}
+					</div>
+					<div className="hint">
+						<kbd>tab</kbd>
+						<span>+</span>
+						<kbd>enter</kbd>
+						<span>›</span>
+						<span>restart test</span>
+					</div>
 				</div>
 			</div>
 		</main>

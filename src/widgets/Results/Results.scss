@@ -3,10 +3,23 @@
 	flex-direction: column;
 	gap: 32px;
 
+	@media (max-width: 480px) {
+		gap: 24px;
+	}
+
 	&__stats {
 		display: flex;
 		gap: 48px;
 		align-items: flex-end;
+		flex-wrap: wrap;
+
+		@media (max-width: 768px) {
+			gap: 28px;
+		}
+
+		@media (max-width: 480px) {
+			gap: 20px;
+		}
 	}
 
 	&__stat {
@@ -27,6 +40,14 @@
 		font-weight: 600;
 		color: var(--color-letter-correct);
 		line-height: 1;
+
+		@media (max-width: 768px) {
+			font-size: 40px;
+		}
+
+		@media (max-width: 480px) {
+			font-size: 32px;
+		}
 	}
 
 	&__chart {
@@ -81,6 +102,10 @@
 
 		.letter {
 			font-size: 14px;
+
+			@media (max-width: 480px) {
+				font-size: 12px;
+			}
 		}
 	}
 }

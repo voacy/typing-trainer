@@ -1,0 +1,44 @@
+.typing-page {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+}
+
+.toolbar-bar {
+	position: sticky;
+	top: 0;
+	z-index: 10;
+	padding: 12px 0;
+
+	& .container {
+		display: flex;
+		justify-content: center;
+	}
+}
+
+.typing-page__body {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	flex: 1;
+	padding-bottom: 120px;
+
+	@media (max-width: 768px) {
+		padding-bottom: 80px;
+	}
+
+	@media (max-width: 480px) {
+		padding-bottom: 60px;
+	}
+}
+
+.mobile-input {
+	position: fixed;
+	opacity: 0;
+	pointer-events: none;
+	width: 1px;
+	height: 1px;
+	top: 0;
+	left: 0;
+}

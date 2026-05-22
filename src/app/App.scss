@@ -1,11 +1,26 @@
 .main {
 	display: flex;
+	flex: 1;
+	min-height: 0;
 }
 
 .container {
 	width: 100%;
 	max-width: 1450px;
 	margin: 0 auto;
+	padding: 0 48px;
+
+	@media (max-width: 1024px) {
+		padding: 0 32px;
+	}
+
+	@media (max-width: 768px) {
+		padding: 0 20px;
+	}
+
+	@media (max-width: 480px) {
+		padding: 0 16px;
+	}
 }
 
 .stats__list {
@@ -25,7 +40,7 @@
 .text {
 	position: relative;
 	display: flex;
-	gap: 20px 20px;
+	gap: 16px 16px;
 	flex-wrap: wrap;
 	transition: 0.07s all ease-in-out;
 }
@@ -53,6 +68,16 @@
 	position: relative;
 	height: 180px;
 	overflow: hidden;
+
+	@media (max-width: 768px) {
+		height: 140px;
+	}
+
+	@media (max-width: 480px) {
+		height: 110px;
+		overflow-x: auto;
+		overflow-y: hidden;
+	}
 }
 
 .timer {
@@ -60,6 +85,11 @@
 	color: var(--color-accent);
 	font-size: 32px;
 	margin-bottom: 30px;
+
+	@media (max-width: 480px) {
+		font-size: 24px;
+		margin-bottom: 20px;
+	}
 }
 
 .incorrect-word {
@@ -89,6 +119,13 @@
 	border-radius: 6px;
 	background-color: var(--color-accent);
 	color: var(--color-bg);
+	white-space: nowrap;
+
+	@media (max-width: 480px) {
+		font-size: 14px;
+		padding: 12px 16px;
+		gap: 10px;
+	}
 }
 
 .cursor {
@@ -101,6 +138,14 @@
 		left 0.08s linear;
 	z-index: 5;
 	border-radius: 20px;
+
+	@media (max-width: 768px) {
+		height: 30px;
+	}
+
+	@media (max-width: 480px) {
+		height: 24px;
+	}
 }
 
 .cursor--blinking {
@@ -124,6 +169,10 @@
 	gap: 10px;
 	margin-top: 40px;
 	transition: all 0.2s ease-in-out;
+
+	@media (max-width: 480px) {
+		margin-top: 28px;
+	}
 }
 
 .controls__btn {
@@ -147,6 +196,11 @@
 	align-items: center;
 	gap: 5px;
 	transition: all 0.2s ease-in-out;
+	white-space: nowrap;
+
+	@media (max-width: 480px) {
+		bottom: 16px;
+	}
 
 	kbd {
 		color: var(--color-bg);
