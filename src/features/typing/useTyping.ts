@@ -166,21 +166,6 @@ const useTyping = (
 		setLetterStatuses(newStatuses);
 	}, [letterStatuses, currentWordIndex, currentLetterIndex, extraChars, currentWord, hasErrors]);
 
-	const handleMobileInput = useCallback(
-		(value: string) => {
-			if (!value || timer === 0) return;
-			for (const char of value) {
-				if (char === " ") {
-					handleSpace();
-				} else {
-					if (!timerStatus) startTimer();
-					handleLetter(char);
-				}
-			}
-		},
-		[handleSpace, handleLetter, timer, timerStatus, startTimer],
-	);
-
 	useEffect(() => {
 		const handleKeyDown = (e: KeyboardEvent) => {
 			if (!letterStatuses[currentWordIndex]) return;
@@ -197,10 +182,7 @@ const useTyping = (
 		};
 
 		window.addEventListener("keydown", handleKeyDown);
-
-		return () => {
-			window.removeEventListener("keydown", handleKeyDown);
-		};
+		return () => window.removeEventListener("keydown", handleKeyDown);
 	}, [
 		handleSpace,
 		handleBackspace,
@@ -224,14 +206,7 @@ const useTyping = (
 		[words],
 	);
 
-	return {
-		letterStatuses,
-		extraChars,
-		currentWordIndex,
-		currentLetterIndex,
-		resetTyping,
-		handleMobileInput,
-	};
+	return { letterStatuses, extraChars, currentWordIndex, currentLetterIndex, resetTyping };
 };
 
 export default useTyping;

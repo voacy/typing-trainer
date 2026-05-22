@@ -25,11 +25,14 @@
 	padding-bottom: 120px;
 
 	@media (max-width: 768px) {
-		padding-bottom: 80px;
+		justify-content: flex-start;
+		padding-top: 32px;
+		padding-bottom: 40px;
 	}
 
 	@media (max-width: 480px) {
-		padding-bottom: 60px;
+		padding-top: 24px;
+		padding-bottom: 32px;
 	}
 }
 

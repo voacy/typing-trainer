@@ -33,7 +33,6 @@ const TypingPage = () => {
 		correct,
 		incorrect,
 		extra,
-		handleMobileInput,
 	} = useSession();
 
 	const wrapperRef = useRef<HTMLDivElement>(null);
@@ -58,13 +57,9 @@ const TypingPage = () => {
 		return () => document.removeEventListener("keydown", onKeyDown);
 	}, []);
 
-	useEffect(() => {
-		const handleTouch = () => {
-			if (!isFinished) mobileInputRef.current?.focus();
-		};
-		document.addEventListener("touchstart", handleTouch);
-		return () => document.removeEventListener("touchstart", handleTouch);
-	}, [isFinished]);
+	const focusMobileInput = () => {
+		mobileInputRef.current?.focus();
+	};
 
 	const handleScreenshot = async () => {
 		if (!resultsRef.current) return;
@@ -90,11 +85,6 @@ const TypingPage = () => {
 				autoCorrect="off"
 				autoCapitalize="none"
 				spellCheck={false}
-				onInput={(e) => {
-					const input = e.currentTarget;
-					handleMobileInput(input.value);
-					input.value = "";
-				}}
 			/>
 
 			<div className="toolbar-bar">
@@ -115,7 +105,11 @@ const TypingPage = () => {
 						))}
 					{!isFinished && <CapsLockWarning />}
 					{!isFinished && (
-						<div className="text__wrapper" ref={wrapperRef}>
+						<div
+							className="text__wrapper"
+							ref={wrapperRef}
+							onClick={focusMobileInput}
+						>
 							<TypingText
 								words={words}
 								offset={offset}
