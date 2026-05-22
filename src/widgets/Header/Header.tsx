@@ -1,10 +1,10 @@
 import "./Header.scss";
 import { InfoIcon, GearSixIcon, SwordIcon } from "@phosphor-icons/react";
-import useGameSounds from "../../features/sounds/useSounds";
+import useSound from "../../features/sounds/useSounds";
 import { Link, NavLink } from "react-router-dom";
 
 const Header = () => {
-	const { playClick, playPage } = useGameSounds();
+	const { playClick, playPage } = useSound();
 
 	const getLinkClass = ({ isActive }: { isActive: boolean }) =>
 		`menu__link${isActive ? " menu__link--active" : ""}`;

@@ -2,11 +2,11 @@ import "./SettingsPage.scss";
 import { themes } from "../../features/theme/themes";
 import { sounds } from "../../features/sounds/sounds";
 import useTheme from "../../features/theme/useTheme";
-import useGameSounds from "../../features/sounds/useSounds";
+import useSound from "../../features/sounds/useSounds";
 import {
 	CaretDownIcon,
 	SpeakerHighIcon,
-	// SpeakerLowIcon,
+	SpeakerLowIcon,
 	SpeakerXIcon,
 } from "@phosphor-icons/react";
 import { useState } from "react";
@@ -14,13 +14,13 @@ import { useState } from "react";
 const SettingsPage = () => {
 	const { theme, changeTheme } = useTheme();
 	const {
-		changeCorrectSound,
-		changeIncorrectSound,
+		selectCorrectSound,
+		selectIncorrectSound,
 		correctSound,
 		incorrectSound,
-		previewCorrect,
-		previewIncorrect,
-	} = useGameSounds();
+		volume,
+		changeVolume,
+	} = useSound();
 	const [openSection, setOpenSections] = useState({
 		themes: false,
 		sounds: false,
@@ -51,40 +51,48 @@ const SettingsPage = () => {
 							play sound on click
 						</h3>
 						<div className="sounds__list sounds--correct">
-							{sounds.correct.map((e) => {
-								return (
-									<button
-										className={`sounds__btn ${e.value === correctSound ? "sounds__btn--active" : ""}`}
-										key={e.value}
-										onClick={() => {
-											previewCorrect(e.value);
-											changeCorrectSound(e.value);
-										}}
-									>
-										{e.value}
-									</button>
-								);
-							})}
+							{sounds.correct.map((e) => (
+								<button
+									className={`sounds__btn ${e.value === correctSound ? "sounds__btn--active" : ""}`}
+									key={e.value}
+									onClick={() => selectCorrectSound(e.value)}
+								>
+									{e.value}
+								</button>
+							))}
 						</div>
+
 						<h3 className="settings__subtitle">
 							<SpeakerXIcon size={20} weight="fill" />
 							play sound on error
 						</h3>
 						<div className="sounds__list sounds--incorrect">
-							{sounds.incorrect.map((e) => {
-								return (
-									<button
-										className={`sounds__btn ${e.value === incorrectSound ? "sounds__btn--active" : ""}`}
-										key={e.value}
-										onClick={() => {
-											previewIncorrect(e.value);
-											changeIncorrectSound(e.value);
-										}}
-									>
-										{e.value}
-									</button>
-								);
-							})}
+							{sounds.incorrect.map((e) => (
+								<button
+									className={`sounds__btn ${e.value === incorrectSound ? "sounds__btn--active" : ""}`}
+									key={e.value}
+									onClick={() => selectIncorrectSound(e.value)}
+								>
+									{e.value}
+								</button>
+							))}
+						</div>
+						<h3 className="settings__subtitle">
+							<SpeakerLowIcon size={20} weight="fill" />
+							volume
+						</h3>
+						<div className="volume__row">
+							<input
+								className="volume__slider"
+								type="range"
+								min={0}
+								max={1}
+								step={0.01}
+								value={volume}
+								style={{ "--volume-fill": `${volume * 100}%` } as React.CSSProperties}
+								onChange={(e) => changeVolume(parseFloat(e.target.value))}
+							/>
+							<span className="volume__value">{Math.round(volume * 100)}%</span>
 						</div>
 					</div>
 				</section>
@@ -97,25 +105,23 @@ const SettingsPage = () => {
 						themes
 					</h2>
 					<div className="theme__list settings__list">
-						{themes.map((e) => {
-							return (
-								<div
-									key={e.value}
-									onClick={() => changeTheme(e.value)}
-									className={`theme__btn ${e.value === theme ? "theme__btn--active" : ""}`}
-									style={{ backgroundColor: e.bg }}
-								>
-									<span className="theme__name" style={{ color: e.accent }}>
-										{e.value}
-									</span>
-									<div className="theme__dots">
-										<span className="theme__dot" style={{ backgroundColor: e.accent }}></span>
-										<span className="theme__dot" style={{ backgroundColor: e.text }}></span>
-										<span className="theme__dot" style={{ backgroundColor: e.textAdd }}></span>
-									</div>
+						{themes.map((e) => (
+							<div
+								key={e.value}
+								onClick={() => changeTheme(e.value)}
+								className={`theme__btn ${e.value === theme ? "theme__btn--active" : ""}`}
+								style={{ backgroundColor: e.bg }}
+							>
+								<span className="theme__name" style={{ color: e.accent }}>
+									{e.value}
+								</span>
+								<div className="theme__dots">
+									<span className="theme__dot" style={{ backgroundColor: e.accent }}></span>
+									<span className="theme__dot" style={{ backgroundColor: e.text }}></span>
+									<span className="theme__dot" style={{ backgroundColor: e.textAdd }}></span>
 								</div>
-							);
-						})}
+							</div>
+						))}
 					</div>
 				</section>
 			</div>

@@ -10,7 +10,7 @@ import {
 } from "recharts";
 
 import { useEffect, forwardRef } from "react";
-import useGameSounds from "../../features/sounds/useSounds";
+import useSound from "../../features/sounds/useSounds";
 import confetti from "canvas-confetti";
 import type { LetterStatus } from "../../shared/types";
 import { getLetterClass } from "../../shared/lib";
@@ -56,7 +56,7 @@ const Results = forwardRef<HTMLElement, Props>(
 			accuracy: entry.accuracy,
 		}));
 
-		const { playResult, playClick } = useGameSounds();
+		const { playResult, playClick } = useSound();
 
 		useEffect(() => {
 			playResult();

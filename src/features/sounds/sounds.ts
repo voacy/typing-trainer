@@ -1,5 +1,6 @@
 export const sounds = {
 	correct: [
+		{ value: "off" },
 		{ value: "akko-lavenders" },
 		{ value: "cherry-black-abs" },
 		{ value: "cherry-black-pbt" },
@@ -11,5 +12,5 @@ export const sounds = {
 		{ value: "tealious" },
 		{ value: "typewriter" },
 	],
-	incorrect: [{ value: "damage" }, { value: "punch" }, { value: "square" }, { value: "triangle" }],
+	incorrect: [{ value: "off" }, { value: "damage" }, { value: "punch" }, { value: "square" }, { value: "triangle" }],
 };

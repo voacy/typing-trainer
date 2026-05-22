@@ -10,7 +10,7 @@ import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import "./Toolbar.scss";
 
 import type { TypingSettings } from "../../shared/types";
-import useGameSounds from "../../features/sounds/useSounds";
+import useSound from "../../features/sounds/useSounds";
 import { LANGUAGES } from "../../shared/lib/languages";
 
 type Props = {
@@ -20,7 +20,7 @@ type Props = {
 };
 
 const Toolbar = (props: Props) => {
-	const { playClick } = useGameSounds();
+	const { playClick } = useSound();
 	const { settings, setSettings, onReset } = props;
 
 	const handleSettingsChange = (newSettings: TypingSettings) => {

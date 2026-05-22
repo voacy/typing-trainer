@@ -1,69 +1,116 @@
-import useSound from "use-sound";
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { Howl, Howler } from "howler";
 
-import clickSound from "../../shared/assets/click.mp3";
-import resultSound from "../../shared/assets/results.mp3";
-import pageSound from "../../shared/assets/page.mp3";
+import clickSoundSrc from "../../shared/assets/click.mp3";
+import resultSoundSrc from "../../shared/assets/results.mp3";
+import pageSoundSrc from "../../shared/assets/page.mp3";
 
-const correctSounds = import.meta.glob("../../shared/assets/correct/*.wav", { eager: true });
-const incorrectSounds = import.meta.glob("../../shared/assets/incorrect/*.wav", { eager: true });
+const correctSoundFiles = import.meta.glob("../../shared/assets/correct/*.wav", { eager: true });
+const incorrectSoundFiles = import.meta.glob("../../shared/assets/incorrect/*.wav", {
+	eager: true,
+});
 
-const getFile = (sounds: Record<string, unknown>, folder: string, name: string) => {
+const getFile = (files: Record<string, unknown>, folder: string, name: string): string => {
 	const key = `../../shared/assets/${folder}/${name}.wav`;
-	return (sounds[key] as { default: string }).default;
+	return (files[key] as { default: string }).default;
 };
 
-const useGameSounds = () => {
-	const [correctSound, setCorrectSound] = useState(
-		localStorage.getItem("correctSound") || "nk-creams",
-	);
-	const [incorrectSound, setIncorrectSound] = useState(
-		localStorage.getItem("incorrectSound") || "punch",
-	);
+const createHowl = (src: string, volume: number) => new Howl({ src: [src], volume, preload: true });
 
-	const changeCorrectSound = (sound: string) => {
-		setCorrectSound(sound);
-		localStorage.setItem("correctSound", sound);
+const savedVolume = parseFloat(localStorage.getItem("volume") || "1");
+Howler.volume(savedVolume);
+const savedCorrectSound = localStorage.getItem("correctSound") || "nk-creams";
+const savedIncorrectSound = localStorage.getItem("incorrectSound") || "punch";
+
+let correctHowl =
+	savedCorrectSound !== "off"
+		? createHowl(getFile(correctSoundFiles, "correct", savedCorrectSound), 1)
+		: null;
+
+let incorrectHowl =
+	savedIncorrectSound !== "off"
+		? createHowl(getFile(incorrectSoundFiles, "incorrect", savedIncorrectSound), 1)
+		: null;
+
+const clickHowl = createHowl(clickSoundSrc, 0.3);
+const resultHowl = createHowl(resultSoundSrc, 0.2);
+const pageHowl = createHowl(pageSoundSrc, 0.3);
+
+const useSound = () => {
+	const [correctSound, setCorrectSound] = useState(savedCorrectSound);
+	const [incorrectSound, setIncorrectSound] = useState(savedIncorrectSound);
+	const [volume, setVolume] = useState(savedVolume);
+
+	const volumePreviewTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+	const changeVolume = (value: number) => {
+		Howler.volume(value);
+		setVolume(value);
+		localStorage.setItem("volume", String(value));
+
+		if (volumePreviewTimer.current) clearTimeout(volumePreviewTimer.current);
+		volumePreviewTimer.current = setTimeout(() => {
+			correctHowl?.play();
+		}, 150);
 	};
 
-	const changeIncorrectSound = (sound: string) => {
-		setIncorrectSound(sound);
-		localStorage.setItem("incorrectSound", sound);
+	const changeCorrectSound = (name: string) => {
+		correctHowl?.unload();
+		correctHowl =
+			name !== "off" ? createHowl(getFile(correctSoundFiles, "correct", name), 1) : null;
+		setCorrectSound(name);
+		localStorage.setItem("correctSound", name);
+	};
+
+	const changeIncorrectSound = (name: string) => {
+		incorrectHowl?.unload();
+		incorrectHowl =
+			name !== "off" ? createHowl(getFile(incorrectSoundFiles, "incorrect", name), 1) : null;
+		setIncorrectSound(name);
+		localStorage.setItem("incorrectSound", name);
+	};
+
+	const selectCorrectSound = (name: string) => {
+		if (name !== "off") previewCorrect(name);
+		changeCorrectSound(name);
+	};
+
+	const selectIncorrectSound = (name: string) => {
+		if (name !== "off") previewIncorrect(name);
+		changeIncorrectSound(name);
 	};
 
 	const previewCorrect = (name: string) => {
-		new Audio(getFile(correctSounds, "correct", name)).play();
+		new Howl({ src: [getFile(correctSoundFiles, "correct", name)], volume: 1 }).play();
 	};
 
 	const previewIncorrect = (name: string) => {
-		new Audio(getFile(incorrectSounds, "incorrect", name)).play();
+		new Howl({ src: [getFile(incorrectSoundFiles, "incorrect", name)], volume: 1 }).play();
 	};
 
-	const [playCorrect] = useSound(getFile(correctSounds, "correct", correctSound), {
-		volume: 1,
-		preload: true,
-	});
-	const [playIncorrect] = useSound(getFile(incorrectSounds, "incorrect", incorrectSound), {
-		volume: 1,
-		preload: true,
-	});
-	const [playPage] = useSound(pageSound, { volume: 0.3, preload: true });
-	const [playClick] = useSound(clickSound, { volume: 0.3, preload: true });
-	const [playResult] = useSound(resultSound, { volume: 0.2, preload: true });
+	const playCorrect = () => correctHowl?.play();
+	const playIncorrect = () => incorrectHowl?.play();
+	const playClick = () => clickHowl.play();
+	const playResult = () => resultHowl.play();
+	const playPage = () => pageHowl.play();
 
 	return {
-		playClick,
-		playResult,
 		playCorrect,
 		playIncorrect,
+		playClick,
+		playResult,
 		playPage,
-		changeCorrectSound,
-		changeIncorrectSound,
-		correctSound,
-		incorrectSound,
 		previewCorrect,
 		previewIncorrect,
+		changeCorrectSound,
+		changeIncorrectSound,
+		selectCorrectSound,
+		selectIncorrectSound,
+		correctSound,
+		incorrectSound,
+		volume,
+		changeVolume,
 	};
 };
 
-export default useGameSounds;
+export default useSound;

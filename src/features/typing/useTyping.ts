@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { createLetterStatuses } from "../../shared/lib";
 import type { LetterStatus } from "../../shared/types";
-import useGameSounds from "../../features/sounds/useSounds";
+import useSound from "../../features/sounds/useSounds";
 
 const useTyping = (
 	words: string[],
@@ -18,7 +18,7 @@ const useTyping = (
 	const currentWord = words[currentWordIndex] ?? "";
 	const currentLetter = currentWord[currentLetterIndex];
 
-	const { playCorrect, playIncorrect } = useGameSounds();
+	const { playCorrect, playIncorrect } = useSound();
 
 	const hasErrors = useCallback(() => {
 		return (

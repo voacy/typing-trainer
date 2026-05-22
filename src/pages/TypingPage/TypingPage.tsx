@@ -6,7 +6,7 @@ import Toolbar from "../../widgets/Toolbar/Toolbar";
 import CapsLockWarning from "../../features/capsLock/CapsLockWarning";
 import { ArrowClockwiseIcon, TextAlignLeftIcon, ImageIcon } from "@phosphor-icons/react";
 import Results from "../../widgets/Results/Results";
-import useGameSounds from "../../features/sounds/useSounds";
+import useSound from "../../features/sounds/useSounds";
 import html2canvas from "html2canvas";
 import Tooltip from "../../shared/ui/Tooltip";
 import { toast } from "sonner";
@@ -40,7 +40,7 @@ const TypingPage = () => {
 	const [showReplay, setShowReplay] = useState(false);
 	const offset = useTextScroll(currentWordIndex, wrapperRef);
 	const cursorPos = useCursor(currentLetterIndex, currentWordIndex, offset, wrapperRef);
-	const { playClick } = useGameSounds();
+	const { playClick } = useSound();
 
 	useEffect(() => {
 		const onKeyDown = (e: KeyboardEvent) => {
