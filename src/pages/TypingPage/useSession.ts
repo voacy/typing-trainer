@@ -64,7 +64,7 @@ const useSession = () => {
 		settings.mode,
 	);
 
-	const { currentWordIndex, currentLetterIndex, letterStatuses, extraChars, resetTyping } =
+	const { currentWordIndex, currentLetterIndex, letterStatuses, extraChars, resetTyping, handleMobileInput } =
 		useTyping(words, timer, timerStatus, startTimer);
 
 	const { wpm, accuracy, correct, incorrect, extra } = calculateResults(
@@ -155,6 +155,7 @@ const useSession = () => {
 		wpm,
 		accuracy,
 		handleReset,
+		handleMobileInput,
 		chartData,
 		elapsed,
 		correct,

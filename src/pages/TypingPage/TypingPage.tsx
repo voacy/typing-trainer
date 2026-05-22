@@ -33,6 +33,7 @@ const TypingPage = () => {
 		correct,
 		incorrect,
 		extra,
+		handleMobileInput,
 	} = useSession();
 
 	const wrapperRef = useRef<HTMLDivElement>(null);
@@ -89,7 +90,11 @@ const TypingPage = () => {
 				autoCorrect="off"
 				autoCapitalize="none"
 				spellCheck={false}
-				readOnly
+				onInput={(e) => {
+					const input = e.currentTarget;
+					handleMobileInput(input.value);
+					input.value = "";
+				}}
 			/>
 
 			<div className="toolbar-bar">
