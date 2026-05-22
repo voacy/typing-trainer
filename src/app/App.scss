@@ -128,14 +128,6 @@
 		left 0.08s linear;
 	z-index: 5;
 	border-radius: 20px;
-
-	@media (max-width: 768px) {
-		height: 30px;
-	}
-
-	@media (max-width: 480px) {
-		height: 24px;
-	}
 }
 
 .cursor--blinking {

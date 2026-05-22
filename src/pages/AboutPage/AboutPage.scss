@@ -43,7 +43,8 @@
 		border-left: 1px solid rgba(var(--color-text-rgb, 88, 110, 117), 0.15);
 
 		@media (max-width: 480px) {
-			padding: 24px 0 24px 16px;
+			padding: 24px 0;
+			border-left: none;
 		}
 
 		&--last {
