@@ -1,0 +1,44 @@
+.not-found {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	flex: 1;
+	gap: 16px;
+	text-align: center;
+
+	&__subtitle {
+		text-transform: uppercase;
+		font-size: 22px;
+		color: var(--color-text);
+		letter-spacing: 0.1em;
+	}
+
+	&__title {
+		font-size: 120px;
+		font-weight: 800;
+		color: var(--color-accent);
+		line-height: 1;
+		font-family: "Syne", sans-serif;
+	}
+
+	&__description {
+		font-size: 16px;
+		color: var(--color-text);
+	}
+
+	&__link {
+		margin-top: 8px;
+		padding: 10px 24px;
+		background: var(--color-accent);
+		color: var(--color-bg);
+		border-radius: 6px;
+		font-size: 16px;
+		font-family: "Syne", sans-serif;
+		transition: opacity 0.2s;
+
+		&:hover {
+			opacity: 0.8;
+		}
+	}
+}
