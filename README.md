@@ -1,56 +1,33 @@
-# typezone
+<a href="https://typing-trainer-sigma.vercel.app">
+  <img width="1280" height="452" alt="banner" src="https://github.com/user-attachments/assets/430ec2ae-5cd1-4f90-ac41-1699baccc8b0" />
+</a>
 
-Typing trainer for people who care about their setup.
-Clean interface, mechanical keyboard sounds, 170+ themes.
+[![React](https://img.shields.io/badge/React_19-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![ESLint](https://img.shields.io/badge/eslint-4B32C3?style=for-the-badge&logo=eslint&logoColor=white)](https://eslint.org/)
+[![SCSS](https://img.shields.io/badge/SCSS-CC6699?style=for-the-badge&logo=sass&logoColor=white)](https://sass-lang.com/)
+[![Vitest](https://img.shields.io/badge/Vitest-6E9F18?style=for-the-badge&logo=vitest&logoColor=white)](https://vitest.dev/)
+[![Radix UI](https://img.shields.io/badge/Radix_UI-161618?style=for-the-badge&logo=radix-ui&logoColor=white)](https://www.radix-ui.com/)
+[![Phosphor Icons](https://img.shields.io/badge/Phosphor_Icons-000000?style=for-the-badge&logo=phosphoricons&logoColor=white)](https://phosphoricons.com/)
 
-→ [typing-trainer-sigma.vercel.app](https://typing-trainer-sigma.vercel.app)
+# About
 
----
+Typezone is a minimalist typing speed test for people who care about their setup. Multiple test modes, 170+ themes, mechanical keyboard sounds and a live WPM chart.
 
-## start
+# Features
+
+- time, words and quote modes
+- punctuation and numbers
+- 170+ themes via CSS variables
+- mechanical keyboard sounds
+- WPM chart and accuracy stats
+- screenshot results to clipboard
+- settings persist to localStorage
+
+# Start
 
 ```bash
 npm install
 npm run dev
 ```
-
----
-
-## stack
-
-React 19 · TypeScript 6 · Vite 8 · Howler · Recharts · Radix UI · SCSS
-
----
-
-## structure
-
-```
-features/typing        keyboard input, word validation, letter states
-features/sounds        Howler singleton — one instance, shared everywhere
-features/timer         countdown and elapsed tracking
-features/results       WPM and accuracy calculation
-features/theme         170+ themes via CSS custom properties
-features/cursor        pixel-perfect caret positioning
-features/textScroll    3-line scroll logic
-widgets/Toolbar        mode, count, language, punctuation controls
-widgets/Results        stats screen with per-second WPM chart
-pages/TypingPage       useSession — single source of truth for a test
-```
-
----
-
-## how it works
-
-A test is owned entirely by `useSession`.
-It holds words, timer, typing state, and results.
-Components only read — they never write to each other.
-
-Themes switch by setting `data-theme` on `<html>`.
-No re-renders. No JS on switch. Just CSS variables.
-
-Sound runs through a module-level Howler singleton.
-Every component that calls `useGameSounds()` gets the same instance.
-Volume changes apply globally and immediately via `Howler.volume()`.
-
-Settings persist to `localStorage` automatically.
-No backend. No accounts. Nothing leaves the browser.
