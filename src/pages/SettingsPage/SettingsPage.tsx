@@ -1,4 +1,5 @@
 import "./SettingsPage.scss";
+import { useEffect, useState } from "react";
 import { themes } from "../../features/theme/themes";
 import { sounds } from "../../features/sounds/sounds";
 import useTheme from "../../features/theme/useTheme";
@@ -9,9 +10,12 @@ import {
 	SpeakerLowIcon,
 	SpeakerXIcon,
 } from "@phosphor-icons/react";
-import { useState } from "react";
 
 const SettingsPage = () => {
+	useEffect(() => {
+		document.title = "Typezone | Settings";
+	}, []);
+
 	const { theme, changeTheme } = useTheme();
 	const {
 		selectCorrectSound,

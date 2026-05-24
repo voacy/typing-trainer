@@ -1,7 +1,12 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./NotFoundPage.scss";
 
 const NotFoundPage = () => {
+	useEffect(() => {
+		document.title = "Typezone | Not found";
+	}, []);
+
 	return (
 		<div className="not-found">
 			<p className="not-found__subtitle">why are you here...</p>

@@ -1,4 +1,5 @@
 import "./AboutPage.scss";
+import { useEffect } from "react";
 import {
 	GithubLogoIcon,
 	KeyboardIcon,
@@ -51,6 +52,10 @@ const stats = [
 ];
 
 const AboutPage = () => {
+	useEffect(() => {
+		document.title = "Typezone | About";
+	}, []);
+
 	return (
 		<main className="about">
 			<div className="container">

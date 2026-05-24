@@ -45,6 +45,10 @@ const TypingPage = () => {
 	const { playClick } = useSound();
 
 	useEffect(() => {
+		document.title = "Typezone | Customizable typing test";
+	}, []);
+
+	useEffect(() => {
 		const onKeyDown = (e: KeyboardEvent) => {
 			if (e.key !== "Tab") return;
 			const isRestartFocused = document.activeElement === btnRef.current;
@@ -105,11 +109,7 @@ const TypingPage = () => {
 						))}
 					{!isFinished && <CapsLockWarning />}
 					{!isFinished && (
-						<div
-							className="text__wrapper"
-							ref={wrapperRef}
-							onClick={focusMobileInput}
-						>
+						<div className="text__wrapper" ref={wrapperRef} onClick={focusMobileInput}>
 							<TypingText
 								words={words}
 								offset={offset}
