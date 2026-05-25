@@ -1,15 +1,14 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type { Theme } from "../../shared/types";
 
-const DEFAULT_THEME: Theme = "tokyo-night";
+const DEFAULT_THEME: Theme = "sewing-tin";
 
 const useTheme = () => {
-	const savedTheme = localStorage.getItem("theme") as Theme;
-	const [theme, setTheme] = useState<Theme>(savedTheme || DEFAULT_THEME);
-
-	useEffect(() => {
-		document.body.setAttribute("data-theme", savedTheme || DEFAULT_THEME);
-	}, []);
+	const [theme, setTheme] = useState<Theme>(() => {
+		const saved = (localStorage.getItem("theme") as Theme) || DEFAULT_THEME;
+		document.body.setAttribute("data-theme", saved);
+		return saved;
+	});
 
 	const changeTheme = (newTheme: Theme) => {
 		setTheme(newTheme);
