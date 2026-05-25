@@ -81,11 +81,18 @@ const useSound = () => {
 	};
 
 	const previewCorrect = (name: string) => {
-		new Howl({ src: [getFile(correctSoundFiles, "correct", name)], volume: 1 }).play();
+		const preview = new Howl({
+			src: [getFile(correctSoundFiles, "correct", name)],
+			volume: 1,
+		});
+		preview.once("end", () => preview.unload());
+		preview.play();
 	};
 
 	const previewIncorrect = (name: string) => {
-		new Howl({ src: [getFile(incorrectSoundFiles, "incorrect", name)], volume: 1 }).play();
+		const preview = new Howl({ src: [getFile(incorrectSoundFiles, "incorrect", name)], volume: 1 });
+		preview.once("end", () => preview.unload());
+		preview.play();
 	};
 
 	const playCorrect = () => correctHowl?.play();
