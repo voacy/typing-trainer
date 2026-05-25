@@ -5,7 +5,7 @@ import calculateResults from "../../features/results/calculateResults";
 import { generateWordsWithOptions, generateQuote } from "../../shared/lib";
 import { getLanguageWords } from "../../shared/lib/languages";
 import quotes from "../../shared/lib/quotes";
-import type { LetterStatus, TypingSettings } from "../../shared/types";
+import type { TypingSettings } from "../../shared/types";
 
 const getNewWords = (newSettings: TypingSettings): string[] => {
 	const count = newSettings.mode === "time" ? 200 : newSettings.count;
@@ -50,12 +50,6 @@ const useSession = () => {
 	const [isMouseActive, setIsMouseActive] = useState(false);
 	const isMouseActiveRef = useRef(false);
 
-	const [snapshot, setSnapshot] = useState<{
-		words: string[];
-		letterStatuses: LetterStatus[][];
-		extraChars: string[][];
-	} | null>(null);
-
 	const [words, setWords] = useState(() => getNewWords(settings));
 
 	const { timer, timerStatus, startTimer, resetTimer, elapsed } = useTimer(
@@ -93,7 +87,6 @@ const useSession = () => {
 	useEffect(() => {
 		if ((settings.mode === "time" && timer === 0) || currentWordIndex >= words.length) {
 			setIsFinished(true);
-			setSnapshot({ words, letterStatuses, extraChars });
 		}
 	}, [timer, currentWordIndex]);
 
@@ -135,7 +128,6 @@ const useSession = () => {
 			isMouseActiveRef.current = false;
 			setIsMouseActive(false);
 			setChartData([]);
-			setSnapshot(null);
 		},
 		[settings],
 	);
@@ -160,7 +152,6 @@ const useSession = () => {
 		correct,
 		incorrect,
 		extra,
-		snapshot,
 	};
 };
 

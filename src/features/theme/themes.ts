@@ -1,7 +1,5 @@
-import type { Theme } from "../../shared/types";
-
 export type ThemeOption = {
-	value: Theme;
+	value: string;
 	label: string;
 	bg: string;
 	text: string;
@@ -9,7 +7,7 @@ export type ThemeOption = {
 	textAdd: string;
 };
 
-export const themes: ThemeOption[] = [
+export const themes = [
 	{
 		value: "dino",
 		label: "dino",
@@ -1627,4 +1625,6 @@ export const themes: ThemeOption[] = [
 		accent: "#d6d2bc",
 		textAdd: "#d6d2bc",
 	},
-];
+] as const;
+
+export type Theme = (typeof themes)[number]["value"];

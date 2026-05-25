@@ -32,6 +32,8 @@ type Props = {
 	showReplay: boolean;
 };
 
+const CONFETTI_COLORS = ["#d65ccc", "#d1d0c5", "#ca4754", "#47ca5d"];
+
 const Results = forwardRef<HTMLElement, Props>(
 	(
 		{
@@ -60,9 +62,7 @@ const Results = forwardRef<HTMLElement, Props>(
 
 		useEffect(() => {
 			playResult();
-		}, [playResult]);
-
-		const colors = ["#d65ccc", "#d1d0c5", "#ca4754", "#47ca5d"];
+		}, []);
 
 		useEffect(() => {
 			confetti({
@@ -70,14 +70,14 @@ const Results = forwardRef<HTMLElement, Props>(
 				angle: 60,
 				spread: 150,
 				origin: { x: 0 },
-				colors: colors,
+				colors: CONFETTI_COLORS,
 			});
 			confetti({
 				particleCount: 50,
 				angle: 120,
 				spread: 150,
 				origin: { x: 1 },
-				colors: colors,
+				colors: CONFETTI_COLORS,
 			});
 		}, []);
 
