@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { Theme } from "../../shared/types";
+import type { Theme } from "./themes";
 
 const DEFAULT_THEME: Theme = "sewing-tin";
 
