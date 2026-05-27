@@ -16,7 +16,7 @@ const stack = [
 	"SCSS",
 	"Recharts",
 	"Radix UI",
-	"use-sound",
+	"Holwer",
 	"Phosphor Icons",
 ];
 
