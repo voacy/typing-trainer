@@ -1,5 +1,5 @@
 import "./AboutPage.scss";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
 	GithubLogoIcon,
 	KeyboardIcon,
@@ -7,6 +7,7 @@ import {
 	QuotesIcon,
 	ChartLineIcon,
 	TargetIcon,
+	CaretDownIcon,
 } from "@phosphor-icons/react";
 
 const stack = [
@@ -16,7 +17,7 @@ const stack = [
 	"SCSS",
 	"Recharts",
 	"Radix UI",
-	"Holwer",
+	"Howler",
 	"Phosphor Icons",
 ];
 
@@ -56,6 +57,17 @@ const AboutPage = () => {
 		document.title = "Typezone | About";
 	}, []);
 
+	const [openSection, setOpenSection] = useState({
+		modes: true,
+		stats: true,
+		stack: true,
+		source: true,
+	});
+
+	const toggle = (key: keyof typeof openSection) => {
+		setOpenSection((prev) => ({ ...prev, [key]: !prev[key] }));
+	};
+
 	return (
 		<main className="about">
 			<div className="container">
@@ -67,9 +79,15 @@ const AboutPage = () => {
 					</p>
 				</section>
 
-				<section className="about__section">
-					<p className="about__label">// modes</p>
-					<div className="about__rows">
+				<section className={`about__section ${!openSection.modes ? "hidden" : ""}`}>
+					<h2
+						className="about__label"
+						onClick={() => toggle("modes")}
+					>
+						<CaretDownIcon className="about__icon" size={40} weight="fill" />
+						modes
+					</h2>
+					<div className="about__rows about__collapsible">
 						{modes.map(({ icon, key, desc }) => (
 							<div className="about__row" key={key}>
 								<span className="about__key">
@@ -82,9 +100,15 @@ const AboutPage = () => {
 					</div>
 				</section>
 
-				<section className="about__section">
-					<p className="about__label">// stats</p>
-					<div className="about__rows">
+				<section className={`about__section ${!openSection.stats ? "hidden" : ""}`}>
+					<h2
+						className="about__label"
+						onClick={() => toggle("stats")}
+					>
+						<CaretDownIcon className="about__icon" size={40} weight="fill" />
+						stats
+					</h2>
+					<div className="about__rows about__collapsible">
 						{stats.map(({ icon, key, desc }) => (
 							<div className="about__row" key={key}>
 								<span className="about__key">
@@ -97,9 +121,15 @@ const AboutPage = () => {
 					</div>
 				</section>
 
-				<section className="about__section">
-					<p className="about__label">// stack</p>
-					<div className="about__tags">
+				<section className={`about__section ${!openSection.stack ? "hidden" : ""}`}>
+					<h2
+						className="about__label"
+						onClick={() => toggle("stack")}
+					>
+						<CaretDownIcon className="about__icon" size={40} weight="fill" />
+						stack
+					</h2>
+					<div className="about__tags about__collapsible">
 						{stack.map((tag) => (
 							<span key={tag} className="about__tag">
 								{tag}
@@ -108,9 +138,15 @@ const AboutPage = () => {
 					</div>
 				</section>
 
-				<section className="about__section about__section--last">
-					<p className="about__label">// source</p>
-					<a className="about__github" href="https://github.com/voacy/speed-keys" rel="noreferrer">
+				<section className={`about__section about__section--last ${!openSection.source ? "hidden" : ""}`}>
+					<h2
+						className="about__label"
+						onClick={() => toggle("source")}
+					>
+						<CaretDownIcon className="about__icon" size={40} weight="fill" />
+						source
+					</h2>
+					<a className="about__github about__collapsible" href="https://github.com/voacy/speed-keys" rel="noreferrer">
 						<GithubLogoIcon size={16} weight="fill" />
 						github.com/voacy/speed-keys
 					</a>
