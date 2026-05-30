@@ -7,13 +7,6 @@
 	gap: 16px;
 	text-align: center;
 
-	&__subtitle {
-		text-transform: uppercase;
-		font-size: 22px;
-		color: var(--color-text);
-		letter-spacing: 0.1em;
-	}
-
 	&__title {
 		font-size: 120px;
 		font-weight: 800;
@@ -29,16 +22,18 @@
 
 	&__link {
 		margin-top: 8px;
-		padding: 10px 24px;
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		padding: 6px 14px;
 		background: var(--color-accent);
 		color: var(--color-bg);
 		border-radius: 6px;
-		font-size: 16px;
-		font-family: "Syne", sans-serif;
-		transition: opacity 0.2s;
+		font-size: 14px;
+		transition: opacity 0.2s ease-in-out;
 
 		&:hover {
-			opacity: 0.8;
+			opacity: 0.7;
 		}
 	}
 }
