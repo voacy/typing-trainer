@@ -44,7 +44,7 @@
 			padding: 6px 14px;
 			border-radius: 8px;
 			background-color: var(--color-mode-bg);
-			transition: color 0.15s ease-in-out;
+			transition: color 0.2s ease-in-out;
 
 			@media (hover: hover) {
 				&:hover {
@@ -109,8 +109,8 @@
 		padding: 5px 10px;
 		border-radius: 5px;
 		transition:
-			color 0.15s ease-in-out,
-			background 0.15s ease-in-out;
+			color 0.2s ease-in-out,
+			background 0.2s ease-in-out;
 
 		@media (hover: hover) {
 			&:hover {
@@ -137,7 +137,6 @@
 			}
 		}
 	}
-
 }
 
 .language-dropdown {
@@ -159,8 +158,8 @@
 	cursor: pointer;
 	outline: none;
 	transition:
-		background 0.15s ease-in-out,
-		color 0.15s ease-in-out;
+		background 0.2s ease-in-out,
+		color 0.2s ease-in-out;
 
 	@media (hover: hover) {
 		&:hover {
@@ -174,9 +173,13 @@
 	}
 }
 
-
 .session--active {
 	.toolbar {
+		opacity: 0;
+		visibility: hidden;
+	}
+
+	.toolbar__toggle {
 		opacity: 0;
 		visibility: hidden;
 	}
