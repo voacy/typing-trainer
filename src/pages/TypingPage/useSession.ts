@@ -103,7 +103,12 @@ const useSession = () => {
 			setIsMouseActive(true);
 		};
 
-		const handleKeyDown = () => {
+		const handleKeyDown = (e: KeyboardEvent) => {
+			if (e.key === "Tab") {
+				isMouseActiveRef.current = true;
+				setIsMouseActive(true);
+				return;
+			}
 			if (!isMouseActiveRef.current) return;
 			isMouseActiveRef.current = false;
 			setIsMouseActive(false);
