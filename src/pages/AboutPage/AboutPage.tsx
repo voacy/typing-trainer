@@ -9,6 +9,7 @@ import {
 	TargetIcon,
 	CaretDownIcon,
 } from "@phosphor-icons/react";
+import useSound from "../../features/sounds/useSounds";
 
 const stack = [
 	"React 19",
@@ -57,6 +58,8 @@ const AboutPage = () => {
 		document.title = "Typezone | About";
 	}, []);
 
+	const { playClick } = useSound();
+
 	const [openSection, setOpenSection] = useState({
 		modes: true,
 		stats: true,
@@ -65,6 +68,7 @@ const AboutPage = () => {
 	});
 
 	const toggle = (key: keyof typeof openSection) => {
+		playClick();
 		setOpenSection((prev) => ({ ...prev, [key]: !prev[key] }));
 	};
 
@@ -80,10 +84,7 @@ const AboutPage = () => {
 				</section>
 
 				<section className={`about__section ${!openSection.modes ? "hidden" : ""}`}>
-					<h2
-						className="about__label"
-						onClick={() => toggle("modes")}
-					>
+					<h2 className="about__label" onClick={() => toggle("modes")}>
 						<CaretDownIcon className="about__icon" size={40} weight="fill" />
 						modes
 					</h2>
@@ -101,10 +102,7 @@ const AboutPage = () => {
 				</section>
 
 				<section className={`about__section ${!openSection.stats ? "hidden" : ""}`}>
-					<h2
-						className="about__label"
-						onClick={() => toggle("stats")}
-					>
+					<h2 className="about__label" onClick={() => toggle("stats")}>
 						<CaretDownIcon className="about__icon" size={40} weight="fill" />
 						stats
 					</h2>
@@ -122,10 +120,7 @@ const AboutPage = () => {
 				</section>
 
 				<section className={`about__section ${!openSection.stack ? "hidden" : ""}`}>
-					<h2
-						className="about__label"
-						onClick={() => toggle("stack")}
-					>
+					<h2 className="about__label" onClick={() => toggle("stack")}>
 						<CaretDownIcon className="about__icon" size={40} weight="fill" />
 						stack
 					</h2>
@@ -139,14 +134,16 @@ const AboutPage = () => {
 				</section>
 
 				<section className={`about__section about__section--last ${!openSection.source ? "hidden" : ""}`}>
-					<h2
-						className="about__label"
-						onClick={() => toggle("source")}
-					>
+					<h2 className="about__label" onClick={() => toggle("source")}>
 						<CaretDownIcon className="about__icon" size={40} weight="fill" />
 						source
 					</h2>
-					<a className="about__github about__collapsible" href="https://github.com/voacy/speed-keys" rel="noreferrer">
+					<a
+						className="about__github about__collapsible"
+						href="https://github.com/voacy/speed-keys"
+						rel="noreferrer"
+						onClick={() => playClick()}
+					>
 						<GithubLogoIcon size={16} weight="fill" />
 						github.com/voacy/speed-keys
 					</a>

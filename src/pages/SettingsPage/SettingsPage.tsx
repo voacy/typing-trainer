@@ -24,6 +24,7 @@ const SettingsPage = () => {
 		incorrectSound,
 		volume,
 		changeVolume,
+		playClick,
 	} = useSound();
 	const [openSection, setOpenSections] = useState({
 		themes: false,
@@ -44,7 +45,10 @@ const SettingsPage = () => {
 				<section className={`settings__section ${openSection.sounds ? "hidden" : ""}`}>
 					<h2
 						className="settings__label"
-						onClick={() => setOpenSections((prev) => ({ ...prev, sounds: !prev.sounds }))}
+						onClick={() => {
+							playClick();
+							setOpenSections((prev) => ({ ...prev, sounds: !prev.sounds }));
+						}}
 					>
 						<CaretDownIcon className="settings__icon" size={40} weight="fill" />
 						sounds
@@ -103,7 +107,10 @@ const SettingsPage = () => {
 				<section className={`settings__section ${openSection.themes ? "hidden" : ""}`}>
 					<h2
 						className="settings__label"
-						onClick={() => setOpenSections((prev) => ({ ...prev, themes: !prev.themes }))}
+						onClick={() => {
+							playClick();
+							setOpenSections((prev) => ({ ...prev, themes: !prev.themes }));
+						}}
 					>
 						<CaretDownIcon className="settings__icon" size={40} weight="fill" />
 						themes
@@ -112,7 +119,10 @@ const SettingsPage = () => {
 						{themes.map((e) => (
 							<div
 								key={e.value}
-								onClick={() => changeTheme(e.value)}
+								onClick={() => {
+									playClick();
+									changeTheme(e.value);
+								}}
 								className={`theme__btn ${e.value === theme ? "theme__btn--active" : ""}`}
 								style={{ backgroundColor: e.bg }}
 							>

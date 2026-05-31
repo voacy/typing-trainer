@@ -47,7 +47,10 @@ const Toolbar = (props: Props) => {
 		<div className="toolbar-wrapper" ref={wrapperRef}>
 			<button
 				className="toolbar__toggle"
-				onClick={() => setIsOpen((v) => !v)}
+				onClick={() => {
+					playClick();
+					setIsOpen((v) => !v);
+				}}
 			>
 				<SlidersHorizontalIcon size={18} />
 				settings
