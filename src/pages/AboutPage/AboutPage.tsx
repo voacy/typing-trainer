@@ -133,19 +133,20 @@ const AboutPage = () => {
 					</div>
 				</section>
 
-				<section className={`about__section about__section--last ${!openSection.source ? "hidden" : ""}`}>
+				<section
+					className={`about__section about__section--last ${!openSection.source ? "hidden" : ""}`}
+				>
 					<h2 className="about__label" onClick={() => toggle("source")}>
 						<CaretDownIcon className="about__icon" size={40} weight="fill" />
 						source
 					</h2>
 					<a
 						className="about__github about__collapsible"
-						href="https://github.com/voacy/speed-keys"
-						rel="noreferrer"
+						href="https://github.com/voacy/typing-trainer"
 						onClick={() => playClick()}
 					>
 						<GithubLogoIcon size={16} weight="fill" />
-						github.com/voacy/speed-keys
+						github.com/voacy/typing-trainer
 					</a>
 				</section>
 			</div>
